@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.yxy.dch.seo.information.mapper.ArticleMapper">
+
+    <resultMap id="customResultMap" type="com.yxy.dch.seo.information.entity.Article">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="columnId" column="column_id"/>
+        <result property="name" column="name"/>
+        <result property="contentUrl" column="content_url"/>
+        <result property="recommend" column="recommend"/>
+        <result property="readingNum" column="reading_num"/>
+        <result property="state" column="state"/>
+        <result property="tags" column="tags"/>
+        <result property="relateArticleIds" column="relate_article_ids"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <sql id="columns">
+        	u.id,
+        	u.title,
+        	u.keyword,
+        	u.desc,
+        	u.column_id,
+        	u.name,
+        	u.content_url,
+        	u.recommend,
+        	u.reading_num,
+        	u.state,
+        	u.tags,
+        	u.relate_article_ids,
+        	u.create_time,
+        	u.create_uid,
+        	u.update_time,
+        	u.update_uid
+	</sql>
+
+</mapper>
+
