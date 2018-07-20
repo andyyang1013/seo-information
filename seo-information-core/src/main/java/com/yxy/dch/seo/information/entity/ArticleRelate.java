@@ -8,12 +8,12 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 文章标签关联表
+ * 相关文章
  *
  * @author yangzhen
  */
-@TableName("t_seo_article_tag_mapping")
-public class ArticleTagMapping extends Model<ArticleTagMapping> {
+@TableName("t_seo_article_relate")
+public class ArticleRelate extends Model<ArticleRelate> {
 
     private static final long serialVersionUID = 1L;
 
@@ -27,10 +27,10 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
     @TableField("article_id")
     private Long articleId;
     /**
-     * 标签id
+     * 相关文章id
      */
-    @TableField("tag_id")
-    private Long tagId;
+    @TableField("relate_article_id")
+    private Long relateArticleId;
     /**
      * 创建时间
      */
@@ -42,7 +42,7 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
     @TableField("create_uid")
     private Long createUid;
     /**
-     * 更新时间
+     * 更新用户id
      */
     @TableField("update_time")
     private Date updateTime;
@@ -68,12 +68,12 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
         this.articleId = articleId;
     }
 
-    public Long getTagId() {
-        return tagId;
+    public Long getRelateArticleId() {
+        return relateArticleId;
     }
 
-    public void setTagId(Long tagId) {
-        this.tagId = tagId;
+    public void setRelateArticleId(Long relateArticleId) {
+        this.relateArticleId = relateArticleId;
     }
 
     public Date getCreateTime() {
@@ -115,10 +115,10 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
 
     @Override
     public String toString() {
-        return "ArticleTagMapping{" +
+        return "Article{" +
                 ", id=" + id +
                 ", articleId=" + articleId +
-                ", tagId=" + tagId +
+                ", relateArticleId=" + relateArticleId +
                 ", createTime=" + createTime +
                 ", createUid=" + createUid +
                 ", updateTime=" + updateTime +

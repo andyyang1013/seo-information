@@ -30,9 +30,13 @@ public class MinioProperties {
      */
     private String columnPictureDir;
     /**
-     * article content dir
+     * article content base dir
      */
-    private String articleContentDir;
+    private String articleContentBaseDir;
+    /**
+     * article content img base dir
+     */
+    private String articleContentImgBaseDir;
 
     public String getAccessKey() {
         return accessKey;
@@ -74,11 +78,19 @@ public class MinioProperties {
         this.columnPictureDir = columnPictureDir;
     }
 
-    public String getArticleContentDir() {
-        return articleContentDir;
+    public String getArticleContentBaseDir() {
+        return articleContentBaseDir;
     }
 
-    public void setArticleContentDir(String articleContentDir) {
-        this.articleContentDir = articleContentDir;
+    public void setArticleContentBaseDir(String articleContentBaseDir) {
+        this.articleContentBaseDir = articleContentBaseDir;
+    }
+
+    public String getArticleContentImgBaseDir() {
+        return articleContentImgBaseDir;
+    }
+
+    public void setArticleContentImgBaseDir(String articleContentImgBaseDir) {
+        this.articleContentImgBaseDir = articleContentImgBaseDir;
     }
 }

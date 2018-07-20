@@ -47,6 +47,11 @@ public class Article extends Model<Article> {
     @TableField("name")
     private String name;
     /**
+     * 文章内容
+     */
+    @TableField("content")
+    private String content;
+    /**
      * 文章内容URL
      */
     @TableField("content_url")
@@ -66,6 +71,11 @@ public class Article extends Model<Article> {
      */
     @TableField("state")
     private Integer state;
+    /**
+     * 上架时间
+     */
+    @TableField("up_time")
+    private Date upTime;
     /**
      * 创建时间
      */
@@ -223,6 +233,22 @@ public class Article extends Model<Article> {
 
     public void setState(Integer state) {
         this.state = state;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Date getUpTime() {
+        return upTime;
+    }
+
+    public void setUpTime(Date upTime) {
+        this.upTime = upTime;
     }
 
     @Override

@@ -7,7 +7,7 @@ package com.yxy.dch.seo.information.exception;
  **/
 public enum CodeMsg {
     //1、异常码定义区
-    success("成功", "200"),
+    success("成功", "0"),
     system_error("系统出错，请稍后再试", "500"),
     url_not_effective("URL不合法，请确认", "501"),
     not_allow_visit("不允许访问", "401"),
@@ -51,8 +51,10 @@ public enum CodeMsg {
     user_phone_error("手机号格式错误", "biz_027"),
     user_idNumberState_error("身份证号验证状态错误", "biz_028"),
     user_bind_over_max("绑定的用户数超过最大限制", "biz_029"),
-    role_name_exist("用户组已存在", "biz_030");
+    role_name_exist("用户组已存在", "biz_030"),
 
+    //资源异常
+    file_system_error("文件服务器异常","res_001");
 
     //2、属性
     private String code; //返回码

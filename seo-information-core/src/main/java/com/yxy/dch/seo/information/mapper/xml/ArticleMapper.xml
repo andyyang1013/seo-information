@@ -11,36 +11,139 @@
         <result property="desc" column="desc"/>
         <result property="columnId" column="column_id"/>
         <result property="name" column="name"/>
+        <result property="content" column="content"/>
         <result property="contentUrl" column="content_url"/>
         <result property="recommend" column="recommend"/>
         <result property="readingNum" column="reading_num"/>
         <result property="state" column="state"/>
         <result property="tags" column="tags"/>
         <result property="relateArticleIds" column="relate_article_ids"/>
+        <result property="upTime" column="up_time"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
     </resultMap>
 
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ArticleVO">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="columnId" column="column_id"/>
+        <result property="name" column="name"/>
+        <result property="content" column="content"/>
+        <result property="contentUrl" column="content_url"/>
+        <result property="recommend" column="recommend"/>
+        <result property="readingNum" column="reading_num"/>
+        <result property="state" column="state"/>
+        <result property="tags" column="tags"/>
+        <result property="relateArticleIds" column="relate_article_ids"/>
+        <result property="upTime" column="up_time"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+        <collection property="tagList" ofType="com.yxy.dch.seo.information.entity.Tag">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="name"/>
+            <result column="tag_title" property="title"/>
+            <result column="tag_keyword" property="keyword"/>
+            <result column="tag_desc" property="desc"/>
+            <result property="createTime" column="tag_create_time"/>
+            <result property="createUid" column="tag_create_uid"/>
+            <result property="updateTime" column="tag_update_time"/>
+            <result property="updateUid" column="tag_update_uid"/>
+        </collection>
+        <collection property="relateArticleList" ofType="com.yxy.dch.seo.information.entity.Article">
+            <id column="relate_article_id" property="id"/>
+            <result property="title" column="ra_title"/>
+            <result property="keyword" column="ra_keyword"/>
+            <result property="desc" column="ra_desc"/>
+            <result property="columnId" column="ra_column_id"/>
+            <result property="name" column="ra_name"/>
+            <result property="content" column="content"/>
+            <result property="contentUrl" column="ra_content_url"/>
+            <result property="recommend" column="ra_recommend"/>
+            <result property="readingNum" column="ra_reading_num"/>
+            <result property="state" column="ra_state"/>
+            <result property="tags" column="ra_tags"/>
+            <result property="relateArticleIds" column="ra_raids"/>
+            <result property="upTime" column="ra_up_time"/>
+            <result property="createTime" column="ra_create_time"/>
+            <result property="createUid" column="ra_create_uid"/>
+            <result property="updateTime" column="ra_update_time"/>
+            <result property="updateUid" column="ra_update_uid"/>
+        </collection>
+    </resultMap>
+
     <sql id="columns">
-        	u.id,
-        	u.title,
-        	u.keyword,
-        	u.desc,
-        	u.column_id,
-        	u.name,
-        	u.content_url,
-        	u.recommend,
-        	u.reading_num,
-        	u.state,
-        	u.tags,
-        	u.relate_article_ids,
-        	u.create_time,
-        	u.create_uid,
-        	u.update_time,
-        	u.update_uid
+        	a.id,
+        	a.title,
+        	a.keyword,
+        	a.desc,
+        	a.column_id,
+        	a.name,
+        	a.content,
+        	a.content_url,
+        	a.recommend,
+        	a.reading_num,
+        	a.state,
+        	a.tags,
+        	a.relate_article_ids,
+        	a.up_time,
+        	a.create_time,
+        	a.create_uid,
+        	a.update_time,
+        	a.update_uid
 	</sql>
+
+    <select id="selectArticleById" resultMap="customVoResultMap">
+        SELECT a.`*`,
+t.tag_id,
+t.create_time AS tag_create_time,
+t.create_uid AS tag_create_uid,
+t.update_time AS tag_update_time,
+t.update_uid AS tag_update_uid,
+tag.name AS tag_name,
+tag.title AS tag_title,
+tag.keyword AS tag_keyword,
+tag.`desc` AS tag_desc,
+r.relate_article_id,
+r.create_time AS ra_create_time,
+r.create_uid AS ra_create_uid,
+r.update_time AS ra_update_time,
+r.update_uid AS ra_update_uid,
+article.title AS ra_title,
+article.keyword AS ra_keyword,
+article.`desc` AS ra_desc,
+article.column_id AS ra_column_id,
+article.name AS ra_name,
+article.content_url AS ra_content_url,
+article.recommend AS ra_recommend,
+article.reading_num AS ra_reading_num,
+article.state AS ra_state,
+article.tags AS ra_tags,
+article.relate_article_ids AS ra_raids,
+article.up_time AS ra_up_time
+FROM t_seo_article a
+LEFT JOIN t_seo_article_tag_mapping t ON a.id = t.article_id
+LEFT JOIN t_seo_article_relate r ON a.id=r.article_id
+LEFT JOIN t_seo_tag tag ON t.tag_id=tag.id
+LEFT JOIN t_seo_article article ON r.relate_article_id = article.id
+where a.id = #{id} and a.state = 1
+    </select>
+
+    <select id="selectArticleList" resultMap="customVoResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_article a
+        WHERE 1 = 1
+        <if test="name!=null and name!=''">
+            AND name LIKE '%${name}%'
+        </if>
+        <if test="tags!=null and tags!=''">
+            AND tags LIKE '%${tags}%'
+        </if>
+    </select>
 
 </mapper>
 

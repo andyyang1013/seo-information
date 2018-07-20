@@ -3,16 +3,24 @@ package com.yxy.dch.seo.information.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
+import com.yxy.dch.seo.information.entity.ArticleRelate;
+import com.yxy.dch.seo.information.entity.ArticleTagMapping;
+import com.yxy.dch.seo.information.entity.Tag;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
+import com.yxy.dch.seo.information.mapper.ArticleRelateMapper;
 import com.yxy.dch.seo.information.mapper.ArticleTagMapper;
 import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.IArticleService;
+import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.ArticleVO;
+import io.minio.MinioClient;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +38,53 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private TagMapper tagMapper;
     @Autowired
     private ArticleTagMapper articleTagMapper;
+    @Autowired
+    private ArticleRelateMapper articleRelateMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ArticleVO create(ArticleVO param) {
 
         // 保存文章
         Article article = new Article();
         BeanUtils.copyProperties(param, article);
         articleMapper.insert(article);
+
+        // 保存文章标签
+        if (StringUtils.isNotBlank(param.getTags())) {
+            String[] tagNames = StringUtils.split(param.getTags(), ",");
+            for (String tagName : tagNames) {
+                Tag entity = new Tag();
+                entity.setName(tagName);
+                Tag tag = tagMapper.selectOne(entity);
+                if (tag == null) {
+                    tagMapper.insert(entity);
+                    tag = new Tag();
+                    BeanUtils.copyProperties(entity, tag);
+                }
+                ArticleTagMapping entityMapping = new ArticleTagMapping();
+                entityMapping.setTagId(tag.getId());
+                entityMapping.setArticleId(article.getId());
+                ArticleTagMapping articleTagMapping = articleTagMapper.selectOne(entityMapping);
+                if (articleTagMapping == null) {
+                    articleTagMapper.insert(entityMapping);
+                }
+            }
+        }
+
+        // 保存相关文章
+        if (StringUtils.isNotBlank(param.getRelateArticleIds())) {
+            String[] articleRelateIds = StringUtils.split(param.getRelateArticleIds(), ",");
+            for (String articleRelateId : articleRelateIds) {
+                ArticleRelate entity = new ArticleRelate();
+                entity.setArticleId(article.getId());
+                entity.setRelateArticleId(Long.valueOf(articleRelateId));
+                ArticleRelate articleRelate = articleRelateMapper.selectOne(entity);
+                if (articleRelate == null) {
+                    articleRelateMapper.insert(entity);
+                }
+            }
+        }
 
         // 查询保存后的文章
         Article createdArticle = articleMapper.selectById(article.getId());
@@ -52,6 +99,19 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+
+        // 删除文章标签关联
+        ArticleTagMapping articleTagMapping=new ArticleTagMapping();
+        articleTagMapping.setArticleId(article.getId());
+        articleTagMapper.delete(new EntityWrapper<>(articleTagMapping));
+
+        // 删除相关文章关联
+        articleRelateMapper.deleteArticleRelate(article.getId());
+
+        // 删除文章内容
+        // TODO:删除文章内容
+
+        // 删除文章
         articleMapper.deleteById(param.getId());
         return true;
     }
@@ -88,6 +148,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             throw new BizException(CodeMsg.record_not_exist);
         }
         article.setState(1);
+        article.setUpTime(Toolkit.getCurDate());
         articleMapper.updateById(article);
         Article upArticle = articleMapper.selectById(article.getId());
         ArticleVO upArticleVO = new ArticleVO();
@@ -113,14 +174,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public List<ArticleVO> listBy(ArticleVO param) {
         Article article = new Article();
         BeanUtils.copyProperties(param, article);
-        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(article));
-        List<ArticleVO> articleVOList = new ArrayList<>();
-        for (Article entity : articleList) {
-            ArticleVO vo = new ArticleVO();
-            BeanUtils.copyProperties(entity, vo);
-            articleVOList.add(vo);
-        }
-        return articleVOList;
+        return articleMapper.selectArticleList(article);
     }
 
     @Override
@@ -199,8 +253,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setReadingNum(article.getReadingNum() + 1);
         articleMapper.updateById(article);
 
-        ArticleVO articleVO = new ArticleVO();
-        BeanUtils.copyProperties(article, articleVO);
-        return articleVO;
+        return articleMapper.selectArticleById(article.getId());
     }
 }
