@@ -42,62 +42,72 @@
 
     <build>
         <finalName>seoInformationManager</finalName>
-        <resources>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-                <includes>
-                    <include>**/*</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                </includes>
-            </resource>
-        </resources>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                            <!--可执行jar里面包含的依赖，此处需要过滤掉，每个groupId之间用逗号分开-->
-                            <excludeGroupIds>com.yxy.dch.seo.information</excludeGroupIds>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <executable>true</executable>
-                    <layout>ZIP</layout>
-                    <includes>
-                        <include>
-                            <groupId>com.yxy.dch.seo.information</groupId>
-                            <artifactId>seo-information-core</artifactId>
-                        </include>
-                        <!--本项目的依赖，一定要加上，不然生成的jar启动不起来-->
-                        <include>
-                            <groupId>com.yxy.dch.seo.information</groupId>
-                            <artifactId>seo-information-manager</artifactId>
-                        </include>
-                    </includes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
+
+    <!--<build>-->
+        <!--<finalName>seoInformationManager</finalName>-->
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>${basedir}/src/main/resources</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+            <!--<resource>-->
+                <!--<directory>src/main/java</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.xml</include>-->
+                <!--</includes>-->
+            <!--</resource>-->
+        <!--</resources>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-dependency-plugin</artifactId>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>copy-dependencies</id>-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>copy-dependencies</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<outputDirectory>${project.build.directory}/lib</outputDirectory>-->
+                            <!--<overWriteReleases>false</overWriteReleases>-->
+                            <!--<overWriteSnapshots>false</overWriteSnapshots>-->
+                            <!--<overWriteIfNewer>true</overWriteIfNewer>-->
+                            <!--&lt;!&ndash;可执行jar里面包含的依赖，此处需要过滤掉，每个groupId之间用逗号分开&ndash;&gt;-->
+                            <!--<excludeGroupIds>com.yxy.dch.seo.information</excludeGroupIds>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-maven-plugin</artifactId>-->
+                <!--<configuration>-->
+                    <!--<executable>true</executable>-->
+                    <!--&lt;!&ndash;<layout>ZIP</layout>&ndash;&gt;-->
+                    <!--<includes>-->
+                        <!--<include>-->
+                            <!--<groupId>com.yxy.dch.seo.information</groupId>-->
+                            <!--<artifactId>seo-information-core</artifactId>-->
+                        <!--</include>-->
+                        <!--&lt;!&ndash;本项目的依赖，一定要加上，不然生成的jar启动不起来&ndash;&gt;-->
+                        <!--<include>-->
+                            <!--<groupId>com.yxy.dch.seo.information</groupId>-->
+                            <!--<artifactId>seo-information-manager</artifactId>-->
+                        <!--</include>-->
+                    <!--</includes>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
 
 </project>
