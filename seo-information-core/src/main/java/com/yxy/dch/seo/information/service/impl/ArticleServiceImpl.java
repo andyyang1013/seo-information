@@ -17,6 +17,8 @@ import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import io.minio.MinioClient;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ import java.util.List;
  */
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IArticleService {
+
+    private Logger logger = LoggerFactory.getLogger(ArticleServiceImpl.class);
+
     @Autowired
     private ArticleMapper articleMapper;
     @Autowired
@@ -160,6 +165,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public ArticleVO down(ArticleVO param) {
         Article article = articleMapper.selectById(param.getId());
         if (article == null) {
+            logger.error("下架的文章不存在");
             throw new BizException(CodeMsg.record_not_exist);
         }
         article.setState(0);

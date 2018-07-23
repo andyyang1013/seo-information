@@ -7,9 +7,11 @@ import com.yxy.dch.seo.information.config.pros.MinioProperties;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IColumnService;
+import com.yxy.dch.seo.information.util.JacksonUtil;
+import com.yxy.dch.seo.information.util.MinioUtil;
 import com.yxy.dch.seo.information.vo.ColumnVO;
+import com.yxy.dch.seo.information.vo.ImgVO;
 import com.yxy.dch.seo.information.vo.Page;
-import io.minio.MinioClient;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -92,7 +94,7 @@ public class ColumnController extends BaseController {
      * @param page  分页参数
      * @return 分页的栏目列表
      */
-    @PostMapping("/listByPage")
+    @RequestMapping("/listByPage")
     public PageInfo<ColumnVO> listByPage(ColumnVO param, Page page) {
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<ColumnVO> list = columnService.listBy(param);
@@ -105,37 +107,32 @@ public class ColumnController extends BaseController {
      * @param param 栏目
      * @return 栏目列表
      */
-    @PostMapping("/list")
+    @RequestMapping("/list")
     public List<ColumnVO> list(ColumnVO param) {
         return columnService.listBy(param);
     }
 
     /**
-     * 上传图片
+     * 上传栏目图片
      *
-     * @param param 栏目
-     * @param file  图片
-     * @return 图片URL
+     * @param file 栏目图片
+     * @return 栏目图片
      */
-    @PostMapping("/uploadPicture")
-    public String uploadPicture(ColumnVO param, MultipartFile file) {
-        String pictureUrl;
-        try {
-            MinioClient minioClient = new MinioClient(minioProperties.getEndpoint(), minioProperties.getAccessKey(), minioProperties.getSecretKey());
-            String contentType = file.getContentType();
-            String originalFilename = file.getOriginalFilename();
-            String bucketName = minioProperties.getBucketName();
-            String columnPictureDir = minioProperties.getColumnPictureDir();
-            String objectName = columnPictureDir + "/" + param.getId() + "/" + originalFilename;
-            boolean isExist = minioClient.bucketExists(bucketName);
-            if (!isExist) {
-                minioClient.makeBucket(bucketName);
-            }
-            minioClient.putObject(bucketName, objectName, file.getInputStream(), contentType);
-            pictureUrl = minioClient.getObjectUrl(bucketName, objectName);
-        } catch (Exception e) {
-            throw new BizException(CodeMsg.system_error);
+    @PostMapping("/uploadImg")
+    public ImgVO uploadImg(MultipartFile file) {
+        if (file == null || file.isEmpty()) {
+            logger.error("上传栏目图片参数错误,文件为空");
+            throw new BizException(CodeMsg.param_note_blank);
         }
-        return pictureUrl;
+        logger.info("上传栏目图片(contentType={},filename={},size={}", file.getContentType(), file.getOriginalFilename(), file.getSize());
+        String originalFilename = file.getOriginalFilename();
+        String columnPictureBaseDir = minioProperties.getColumnPictureBaseDir();
+        String objectName = MinioUtil.genObjectName(columnPictureBaseDir, null);
+        String pictureUrl = MinioUtil.upload(minioProperties, file, objectName);
+        ImgVO imgVO = new ImgVO();
+        imgVO.setSrc(pictureUrl);
+        imgVO.setTitle(originalFilename);
+        logger.info("上传栏目图片成功({})", JacksonUtil.toJson(imgVO));
+        return imgVO;
     }
 }

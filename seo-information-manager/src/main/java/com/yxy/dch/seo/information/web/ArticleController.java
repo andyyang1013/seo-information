@@ -8,12 +8,11 @@ import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IArticleService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
-import com.yxy.dch.seo.information.util.Toolkit;
+import com.yxy.dch.seo.information.util.MinioUtil;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import com.yxy.dch.seo.information.vo.ColumnVO;
 import com.yxy.dch.seo.information.vo.ImgVO;
 import com.yxy.dch.seo.information.vo.Page;
-import io.minio.MinioClient;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -48,7 +46,7 @@ public class ArticleController extends BaseController {
     @PostMapping("/create")
     public ArticleVO create(ArticleVO param) {
         if (StringUtils.isBlank(param.getName()) || param.getColumnId() == null || param.getRecommend() == null || StringUtils.isBlank(param.getContent())) {
-            logger.error("新增文章参数错误({}):param={}",CodeMsg.param_note_blank.getMsg(),JacksonUtil.toJson(param));
+            logger.error("新增文章参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("新增文章:param={}", JacksonUtil.toJson(param));
@@ -69,8 +67,8 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/remove")
     public Boolean remove(ArticleVO param) {
-        if (param.getId() == null){
-            logger.error("删除文章参数错误({}):param={}",CodeMsg.id_param_blank.getMsg(),JacksonUtil.toJson(param));
+        if (param.getId() == null) {
+            logger.error("删除文章参数错误({}):param={}", CodeMsg.id_param_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.id_param_blank);
         }
         logger.info("删除文章:param={}", JacksonUtil.toJson(param));
@@ -87,8 +85,8 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/modify")
     public ArticleVO modify(ArticleVO param) {
-        if (param.getId() == null){
-            logger.error("修改文章参数错误({}):param={}",CodeMsg.id_param_blank.getMsg(),JacksonUtil.toJson(param));
+        if (param.getId() == null) {
+            logger.error("修改文章参数错误({}):param={}", CodeMsg.id_param_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.id_param_blank);
         }
         logger.info("修改文章:param={}", JacksonUtil.toJson(param));
@@ -105,8 +103,8 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/view")
     public ArticleVO view(ArticleVO param) {
-        if (param.getId() == null){
-            logger.error("查看文章参数错误({}):param={}",CodeMsg.id_param_blank.getMsg(),JacksonUtil.toJson(param));
+        if (param.getId() == null) {
+            logger.error("查看文章参数错误({}):param={}", CodeMsg.id_param_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.id_param_blank);
         }
         logger.info("查看文章:param={}", JacksonUtil.toJson(param));
@@ -124,8 +122,8 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/listByPage")
     public PageInfo<ArticleVO> listByPage(ArticleVO param, Page page) {
-        if (page == null || page.getPageSize() == null || page.getPageNum() == null){
-            logger.error("分页查询文章列表参数错误({}):param={},page={}",CodeMsg.user_batch_query_num_out.getMsg(),JacksonUtil.toJson(param),JacksonUtil.toJson(page));
+        if (page == null || page.getPageSize() == null || page.getPageNum() == null) {
+            logger.error("分页查询文章列表参数错误({}):param={},page={}", CodeMsg.user_batch_query_num_out.getMsg(), JacksonUtil.toJson(param), JacksonUtil.toJson(page));
             throw new BizException(CodeMsg.user_batch_query_num_out);
         }
         logger.info("分页查询文章列表:param={},page={}", JacksonUtil.toJson(param), page);
@@ -143,8 +141,8 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/up")
     public ArticleVO up(ArticleVO param) {
-        if (param.getId() == null){
-            logger.error("上架文章参数错误({}):param={}",CodeMsg.id_param_blank.getMsg(),JacksonUtil.toJson(param));
+        if (param.getId() == null) {
+            logger.error("上架文章参数错误({}):param={}", CodeMsg.id_param_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.id_param_blank);
         }
         logger.info("上架文章:param={}", JacksonUtil.toJson(param));
@@ -161,8 +159,8 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/down")
     public ArticleVO down(ArticleVO param) {
-        if (param.getId() == null){
-            logger.error("下架文章参数错误({}):param={}",CodeMsg.id_param_blank.getMsg(),JacksonUtil.toJson(param));
+        if (param.getId() == null) {
+            logger.error("下架文章参数错误({}):param={}", CodeMsg.id_param_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.id_param_blank);
         }
         logger.info("下架文章:param={}", JacksonUtil.toJson(param));
@@ -181,82 +179,39 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/uploadContent")
     public String uploadContent(ColumnVO param, MultipartFile file) {
-        if (param.getId() == null){
-            logger.error("上传文章内容参数错误({}):param={},file={}",CodeMsg.id_param_blank.getMsg(),JacksonUtil.toJson(param),JacksonUtil.toJson(file));
+        if (param.getId() == null) {
+            logger.error("上传文章内容参数错误({}):param={},file={}", CodeMsg.id_param_blank.getMsg(), JacksonUtil.toJson(param), JacksonUtil.toJson(file));
             throw new BizException(CodeMsg.id_param_blank);
         }
-        logger.info("上传文章内容(articleId={},contentType={},filename={},size={})", param.getId(), file.getContentType(),file.getOriginalFilename(),file.getSize());
-        String pictureUrl;
-        try {
-            MinioClient minioClient = new MinioClient(minioProperties.getEndpoint(), minioProperties.getAccessKey(), minioProperties.getSecretKey());
-            String contentType = file.getContentType();
-            String originalFilename = file.getOriginalFilename();
-            String bucketName = minioProperties.getBucketName();
-            String articleContentBaseDir = minioProperties.getArticleContentBaseDir();
-//            String objectName = articleContentBaseDir + "/" + param.getId() + "/" + originalFilename;
-            String objectName = genObjectName(articleContentBaseDir,originalFilename,param.getId());
-            boolean isExist = minioClient.bucketExists(bucketName);
-            if (!isExist) {
-                minioClient.makeBucket(bucketName);
-            }
-            try(InputStream inputStream = file.getInputStream()){
-                minioClient.putObject(bucketName, objectName, inputStream, contentType);
-                pictureUrl = minioClient.getObjectUrl(bucketName, objectName);
-            }catch (Exception e){
-                throw new BizException(CodeMsg.system_error);
-            }
-        } catch (Exception e) {
-            throw new BizException(CodeMsg.system_error);
-        }
+        logger.info("上传文章内容(articleId={},contentType={},filename={},size={})", param.getId(), file.getContentType(), file.getOriginalFilename(), file.getSize());
+        String articleContentBaseDir = minioProperties.getArticleContentBaseDir();
+        String objectName = MinioUtil.genObjectName(articleContentBaseDir, param.getId());
+        String pictureUrl = MinioUtil.upload(minioProperties, file, objectName);
         logger.info("上传文章内容成功({})", pictureUrl);
         return pictureUrl;
     }
 
     /**
      * 上传文章内容图片
+     *
      * @param file 文章内容图片
      * @return 内容图片
      */
     @PostMapping("/uploadImg")
     public ImgVO uploadImg(MultipartFile file) {
-        if (file == null || file.isEmpty()){
+        if (file == null || file.isEmpty()) {
             logger.error("上传文章内容图片参数错误,文件为空");
             throw new BizException(CodeMsg.param_note_blank);
         }
-        logger.info("上传文章内容图片(contentType={},filename={},size={}", file.getContentType(),file.getOriginalFilename(),file.getSize());
-        String pictureUrl;
-        String contentType = file.getContentType();
+        logger.info("上传文章内容图片(contentType={},filename={},size={}", file.getContentType(), file.getOriginalFilename(), file.getSize());
         String originalFilename = file.getOriginalFilename();
-        String bucketName = minioProperties.getBucketName();
         String articleContentImgBaseDir = minioProperties.getArticleContentImgBaseDir();
-//        String objectName = articleContentImgBaseDir + "/" + originalFilename;
-        String objectName = genObjectName(articleContentImgBaseDir,originalFilename,null);
-        try {
-            MinioClient minioClient = new MinioClient(minioProperties.getEndpoint(), minioProperties.getAccessKey(), minioProperties.getSecretKey());
-            boolean isExist = minioClient.bucketExists(bucketName);
-            if (!isExist) {
-                minioClient.makeBucket(bucketName);
-            }
-            try(InputStream inputStream = file.getInputStream()){
-                minioClient.putObject(bucketName, objectName, inputStream, contentType);
-                pictureUrl = minioClient.getObjectUrl(bucketName, objectName);
-            }catch (Exception e){
-                throw new BizException(CodeMsg.system_error);
-            }
-        } catch (Exception e) {
-            throw new BizException(CodeMsg.file_system_error);
-        }
+        String objectName = MinioUtil.genObjectName(articleContentImgBaseDir, null);
+        String pictureUrl = MinioUtil.upload(minioProperties, file, objectName);
         ImgVO imgVO = new ImgVO();
         imgVO.setSrc(pictureUrl);
         imgVO.setTitle(originalFilename);
         logger.info("上传文章内容图片成功({})", JacksonUtil.toJson(imgVO));
         return imgVO;
-    }
-
-    private String genObjectName(String baseDir, String originalFilename, Long businessId) {
-        if (businessId != null){
-            return baseDir + "/" + businessId + "/" + Toolkit.randomUUID();
-        }
-        return baseDir + "/" + originalFilename + "/" + Toolkit.randomUUID();
     }
 }

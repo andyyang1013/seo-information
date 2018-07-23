@@ -7,6 +7,7 @@ import com.yxy.dch.seo.information.vo.Page;
 import com.yxy.dch.seo.information.vo.TagVO;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -51,7 +52,7 @@ public class TagController extends BaseController {
         return tagService.view(param);
     }
 
-    @PostMapping("/listByPage")
+    @GetMapping("/listByPage")
     public PageInfo<TagVO> listByPage(TagVO param, Page page) {
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<TagVO> list = tagService.listBy(param);

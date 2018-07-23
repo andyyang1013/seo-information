@@ -26,9 +26,9 @@ public class MinioProperties {
      */
     private String bucketName;
     /**
-     * column picture dir
+     * column picture base dir
      */
-    private String columnPictureDir;
+    private String columnPictureBaseDir;
     /**
      * article content base dir
      */
@@ -37,6 +37,10 @@ public class MinioProperties {
      * article content img base dir
      */
     private String articleContentImgBaseDir;
+    /**
+     * channel banner picture base dir
+     */
+    private String channelBannerPictureBaseDir;
 
     public String getAccessKey() {
         return accessKey;
@@ -70,12 +74,12 @@ public class MinioProperties {
         this.bucketName = bucketName;
     }
 
-    public String getColumnPictureDir() {
-        return columnPictureDir;
+    public String getColumnPictureBaseDir() {
+        return columnPictureBaseDir;
     }
 
-    public void setColumnPictureDir(String columnPictureDir) {
-        this.columnPictureDir = columnPictureDir;
+    public void setColumnPictureBaseDir(String columnPictureBaseDir) {
+        this.columnPictureBaseDir = columnPictureBaseDir;
     }
 
     public String getArticleContentBaseDir() {
@@ -92,5 +96,13 @@ public class MinioProperties {
 
     public void setArticleContentImgBaseDir(String articleContentImgBaseDir) {
         this.articleContentImgBaseDir = articleContentImgBaseDir;
+    }
+
+    public String getChannelBannerPictureBaseDir() {
+        return channelBannerPictureBaseDir;
+    }
+
+    public void setChannelBannerPictureBaseDir(String channelBannerPictureBaseDir) {
+        this.channelBannerPictureBaseDir = channelBannerPictureBaseDir;
     }
 }
