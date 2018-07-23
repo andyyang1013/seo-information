@@ -3,12 +3,15 @@ package com.yxy.dch.seo.information.service.impl;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Channel;
+import com.yxy.dch.seo.information.exception.BizException;
+import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ChannelMapper;
 import com.yxy.dch.seo.information.service.IChannelService;
 import com.yxy.dch.seo.information.vo.ChannelVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +27,7 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
     private ChannelMapper channelMapper;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ChannelVO create(ChannelVO param) {
         Channel channel = new Channel();
         BeanUtils.copyProperties(param, channel);
@@ -35,6 +39,7 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ChannelVO modify(ChannelVO param) {
         Channel channel = new Channel();
         BeanUtils.copyProperties(param, channel);
@@ -57,5 +62,22 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
             channelVOList.add(vo);
         }
         return channelVOList;
+    }
+
+    @Override
+    public Channel getDefaultChannel(Long channelId) {
+        Channel channel;
+        if (channelId == null){
+            channel = channelMapper.getDefaultChannel();
+            if (channel == null){
+                throw new BizException(CodeMsg.system_error);
+            }
+        }else {
+            channel = channelMapper.selectById(channelId);
+            if (channel == null){
+                throw new BizException(CodeMsg.system_error);
+            }
+        }
+        return channel;
     }
 }

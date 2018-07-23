@@ -9,4 +9,5 @@ import com.yxy.dch.seo.information.entity.Channel;
  * @author yangzhen
  */
 public interface ChannelMapper extends BaseMapper<Channel> {
+    Channel getDefaultChannel();
 }

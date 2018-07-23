@@ -2,15 +2,20 @@ package com.yxy.dch.seo.information.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
+import com.yxy.dch.seo.information.mapper.ChannelMapper;
 import com.yxy.dch.seo.information.mapper.ColumnMapper;
+import com.yxy.dch.seo.information.service.IChannelService;
 import com.yxy.dch.seo.information.service.IColumnService;
 import com.yxy.dch.seo.information.vo.ColumnVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +29,38 @@ import java.util.List;
 public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> implements IColumnService {
     @Autowired
     private ColumnMapper columnMapper;
+    @Autowired
+    private ChannelMapper channelMapper;
+    @Autowired
+    private IChannelService channelService;
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ColumnVO create(ColumnVO param) {
+        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getUrl()) || StringUtils.isBlank(param.getPictureUrl())) {
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+
+        // 获取频道
+        Long channelId = param.getChannelId();
+        Channel channel = channelService.getDefaultChannel(channelId);
+
+        // 新增栏目
         Column column = new Column();
         BeanUtils.copyProperties(param, column);
+        column.setChannelId(channel.getId());
         columnMapper.insert(column);
+
+        // 查询新增的栏目
         Column createdColumn = columnMapper.selectById(column.getId());
         ColumnVO createdColumnVO = new ColumnVO();
         BeanUtils.copyProperties(createdColumn, createdColumnVO);
+
         return createdColumnVO;
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean remove(ColumnVO param) {
         Column column = columnMapper.selectById(param.getId());
         if (column == null) {
@@ -47,6 +71,7 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ColumnVO modify(ColumnVO param) {
         Column column = columnMapper.selectById(param.getId());
         if (column == null) {
@@ -89,7 +114,7 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     public List<ColumnVO> listOrderBy(ColumnVO param) {
         Column column = new Column();
         BeanUtils.copyProperties(param, column);
-        List<Column> columnList = columnMapper.selectList(new EntityWrapper<>(column).where("visible={0}",1).orderBy("orderNum", true));
+        List<Column> columnList = columnMapper.selectList(new EntityWrapper<>(column).where("visible={0}", 1).orderBy("orderNum", true));
         List<ColumnVO> columnVOList = new ArrayList<>();
         for (Column entity : columnList) {
             ColumnVO vo = new ColumnVO();

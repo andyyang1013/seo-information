@@ -65,7 +65,7 @@ public class Banner extends Model<Banner> {
      * 创建用户id
      */
     @TableField("create_uid")
-    private String createUid;
+    private Long createUid;
     /**
      * 更新时间
      */
@@ -75,7 +75,7 @@ public class Banner extends Model<Banner> {
      * 更新用户id
      */
     @TableField("update_uid")
-    private String updateUid;
+    private Long updateUid;
 
     public Long getId() {
         return id;
@@ -149,11 +149,11 @@ public class Banner extends Model<Banner> {
         this.createTime = createTime;
     }
 
-    public String getCreateUid() {
+    public Long getCreateUid() {
         return createUid;
     }
 
-    public void setCreateUid(String createUid) {
+    public void setCreateUid(Long createUid) {
         this.createUid = createUid;
     }
 
@@ -165,11 +165,11 @@ public class Banner extends Model<Banner> {
         this.updateTime = updateTime;
     }
 
-    public String getUpdateUid() {
+    public Long getUpdateUid() {
         return updateUid;
     }
 
-    public void setUpdateUid(String updateUid) {
+    public void setUpdateUid(Long updateUid) {
         this.updateUid = updateUid;
     }
 

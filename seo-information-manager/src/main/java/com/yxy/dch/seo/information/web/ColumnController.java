@@ -13,6 +13,7 @@ import com.yxy.dch.seo.information.vo.ColumnVO;
 import com.yxy.dch.seo.information.vo.ImgVO;
 import com.yxy.dch.seo.information.vo.Page;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,11 +45,18 @@ public class ColumnController extends BaseController {
      */
     @PostMapping("/create")
     public ColumnVO create(@Valid ColumnVO param) {
+        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getUrl()) || StringUtils.isBlank(param.getPictureUrl())) {
+            logger.error("新增栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("新增栏目:param={}", JacksonUtil.toJson(param));
         // 操作用户ID
         Long opeUid = UserReqContextUtil.getRequestUserId();
         param.setCreateUid(opeUid);
         param.setUpdateUid(opeUid);
-        return columnService.create(param);
+        ColumnVO columnVO = columnService.create(param);
+        logger.info("新增栏目成功,result={}", JacksonUtil.toJson(columnVO));
+        return columnVO;
     }
 
     /**
@@ -59,7 +67,14 @@ public class ColumnController extends BaseController {
      */
     @PostMapping("/remove")
     public Boolean remove(ColumnVO param) {
-        return columnService.remove(param);
+        if (param.getId() == null) {
+            logger.error("删除栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("删除栏目:param={}", JacksonUtil.toJson(param));
+        Boolean ret = columnService.remove(param);
+        logger.info("修改b栏目成功,result={}", ret);
+        return ret;
     }
 
     /**
@@ -70,10 +85,17 @@ public class ColumnController extends BaseController {
      */
     @PostMapping("/modify")
     public ColumnVO modify(ColumnVO param) {
+        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getUrl()) || StringUtils.isBlank(param.getPictureUrl())) {
+            logger.error("修改栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("修改栏目:param={}", JacksonUtil.toJson(param));
         // 操作用户ID
         Long opeUid = UserReqContextUtil.getRequestUserId();
         param.setUpdateUid(opeUid);
-        return columnService.modify(param);
+        ColumnVO columnVO = columnService.modify(param);
+        logger.info("修改栏目成功,result={}", JacksonUtil.toJson(columnVO));
+        return columnVO;
     }
 
     /**
@@ -84,7 +106,14 @@ public class ColumnController extends BaseController {
      */
     @PostMapping("/view")
     public ColumnVO view(ColumnVO param) {
-        return columnService.view(param);
+        if (param.getId() == null) {
+            logger.error("删除栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("删除栏目:param={}", JacksonUtil.toJson(param));
+        ColumnVO columnVO = columnService.view(param);
+        logger.info("删除栏目成功,result={}", JacksonUtil.toJson(columnVO));
+        return columnVO;
     }
 
     /**
@@ -96,8 +125,14 @@ public class ColumnController extends BaseController {
      */
     @RequestMapping("/listByPage")
     public PageInfo<ColumnVO> listByPage(ColumnVO param, Page page) {
+        if (page == null||page.getPageSize()==null||page.getPageNum()==null){
+            logger.error("分页查询栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("分页查询栏目:param={}", JacksonUtil.toJson(param));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<ColumnVO> list = columnService.listBy(param);
+        logger.info("分页查询栏目成功,result={}", JacksonUtil.toJson(list));
         return new PageInfo<>(list);
     }
 
@@ -109,7 +144,10 @@ public class ColumnController extends BaseController {
      */
     @RequestMapping("/list")
     public List<ColumnVO> list(ColumnVO param) {
-        return columnService.listBy(param);
+        logger.info("查询栏目列表:param={}", JacksonUtil.toJson(param));
+        List<ColumnVO> list = columnService.listBy(param);
+        logger.info("分页查询栏目成功,result={}", JacksonUtil.toJson(list));
+        return list;
     }
 
     /**

@@ -2,6 +2,7 @@ package com.yxy.dch.seo.information.web;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yxy.dch.seo.information.config.filter.UserReqContextUtil;
 import com.yxy.dch.seo.information.config.pros.MinioProperties;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
@@ -12,6 +13,7 @@ import com.yxy.dch.seo.information.vo.BannerVO;
 import com.yxy.dch.seo.information.vo.ImgVO;
 import com.yxy.dch.seo.information.vo.Page;
 import io.swagger.annotations.Api;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,28 +44,69 @@ public class BannerController extends BaseController {
      */
     @PostMapping("/create")
     public BannerVO create(BannerVO param) {
-        return bannerService.create(param);
+        if (StringUtils.isBlank(param.getName()) || param.getVisible() == null) {
+            logger.error("新增banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("新增banner:param={}", JacksonUtil.toJson(param));
+        // 操作用户ID
+        Long opeUid = UserReqContextUtil.getRequestUserId();
+        param.setCreateUid(opeUid);
+        param.setUpdateUid(opeUid);
+        BannerVO bannerVO = bannerService.create(param);
+        logger.info("新增banner成功,result={}", JacksonUtil.toJson(bannerVO));
+        return bannerVO;
     }
 
     @PostMapping("/modify")
     public BannerVO modify(BannerVO param) {
-        return bannerService.modify(param);
+        if (StringUtils.isBlank(param.getName()) || param.getVisible() == null) {
+            logger.error("修改banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("修改banner:param={}", JacksonUtil.toJson(param));
+        // 操作用户ID
+        Long opeUid = UserReqContextUtil.getRequestUserId();
+        param.setUpdateUid(opeUid);
+        BannerVO bannerVO = bannerService.modify(param);
+        logger.info("修改banner成功,result={}", JacksonUtil.toJson(bannerVO));
+        return bannerVO;
     }
 
     @PostMapping("/remove")
     public Boolean remove(BannerVO param) {
-        return bannerService.remove(param);
+        if (param.getId() == null) {
+            logger.error("删除banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("删除banner:param={}", JacksonUtil.toJson(param));
+        Boolean ret = bannerService.remove(param);
+        logger.info("修改banner成功,result={}", ret);
+        return ret;
     }
 
     @PostMapping("/view")
     public BannerVO view(BannerVO param) {
-        return bannerService.view(param);
+        if (param.getId() == null) {
+            logger.error("查询banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("查询banner:param={}", JacksonUtil.toJson(param));
+        BannerVO bannerVO = bannerService.view(param);
+        logger.info("查询banner成功,result={}", JacksonUtil.toJson(bannerVO));
+        return bannerVO;
     }
 
     @PostMapping("/listByPage")
     public PageInfo<BannerVO> listByPage(BannerVO param, Page page) {
+        if (page == null || page.getPageNum() == null || page.getPageSize() == null) {
+            logger.error("分页查询banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        logger.info("分页查询banner:param={}", JacksonUtil.toJson(param));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<BannerVO> list = bannerService.listBy(param);
+        logger.info("分页查询banner成功,result={}", JacksonUtil.toJson(list));
         return new PageInfo<>(list);
     }
 

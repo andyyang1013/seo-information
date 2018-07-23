@@ -16,15 +16,19 @@
     </resultMap>
 
     <sql id="columns">
-        	u.id,
-        	u.title,
-        	u.keyword,
-        	u.desc,
-        	u.create_time,
-        	u.create_uid,
-        	u.update_time,
-        	u.update_uid
+        	c.id,
+        	c.title,
+        	c.keyword,
+        	c.desc,
+        	c.create_time,
+        	c.create_uid,
+        	c.update_time,
+        	c.update_uid
 	</sql>
+
+    <select id="getDefaultChannel" resultMap="customResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_channel c
+    </select>
 
 </mapper>
 

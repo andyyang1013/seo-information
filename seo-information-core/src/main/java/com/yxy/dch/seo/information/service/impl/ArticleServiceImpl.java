@@ -15,7 +15,6 @@ import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.IArticleService;
 import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.ArticleVO;
-import io.minio.MinioClient;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +48,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ArticleVO create(ArticleVO param) {
-
         // 保存文章
         Article article = new Article();
         BeanUtils.copyProperties(param, article);
@@ -99,6 +97,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean remove(ArticleVO param) {
         Article article = articleMapper.selectById(param.getId());
         if (article == null) {
@@ -106,7 +105,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
 
         // 删除文章标签关联
-        ArticleTagMapping articleTagMapping=new ArticleTagMapping();
+        ArticleTagMapping articleTagMapping = new ArticleTagMapping();
         articleTagMapping.setArticleId(article.getId());
         articleTagMapper.delete(new EntityWrapper<>(articleTagMapping));
 
@@ -122,6 +121,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ArticleVO modify(ArticleVO param) {
         Article article = articleMapper.selectById(param.getId());
         if (article == null) {
@@ -147,6 +147,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ArticleVO up(ArticleVO param) {
         Article article = articleMapper.selectById(param.getId());
         if (article == null) {
@@ -162,6 +163,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ArticleVO down(ArticleVO param) {
         Article article = articleMapper.selectById(param.getId());
         if (article == null) {
@@ -249,6 +251,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ArticleVO read(ArticleVO param) {
         Article article = articleMapper.selectById(param.getId());
         if (article == null) {
