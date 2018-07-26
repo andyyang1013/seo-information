@@ -34,7 +34,7 @@
 + 登录拦截器、异常拦截器
 + 日期格式支持多种转换格式："yyyy", "yyyy-MM", "yyyy-MM-dd",  "yyyy-MM-dd HH:mm" ,"yyyy-MM-dd HH:mm:ss"
 + 多环境配置
-+ 基本工具类:com.hhly.member.util包下
++ 基本工具类:com.yxy.dch.seo.information.util包下
    
 ## maven打包命令 ##
 
