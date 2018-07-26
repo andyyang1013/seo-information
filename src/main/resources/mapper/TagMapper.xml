@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.yxy.dch.seo.information.mapper.TagMapper">
+
+    <resultMap id="customResultMap" type="com.yxy.dch.seo.information.entity.Tag">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="href" column="href"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.TagVO">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="href" column="href"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <sql id="columns">
+        	t.id,
+        	t.name,
+        	t.title,
+        	t.keyword,
+        	t.desc,
+        	t.href,
+        	t.create_time,
+        	t.create_uid,
+        	t.update_time,
+        	t.update_uid
+	</sql>
+
+    <select id="selectTagList" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_tag t
+    </select>
+
+</mapper>
+

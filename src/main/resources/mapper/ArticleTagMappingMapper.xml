@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.yxy.dch.seo.information.mapper.ArticleTagMapper">
+
+    <resultMap id="customResultMap" type="com.yxy.dch.seo.information.entity.ArticleTagMapping">
+        <result property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ArticleTagMappingVO">
+        <result property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="tagId" column="tag_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+        <result property="article.id" column="article_id"/>
+        <result property="article.title" column="article_title"/>
+        <result property="article.keyword" column="article_keyword"/>
+        <result property="article.desc" column="article_desc"/>
+        <result property="article.columnId" column="article_column_id"/>
+        <result property="article.name" column="article_name"/>
+        <result property="article.content" column="article_content"/>
+        <result property="article.contentUrl" column="article_content_url"/>
+        <result property="article.recommend" column="article_recommend"/>
+        <result property="article.readingNum" column="article_reading_num"/>
+        <result property="article.state" column="article_state"/>
+        <result property="article.tags" column="article_tags"/>
+        <result property="article.relateArticleIds" column="article_relate_article_ids"/>
+        <result property="article.upTime" column="article_up_time"/>
+        <result property="article.href" column="article_href"/>
+        <result property="article.createTime" column="article_create_time"/>
+        <result property="article.createUid" column="article_create_uid"/>
+        <result property="article.updateTime" column="article_update_time"/>
+        <result property="article.updateUid" column="article_update_uid"/>
+        <result property="tag.id" column="tag_id"/>
+        <result property="tag.name" column="tag_name"/>
+        <result property="tag.title" column="tag_title"/>
+        <result property="tag.keyword" column="tag_keyword"/>
+        <result property="tag.desc" column="tag_desc"/>
+        <result property="tag.href" column="tag_href"/>
+        <result property="tag.createTime" column="tag_create_time"/>
+        <result property="tag.createUid" column="tag_create_uid"/>
+        <result property="tag.updateTime" column="tag_update_time"/>
+        <result property="tag.updateUid" column="tag_update_uid"/>
+    </resultMap>
+
+    <sql id="columns">
+        	m.id,
+        	m.article_id,
+        	m.tag_id,
+        	m.create_time,
+        	m.create_uid,
+        	m.update_time,
+        	m.update_uid
+	</sql>
+
+    <select id="selectMappingList" resultMap="customVoResultMap">
+        SELECT<include refid="columns"/>,
+        article.id AS article_id,
+        article.title AS article_title,
+        article.keyword AS article_keyword,
+        article.desc AS article_desc,
+        article.column_id AS article_column_id,
+        article.name AS article_name,
+        article.content AS article_content,
+        article.content_url AS article_content_url,
+        article.recommend AS article_recommend,
+        article.reading_num AS article_reading_num,
+        article.state AS article_state,
+        article.tags AS article_tags,
+        article.relate_article_ids AS article_relate_article_ids,
+        article.up_time AS article_up_time,
+        article.href AS article_href,
+        article.create_time AS article_create_time,
+        article.create_uid AS article_create_uid,
+        article.update_time AS article_update_time,
+        article.update_uid AS article_update_uid,
+        tag.id AS tag_id,
+        tag.name AS tag_name,
+        tag.title AS tag_title,
+        tag.keyword AS tag_keyword,
+        tag.desc AS tag_desc,
+        tag.href AS tag_href,
+        tag.create_time AS tag_create_time,
+        tag.create_uid AS tag_create_uid,
+        tag.update_time AS tag_update_time,
+        tag.update_uid AS tag_update_uid
+        FROM t_seo_article_tag_mapping m
+        LEFT JOIN t_seo_article article ON m.article_id = article.id
+        LEFT JOIN t_seo_tag tag ON m.tag_id = tag.id
+        WHERE article_id = #{articleId}
+    </select>
+
+</mapper>
+

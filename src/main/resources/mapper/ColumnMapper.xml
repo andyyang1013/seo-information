@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+
+<mapper namespace="com.yxy.dch.seo.information.mapper.ColumnMapper">
+
+    <resultMap id="customResultMap" type="com.yxy.dch.seo.information.entity.Column">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="name" column="name"/>
+        <result property="namePinyin" column="name_pinyin"/>
+        <result property="href" column="href"/>
+        <result property="visible" column="visible"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ColumnVO">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="name" column="name"/>
+        <result property="namePinyin" column="name_pinyin"/>
+        <result property="href" column="href"/>
+        <result property="visible" column="visible"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <sql id="columns">
+        	c.id,
+        	c.title,
+        	c.keyword,
+        	c.desc,
+        	c.channel_id,
+        	c.name,
+        	c.name_pinyin,
+        	c.href,
+        	c.visible,
+        	c.order_num,
+        	c.picture_url,
+        	c.create_time,
+        	c.create_uid,
+        	c.update_time,
+        	c.update_uid
+	</sql>
+
+    <select id="getColumnListByIndexPage" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_column c WHERE visible = 1 ORDER BY order_num DESC
+    </select>
+
+    <select id="selectColumnList" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_column c ORDER BY c.update_time DESC
+    </select>
+
+</mapper>
+
