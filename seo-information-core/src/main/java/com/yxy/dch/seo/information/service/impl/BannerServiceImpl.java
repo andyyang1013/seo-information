@@ -36,7 +36,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
     public BannerVO create(BannerVO param) {
 
         // 获取频道
-        Long channelId = param.getChannelId();
+        String channelId = param.getChannelId();
         Channel channel = channelService.getDefaultChannel(channelId);
 
         // 新增banner
@@ -92,16 +92,16 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
 
     @Override
     public List<BannerVO> listBy(BannerVO param) {
-        Banner banner = new Banner();
-        BeanUtils.copyProperties(param, banner);
-        List<Banner> bannerList = bannerMapper.selectList(new EntityWrapper<>(banner));
-        List<BannerVO> bannerVOList = new ArrayList<>();
-        for (Banner entity : bannerList) {
-            BannerVO vo = new BannerVO();
-            BeanUtils.copyProperties(entity, vo);
-            bannerVOList.add(vo);
-        }
-        return bannerVOList;
+//        Banner banner = new Banner();
+//        BeanUtils.copyProperties(param, banner);
+//        List<Banner> bannerList = bannerMapper.selectList(new EntityWrapper<>(banner));
+//        List<BannerVO> bannerVOList = new ArrayList<>();
+//        for (Banner entity : bannerList) {
+//            BannerVO vo = new BannerVO();
+//            BeanUtils.copyProperties(entity, vo);
+//            bannerVOList.add(vo);
+//        }
+        return bannerMapper.selectBannerList(param);
     }
 
     @Override

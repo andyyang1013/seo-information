@@ -10,6 +10,7 @@ import com.yxy.dch.seo.information.mapper.ChannelMapper;
 import com.yxy.dch.seo.information.mapper.ColumnMapper;
 import com.yxy.dch.seo.information.service.IChannelService;
 import com.yxy.dch.seo.information.service.IColumnService;
+import com.yxy.dch.seo.information.util.PinyinUtil;
 import com.yxy.dch.seo.information.vo.ColumnVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -37,18 +38,16 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ColumnVO create(ColumnVO param) {
-        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getUrl()) || StringUtils.isBlank(param.getPictureUrl())) {
-            throw new BizException(CodeMsg.param_note_blank);
-        }
 
         // 获取频道
-        Long channelId = param.getChannelId();
+        String channelId = param.getChannelId();
         Channel channel = channelService.getDefaultChannel(channelId);
 
         // 新增栏目
         Column column = new Column();
         BeanUtils.copyProperties(param, column);
         column.setChannelId(channel.getId());
+//        column.setUrl();
         columnMapper.insert(column);
 
         // 查询新增的栏目
@@ -98,16 +97,16 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
 
     @Override
     public List<ColumnVO> listBy(ColumnVO param) {
-        Column column = new Column();
-        BeanUtils.copyProperties(param, column);
-        List<Column> columnList = columnMapper.selectList(new EntityWrapper<>(column));
-        List<ColumnVO> columnVOList = new ArrayList<>();
-        for (Column entity : columnList) {
-            ColumnVO vo = new ColumnVO();
-            BeanUtils.copyProperties(entity, vo);
-            columnVOList.add(vo);
-        }
-        return columnVOList;
+//        Column column = new Column();
+//        BeanUtils.copyProperties(param, column);
+//        List<Column> columnList = columnMapper.selectList(new EntityWrapper<>(column));
+//        List<ColumnVO> columnVOList = new ArrayList<>();
+//        for (Column entity : columnList) {
+//            ColumnVO vo = new ColumnVO();
+//            BeanUtils.copyProperties(entity, vo);
+//            columnVOList.add(vo);
+//        }
+        return columnMapper.selectColumnList(param);
     }
 
     @Override
@@ -122,5 +121,17 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
             columnVOList.add(vo);
         }
         return columnVOList;
+    }
+
+    @Override
+    public List<ColumnVO> getColumnListByIndexPage() {
+        List<ColumnVO> columnList = columnMapper.getColumnListByIndexPage();
+        for (ColumnVO column : columnList) {
+            String name = column.getName();
+            String pinYin = PinyinUtil.getPinYin(name);
+            column.setNamePinyin(pinYin);
+            column.setHref(pinYin + "/");
+        }
+        return columnList;
     }
 }

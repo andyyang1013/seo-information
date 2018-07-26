@@ -57,13 +57,13 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有的请求，api文档暂时放过
-        registry.addInterceptor(apiInterceptor())
-                .addPathPatterns("/**")
-                .excludePathPatterns(
-                        "/data/import",
-                        "/swagger/**",
-                        "/swagger-resources/**"
-                );
+//        registry.addInterceptor(apiInterceptor())
+//                .addPathPatterns("/**")
+//                .excludePathPatterns(
+//                        "/data/import",
+//                        "/swagger/**",
+//                        "/swagger-resources/**"
+//                );
         //排除拦截的url:登录接口、登录状态接口；根据具体情况排除
 //        registry.addInterceptor(loginInterceptor())
 //                .addPathPatterns("/**")

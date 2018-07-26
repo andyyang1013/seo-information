@@ -21,4 +21,6 @@ public interface ITagService extends IService<Tag> {
     TagVO view(TagVO param);
 
     List<TagVO> listBy(TagVO param);
+
+    void save(String articleId, String tags);
 }

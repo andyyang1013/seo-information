@@ -22,7 +22,7 @@ public class MinioUtil {
      * @param businessId business id,eg:articleId...
      * @return object name
      */
-    public static String genObjectName(String baseDir, Long businessId) {
+    public static String genObjectName(String baseDir, String businessId) {
         if (businessId != null) {
             return baseDir + "/" + businessId + Toolkit.randomUUID();
         }

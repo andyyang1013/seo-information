@@ -2,14 +2,14 @@ package com.yxy.dch.seo.information.api;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yxy.dch.seo.information.exception.BizException;
+import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IArticleService;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import com.yxy.dch.seo.information.vo.Page;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +27,20 @@ public class ArticleController extends BaseController {
 
     /**
      * 查看文章
+     *
+     * @param param 文章
+     * @return 文章
+     */
+    @PostMapping("/view")
+    public ArticleVO view(/*@RequestBody */ArticleVO param) {
+        if (param == null || param.getId() == null){
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        return articleService.view(param);
+    }
+
+    /**
+     * 阅读文章
      *
      * @param param 文章
      * @return 文章

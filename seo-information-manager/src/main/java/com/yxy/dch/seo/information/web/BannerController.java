@@ -9,9 +9,7 @@ import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IBannerService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.MinioUtil;
-import com.yxy.dch.seo.information.vo.BannerVO;
-import com.yxy.dch.seo.information.vo.ImgVO;
-import com.yxy.dch.seo.information.vo.Page;
+import com.yxy.dch.seo.information.vo.*;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,15 +42,15 @@ public class BannerController extends BaseController {
      */
     @PostMapping("/create")
     public BannerVO create(BannerVO param) {
-        if (StringUtils.isBlank(param.getName()) || param.getVisible() == null) {
+        if (StringUtils.isBlank(param.getName()) || param.getVisible() == null || StringUtils.isBlank(param.getPictureUrl())) {
             logger.error("新增banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("新增banner:param={}", JacksonUtil.toJson(param));
         // 操作用户ID
         Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setCreateUid(opeUid);
-        param.setUpdateUid(opeUid);
+        param.setCreateUid(String.valueOf(opeUid));
+        param.setUpdateUid(String.valueOf(opeUid));
         BannerVO bannerVO = bannerService.create(param);
         logger.info("新增banner成功,result={}", JacksonUtil.toJson(bannerVO));
         return bannerVO;
@@ -67,7 +65,7 @@ public class BannerController extends BaseController {
         logger.info("修改banner:param={}", JacksonUtil.toJson(param));
         // 操作用户ID
         Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setUpdateUid(opeUid);
+        param.setUpdateUid(String.valueOf(opeUid));
         BannerVO bannerVO = bannerService.modify(param);
         logger.info("修改banner成功,result={}", JacksonUtil.toJson(bannerVO));
         return bannerVO;
@@ -97,8 +95,8 @@ public class BannerController extends BaseController {
         return bannerVO;
     }
 
-    @PostMapping("/listByPage")
-    public PageInfo<BannerVO> listByPage(BannerVO param, Page page) {
+    @RequestMapping("/listByPage")
+    public ResponseT<List<BannerVO>> listByPage(BannerVO param, Page page) {
         if (page == null || page.getPageNum() == null || page.getPageSize() == null) {
             logger.error("分页查询banner参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
@@ -106,8 +104,24 @@ public class BannerController extends BaseController {
         logger.info("分页查询banner:param={}", JacksonUtil.toJson(param));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<BannerVO> list = bannerService.listBy(param);
-        logger.info("分页查询banner成功,result={}", JacksonUtil.toJson(list));
-        return new PageInfo<>(list);
+        // 增加序号
+        int index;
+        if (page.getPageNum() == 1 || page.getPageNum() == 0){
+            index = 1;
+        }else {
+            index = 1 + (page.getPageNum() - 1)*page.getPageSize();
+        }
+        for (BannerVO vo :list){
+            vo.setIndex(String.valueOf(index));
+            ++index;
+        }
+        PageInfo<BannerVO> pageInfo = new PageInfo<>(list);
+        ResponseT<List<BannerVO>> responseT = new ResponseT<>();
+        responseT.setCode(CodeMsg.success.getCode());
+        responseT.setCount(pageInfo.getTotal());
+        responseT.setData(list);
+        logger.info("分页查询banner成功,result={}", JacksonUtil.toJson(responseT));
+        return responseT;
     }
 
     /**

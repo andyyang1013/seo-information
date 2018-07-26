@@ -11,8 +11,25 @@
         <result property="visible" column="visible"/>
         <result property="url" column="url"/>
         <result property="summary" column="summary"/>
-        <result property="click_num" column="click_num"/>
-        <result property="orderNum" column="orderNum"/>
+        <result property="clickNum" column="click_num"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.BannerVO">
+        <result property="id" column="id"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="name" column="name"/>
+        <result property="visible" column="visible"/>
+        <result property="url" column="url"/>
+        <result property="summary" column="summary"/>
+        <result property="clickNum" column="click_num"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="pictureUrl" column="picture_url"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
         <result property="updateTime" column="update_time"/>
@@ -20,19 +37,24 @@
     </resultMap>
 
     <sql id="columns">
-        	u.id,
-        	u.channel_id,
-        	u.name,
-        	u.visible,
-        	u.url,
-        	u.summary,
-        	u.click_num,
-        	u.orderNum,
-        	u.create_time,
-        	u.create_uid,
-        	u.update_time,
-        	u.update_uid
+        	b.id,
+        	b.channel_id,
+        	b.name,
+        	b.visible,
+        	b.url,
+        	b.summary,
+        	b.click_num,
+        	b.order_num,
+        	b.picture_url,
+        	b.create_time,
+        	b.create_uid,
+        	b.update_time,
+        	b.update_uid
 	</sql>
+    
+    <select id="selectBannerList" resultMap="customVoResultMap" parameterType="com.yxy.dch.seo.information.vo.BannerVO">
+        SELECT <include refid="columns"/> FROM t_seo_banner b WHERE 1 = 1 ORDER BY b.update_time DESC
+    </select>
 
 </mapper>
 

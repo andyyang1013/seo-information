@@ -24,4 +24,6 @@ public interface IColumnService extends IService<Column> {
     List<ColumnVO> listBy(ColumnVO param);
 
     List<ColumnVO> listOrderBy(ColumnVO param);
+
+    List<ColumnVO> getColumnListByIndexPage();
 }

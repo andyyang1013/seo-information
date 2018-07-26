@@ -13,7 +13,9 @@ import java.util.List;
  * @author yangzhen
  */
 public interface ArticleMapper extends BaseMapper<Article> {
-    ArticleVO selectArticleById(@Param("id") Long id);
+    ArticleVO selectArticleById(@Param("id") String id);
 
     List<ArticleVO> selectArticleList(Article article);
+
+    List<ArticleVO> selectHottestArticles();
 }

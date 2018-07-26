@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  *
  * @author yangzhen
  */
+@Data
 @TableName("t_seo_article_tag_mapping")
 public class ArticleTagMapping extends Model<ArticleTagMapping> {
 
@@ -20,17 +22,17 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
     /**
      * 主键ID
      */
-    private Long id;
+    private String id;
     /**
      * 文章id
      */
     @TableField("article_id")
-    private Long articleId;
+    private String articleId;
     /**
      * 标签id
      */
     @TableField("tag_id")
-    private Long tagId;
+    private String tagId;
     /**
      * 创建时间
      */
@@ -40,7 +42,7 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
      * 创建用户id
      */
     @TableField("create_uid")
-    private Long createUid;
+    private String createUid;
     /**
      * 更新时间
      */
@@ -50,63 +52,7 @@ public class ArticleTagMapping extends Model<ArticleTagMapping> {
      * 更新用户id
      */
     @TableField("update_uid")
-    private Long updateUid;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getArticleId() {
-        return articleId;
-    }
-
-    public void setArticleId(Long articleId) {
-        this.articleId = articleId;
-    }
-
-    public Long getTagId() {
-        return tagId;
-    }
-
-    public void setTagId(Long tagId) {
-        this.tagId = tagId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreateUid() {
-        return createUid;
-    }
-
-    public void setCreateUid(Long createUid) {
-        this.createUid = createUid;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdateUid() {
-        return updateUid;
-    }
-
-    public void setUpdateUid(Long updateUid) {
-        this.updateUid = updateUid;
-    }
+    private String updateUid;
 
     @Override
     protected Serializable pkVal() {

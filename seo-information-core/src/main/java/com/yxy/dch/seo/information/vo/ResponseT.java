@@ -20,9 +20,13 @@ public class ResponseT<T> implements Serializable {
     private String msg;
 
     /**
+     * 数据条数
+     */
+    private Long count;
+
+    /**
      * 业务数据体 【当请求失败时，该属性值为空】
      */
     private T data;
-
 
 }

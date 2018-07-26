@@ -9,9 +9,7 @@ import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IColumnService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.MinioUtil;
-import com.yxy.dch.seo.information.vo.ColumnVO;
-import com.yxy.dch.seo.information.vo.ImgVO;
-import com.yxy.dch.seo.information.vo.Page;
+import com.yxy.dch.seo.information.vo.*;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,15 +43,15 @@ public class ColumnController extends BaseController {
      */
     @PostMapping("/create")
     public ColumnVO create(@Valid ColumnVO param) {
-        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getUrl()) || StringUtils.isBlank(param.getPictureUrl())) {
+        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getPictureUrl())) {
             logger.error("新增栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("新增栏目:param={}", JacksonUtil.toJson(param));
         // 操作用户ID
         Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setCreateUid(opeUid);
-        param.setUpdateUid(opeUid);
+        param.setCreateUid(String.valueOf(opeUid));
+        param.setUpdateUid(String.valueOf(opeUid));
         ColumnVO columnVO = columnService.create(param);
         logger.info("新增栏目成功,result={}", JacksonUtil.toJson(columnVO));
         return columnVO;
@@ -85,14 +83,14 @@ public class ColumnController extends BaseController {
      */
     @PostMapping("/modify")
     public ColumnVO modify(ColumnVO param) {
-        if (StringUtils.isBlank(param.getName()) || param.getOrderNum() == null || param.getVisible() == null || StringUtils.isBlank(param.getUrl()) || StringUtils.isBlank(param.getPictureUrl())) {
+        if (param.getId() == null) {
             logger.error("修改栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("修改栏目:param={}", JacksonUtil.toJson(param));
         // 操作用户ID
         Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setUpdateUid(opeUid);
+        param.setUpdateUid(String.valueOf(opeUid));
         ColumnVO columnVO = columnService.modify(param);
         logger.info("修改栏目成功,result={}", JacksonUtil.toJson(columnVO));
         return columnVO;
@@ -124,7 +122,7 @@ public class ColumnController extends BaseController {
      * @return 分页的栏目列表
      */
     @RequestMapping("/listByPage")
-    public PageInfo<ColumnVO> listByPage(ColumnVO param, Page page) {
+    public ResponseT<List<ColumnVO>> listByPage(ColumnVO param, Page page) {
         if (page == null||page.getPageSize()==null||page.getPageNum()==null){
             logger.error("分页查询栏目参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
@@ -132,8 +130,24 @@ public class ColumnController extends BaseController {
         logger.info("分页查询栏目:param={}", JacksonUtil.toJson(param));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<ColumnVO> list = columnService.listBy(param);
-        logger.info("分页查询栏目成功,result={}", JacksonUtil.toJson(list));
-        return new PageInfo<>(list);
+        // 增加序号
+        int index;
+        if (page.getPageNum() == 1 || page.getPageNum() == 0){
+            index = 1;
+        }else {
+            index = 1 + (page.getPageNum() - 1)*page.getPageSize();
+        }
+        for (ColumnVO vo :list){
+            vo.setIndex(String.valueOf(index));
+            ++index;
+        }
+        PageInfo<ColumnVO> pageInfo = new PageInfo<>(list);
+        ResponseT<List<ColumnVO>> responseT = new ResponseT<>();
+        responseT.setCode(CodeMsg.success.getCode());
+        responseT.setCount(pageInfo.getTotal());
+        responseT.setData(list);
+        logger.info("分页查询栏目成功,result={}", JacksonUtil.toJson(responseT));
+        return responseT;
     }
 
     /**

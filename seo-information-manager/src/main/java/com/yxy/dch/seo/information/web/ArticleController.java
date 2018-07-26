@@ -9,10 +9,7 @@ import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IArticleService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.MinioUtil;
-import com.yxy.dch.seo.information.vo.ArticleVO;
-import com.yxy.dch.seo.information.vo.ColumnVO;
-import com.yxy.dch.seo.information.vo.ImgVO;
-import com.yxy.dch.seo.information.vo.Page;
+import com.yxy.dch.seo.information.vo.*;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -120,17 +117,33 @@ public class ArticleController extends BaseController {
      * @param page  分页参数
      * @return 分页的文章列表
      */
-    @PostMapping("/listByPage")
-    public PageInfo<ArticleVO> listByPage(ArticleVO param, Page page) {
+    @RequestMapping("/listByPage")
+    public ResponseT<List<ArticleVO>> listByPage(ArticleVO param, Page page) {
         if (page == null || page.getPageSize() == null || page.getPageNum() == null) {
             logger.error("分页查询文章列表参数错误({}):param={},page={}", CodeMsg.user_batch_query_num_out.getMsg(), JacksonUtil.toJson(param), JacksonUtil.toJson(page));
             throw new BizException(CodeMsg.user_batch_query_num_out);
         }
-        logger.info("分页查询文章列表:param={},page={}", JacksonUtil.toJson(param), page);
+        logger.info("分页查询文章列表:param={},page={}", JacksonUtil.toJson(param), JacksonUtil.toJson(page));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<ArticleVO> list = articleService.listBy(param);
-        logger.info("分页查询文章列表成功:result={}", JacksonUtil.toJson(list));
-        return new PageInfo<>(list);
+        // 增加序号
+        int index;
+        if (page.getPageNum() == 1 || page.getPageNum() == 0){
+            index = 1;
+        }else {
+            index = 1 + (page.getPageNum() - 1)*page.getPageSize();
+        }
+        for (ArticleVO vo :list){
+            vo.setIndex(String.valueOf(index));
+            ++index;
+        }
+        PageInfo<ArticleVO> pageInfo = new PageInfo<>(list);
+        ResponseT<List<ArticleVO>> responseT = new ResponseT<>();
+        responseT.setCode(CodeMsg.success.getCode());
+        responseT.setCount(pageInfo.getTotal());
+        responseT.setData(list);
+        logger.info("分页查询文章列表成功:result={}", JacksonUtil.toJson(responseT));
+        return responseT;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.yxy.dch.seo.information;
 
+import com.yxy.dch.seo.information.service.IHtmlService;
 import com.yxy.dch.seo.information.service.IUserTempService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +18,16 @@ public class InitOperateListener implements CommandLineRunner, EnvironmentAware 
 
     @Autowired
     private IUserTempService userTempService;
+    @Autowired
+    private IHtmlService htmlService;
 
     private boolean isDevEnvironment = false;
 
     @Override
     public void run(String... strings) throws Exception {
         logger.info("系统已经启动，可以在此做一些初始化的操作");
-        importHistoryData();
+//        importHistoryData();
+
     }
 
     /**

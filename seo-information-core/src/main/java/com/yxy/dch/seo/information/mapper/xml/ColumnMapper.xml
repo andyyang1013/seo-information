@@ -11,9 +11,26 @@
         <result property="desc" column="desc"/>
         <result property="channelId" column="channel_id"/>
         <result property="name" column="name"/>
-        <result property="url" column="url"/>
+        <result property="href" column="href"/>
         <result property="visible" column="visible"/>
-        <result property="orderNum" column="orderNum"/>
+        <result property="orderNum" column="order_num"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ColumnVO">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="channelId" column="channel_id"/>
+        <result property="name" column="name"/>
+        <result property="href" column="href"/>
+        <result property="visible" column="visible"/>
+        <result property="orderNum" column="order_num"/>
         <result property="pictureUrl" column="picture_url"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
@@ -22,21 +39,29 @@
     </resultMap>
 
     <sql id="columns">
-        	u.id,
-        	u.title,
-        	u.keyword,
-        	u.desc,
-        	u.channel_id,
-        	u.name,
-        	u.url,
-        	u.visible,
-        	u.orderNum,
-        	u.picture_url,
-        	u.create_time,
-        	u.create_uid,
-        	u.update_time,
-        	u.update_uid
+        	c.id,
+        	c.title,
+        	c.keyword,
+        	c.desc,
+        	c.channel_id,
+        	c.name,
+        	c.href,
+        	c.visible,
+        	c.order_num,
+        	c.picture_url,
+        	c.create_time,
+        	c.create_uid,
+        	c.update_time,
+        	c.update_uid
 	</sql>
+
+    <select id="getColumnListByIndexPage" resultMap="customVoResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_column c WHERE visible = 1 ORDER BY order_num DESC
+    </select>
+
+    <select id="selectColumnList" resultMap="customVoResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_column c ORDER BY c.update_time DESC
+    </select>
 
 </mapper>
 

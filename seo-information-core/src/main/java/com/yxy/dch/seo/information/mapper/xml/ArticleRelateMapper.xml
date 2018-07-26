@@ -14,19 +14,33 @@
         <result property="updateUid" column="update_uid"/>
     </resultMap>
 
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ArticleRelateVO">
+        <result property="id" column="id"/>
+        <result property="articleId" column="article_id"/>
+        <result property="relateArticleId" column="relate_article_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
     <sql id="columns">
-        	u.id,
-        	u.article_id,
-        	u.relate_article_id,
-        	u.create_time,
-        	u.create_uid,
-        	u.update_time,
-        	u.update_uid
+        	r.id,
+        	r.article_id,
+        	r.relate_article_id,
+        	r.create_time,
+        	r.create_uid,
+        	r.update_time,
+        	r.update_uid
 	</sql>
 
     <delete id="deleteArticleRelate">
         DELETE FROM t_seo_article_relate WHERE article_id = #{id} OR relate_article_id = #{id}
     </delete>
+
+    <select id="selectRelateList" resultMap="customVoResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_article_relate r WHERE r.article_id = #{articleId}
+    </select>
 
 </mapper>
 

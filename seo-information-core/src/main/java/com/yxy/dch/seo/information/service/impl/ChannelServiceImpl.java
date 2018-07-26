@@ -52,20 +52,11 @@ public class ChannelServiceImpl extends ServiceImpl<ChannelMapper, Channel> impl
 
     @Override
     public List<ChannelVO> listBy(ChannelVO param) {
-        Channel channel = new Channel();
-        BeanUtils.copyProperties(param, channel);
-        List<Channel> channelList = channelMapper.selectList(new EntityWrapper<>(channel));
-        List<ChannelVO> channelVOList = new ArrayList<>();
-        for (Channel entity : channelList) {
-            ChannelVO vo = new ChannelVO();
-            BeanUtils.copyProperties(entity, vo);
-            channelVOList.add(vo);
-        }
-        return channelVOList;
+        return channelMapper.selectChannelList();
     }
 
     @Override
-    public Channel getDefaultChannel(Long channelId) {
+    public Channel getDefaultChannel(String channelId) {
         Channel channel;
         if (channelId == null){
             channel = channelMapper.getDefaultChannel();

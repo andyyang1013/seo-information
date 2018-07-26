@@ -18,5 +18,5 @@ public interface IChannelService extends IService<Channel> {
 
     List<ChannelVO> listBy(ChannelVO param);
 
-    Channel getDefaultChannel(Long channelId);
+    Channel getDefaultChannel(String channelId);
 }

@@ -1,7 +1,9 @@
 package com.yxy.dch.seo.information.vo;
 
 import com.yxy.dch.seo.information.entity.Article;
+import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.entity.Tag;
+import lombok.Data;
 
 import java.util.List;
 
@@ -10,7 +12,12 @@ import java.util.List;
  *
  * @author yangzhen
  */
+@Data
 public class ArticleVO extends Article {
+    /**
+     * 序号
+     */
+    private String index;
     /**
      * 文章标签列表
      */
@@ -19,20 +26,8 @@ public class ArticleVO extends Article {
      * 相关文章列表
      */
     private List<Article> relateArticleList;
-
-    public List<Tag> getTagList() {
-        return tagList;
-    }
-
-    public void setTagList(List<Tag> tagList) {
-        this.tagList = tagList;
-    }
-
-    public List<Article> getRelateArticleList() {
-        return relateArticleList;
-    }
-
-    public void setRelateArticleList(List<Article> relateArticleList) {
-        this.relateArticleList = relateArticleList;
-    }
+    /**
+     * 所属栏目
+     */
+    private Column column;
 }

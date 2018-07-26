@@ -9,6 +9,19 @@
         <result property="title" column="title"/>
         <result property="keyword" column="keyword"/>
         <result property="desc" column="desc"/>
+        <result property="href" column="href"/>
+        <result property="createTime" column="create_time"/>
+        <result property="createUid" column="create_uid"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="updateUid" column="update_uid"/>
+    </resultMap>
+
+    <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ChannelVO">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="keyword" column="keyword"/>
+        <result property="desc" column="desc"/>
+        <result property="href" column="href"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
         <result property="updateTime" column="update_time"/>
@@ -20,6 +33,7 @@
         	c.title,
         	c.keyword,
         	c.desc,
+        	c.href,
         	c.create_time,
         	c.create_uid,
         	c.update_time,
@@ -27,6 +41,10 @@
 	</sql>
 
     <select id="getDefaultChannel" resultMap="customResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_channel c
+    </select>
+
+    <select id="selectChannelList" resultMap="customVoResultMap">
         SELECT <include refid="columns"/> FROM t_seo_channel c
     </select>
 

@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  *
  * @author yangzhen
  */
+@Data
 @TableName("t_seo_banner")
 public class Banner extends Model<Banner> {
 
@@ -20,12 +22,12 @@ public class Banner extends Model<Banner> {
     /**
      * 主键ID
      */
-    private Long id;
+    private String id;
     /**
      * 频道id
      */
     @TableField("channel_id")
-    private Long channelId;
+    private String channelId;
     /**
      * banner名称
      */
@@ -57,6 +59,11 @@ public class Banner extends Model<Banner> {
     @TableField("order_num")
     private Integer orderNum;
     /**
+     * 图片URl
+     */
+    @TableField("picture_url")
+    private String pictureUrl;
+    /**
      * 创建时间
      */
     @TableField("create_time")
@@ -65,7 +72,7 @@ public class Banner extends Model<Banner> {
      * 创建用户id
      */
     @TableField("create_uid")
-    private Long createUid;
+    private String createUid;
     /**
      * 更新时间
      */
@@ -75,103 +82,7 @@ public class Banner extends Model<Banner> {
      * 更新用户id
      */
     @TableField("update_uid")
-    private Long updateUid;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getChannelId() {
-        return channelId;
-    }
-
-    public void setChannelId(Long channelId) {
-        this.channelId = channelId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getVisible() {
-        return visible;
-    }
-
-    public void setVisible(Integer visible) {
-        this.visible = visible;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getSummary() {
-        return summary;
-    }
-
-    public void setSummary(String summary) {
-        this.summary = summary;
-    }
-
-    public Integer getClickNum() {
-        return clickNum;
-    }
-
-    public void setClickNum(Integer clickNum) {
-        this.clickNum = clickNum;
-    }
-
-    public Integer getOrderNum() {
-        return orderNum;
-    }
-
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreateUid() {
-        return createUid;
-    }
-
-    public void setCreateUid(Long createUid) {
-        this.createUid = createUid;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdateUid() {
-        return updateUid;
-    }
-
-    public void setUpdateUid(Long updateUid) {
-        this.updateUid = updateUid;
-    }
+    private String updateUid;
 
     @Override
     protected Serializable pkVal() {

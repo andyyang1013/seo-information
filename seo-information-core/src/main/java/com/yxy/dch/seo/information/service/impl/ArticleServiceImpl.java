@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.ArticleRelate;
 import com.yxy.dch.seo.information.entity.ArticleTagMapping;
-import com.yxy.dch.seo.information.entity.Tag;
+import com.yxy.dch.seo.information.entity.enums.GenHtmlEventEnum;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
@@ -13,7 +13,10 @@ import com.yxy.dch.seo.information.mapper.ArticleRelateMapper;
 import com.yxy.dch.seo.information.mapper.ArticleTagMapper;
 import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.IArticleService;
+import com.yxy.dch.seo.information.service.IHtmlService;
+import com.yxy.dch.seo.information.service.ITagService;
 import com.yxy.dch.seo.information.util.Toolkit;
+import com.yxy.dch.seo.information.vo.ArticleRelateVO;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -44,6 +47,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleTagMapper articleTagMapper;
     @Autowired
     private ArticleRelateMapper articleRelateMapper;
+    @Autowired
+    private IHtmlService htmlService;
+    @Autowired
+    private ITagService tagService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -54,46 +61,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleMapper.insert(article);
 
         // 保存文章标签
-        if (StringUtils.isNotBlank(param.getTags())) {
-            String[] tagNames = StringUtils.split(param.getTags(), ",");
-            for (String tagName : tagNames) {
-                Tag entity = new Tag();
-                entity.setName(tagName);
-                Tag tag = tagMapper.selectOne(entity);
-                if (tag == null) {
-                    tagMapper.insert(entity);
-                    tag = new Tag();
-                    BeanUtils.copyProperties(entity, tag);
-                }
-                ArticleTagMapping entityMapping = new ArticleTagMapping();
-                entityMapping.setTagId(tag.getId());
-                entityMapping.setArticleId(article.getId());
-                ArticleTagMapping articleTagMapping = articleTagMapper.selectOne(entityMapping);
-                if (articleTagMapping == null) {
-                    articleTagMapper.insert(entityMapping);
-                }
-            }
-        }
+        tagService.save(article.getId(), article.getTags());
 
         // 保存相关文章
-        if (StringUtils.isNotBlank(param.getRelateArticleIds())) {
-            String[] articleRelateIds = StringUtils.split(param.getRelateArticleIds(), ",");
-            for (String articleRelateId : articleRelateIds) {
-                ArticleRelate entity = new ArticleRelate();
-                entity.setArticleId(article.getId());
-                entity.setRelateArticleId(Long.valueOf(articleRelateId));
-                ArticleRelate articleRelate = articleRelateMapper.selectOne(entity);
-                if (articleRelate == null) {
-                    articleRelateMapper.insert(entity);
-                }
-            }
-        }
+        this.save(article.getId(), article.getRelateArticleIds());
 
         // 查询保存后的文章
-        Article createdArticle = articleMapper.selectById(article.getId());
-        ArticleVO createdArticleVO = new ArticleVO();
-        BeanUtils.copyProperties(createdArticle, createdArticleVO);
-        return createdArticleVO;
+        return articleMapper.selectArticleById(article.getId());
     }
 
     @Override
@@ -103,6 +77,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+//        if (article.getState() == 1)
 
         // 删除文章标签关联
         ArticleTagMapping articleTagMapping = new ArticleTagMapping();
@@ -127,22 +102,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+
         BeanUtils.copyProperties(param, article);
         articleMapper.updateById(article);
-        Article modifiedArticle = articleMapper.selectById(param.getId());
-        ArticleVO modifiedArticleVO = new ArticleVO();
-        BeanUtils.copyProperties(modifiedArticle, modifiedArticleVO);
-        return modifiedArticleVO;
+
+        // 保存文章标签
+        tagService.save(article.getId(), article.getTags());
+
+        // 保存相关文章
+        this.save(article.getId(), article.getRelateArticleIds());
+
+        return articleMapper.selectArticleById(article.getId());
     }
 
     @Override
     public ArticleVO view(ArticleVO param) {
-        Article article = articleMapper.selectById(param.getId());
-        if (article == null) {
+        ArticleVO articleVO = articleMapper.selectArticleById(param.getId());
+        if (articleVO == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
-        ArticleVO articleVO = new ArticleVO();
-        BeanUtils.copyProperties(article, articleVO);
         return articleVO;
     }
 
@@ -153,13 +131,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+
         article.setState(1);
         article.setUpTime(Toolkit.getCurDate());
         articleMapper.updateById(article);
-        Article upArticle = articleMapper.selectById(article.getId());
-        ArticleVO upArticleVO = new ArticleVO();
-        BeanUtils.copyProperties(upArticle, upArticleVO);
-        return upArticleVO;
+
+        // 生成html
+        htmlService.generateHtml(GenHtmlEventEnum.ARTICLE_UP);
+
+        return articleMapper.selectArticleById(article.getId());
     }
 
     @Override
@@ -170,12 +150,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             logger.error("下架的文章不存在");
             throw new BizException(CodeMsg.record_not_exist);
         }
+
         article.setState(0);
         articleMapper.updateById(article);
-        Article upArticle = articleMapper.selectById(article.getId());
-        ArticleVO upArticleVO = new ArticleVO();
-        BeanUtils.copyProperties(upArticle, upArticleVO);
-        return upArticleVO;
+
+        return articleMapper.selectArticleById(article.getId());
     }
 
     @Override
@@ -187,14 +166,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<ArticleVO> hottest() {
-        Article article = new Article();
-        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(article).orderBy("readingNum", false));
-        List<ArticleVO> articleVOList = new ArrayList<>();
-        for (Article entity : articleList) {
-            ArticleVO vo = new ArticleVO();
-            BeanUtils.copyProperties(entity, vo);
-            articleVOList.add(vo);
-        }
+        List<ArticleVO> articleVOList = articleMapper.selectHottestArticles();
         return articleVOList;
     }
 
@@ -263,5 +235,39 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         articleMapper.updateById(article);
 
         return articleMapper.selectArticleById(article.getId());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void save(String articleId, String relateArticleIds) {
+        if (StringUtils.isBlank(articleId)) {
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        if (StringUtils.isBlank(relateArticleIds)) {
+            // 删除所有相关文章
+            ArticleRelate entity = new ArticleRelate();
+            entity.setArticleId(articleId);
+            articleRelateMapper.delete(new EntityWrapper<>(entity));
+            return;
+        }
+        // 查询文章现有相关文章
+        List<ArticleRelateVO> relateList = articleRelateMapper.selectRelateList(articleId);
+        // 保存相关文章关系
+        String[] relateArray = relateArticleIds.split(",");
+        for (String relateId : relateArray) {
+            boolean exist = false;
+            for (ArticleRelateVO vo : relateList) {
+                if (relateId.equals(vo.getRelateArticleId())) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) {
+                ArticleRelate articleRelate = new ArticleRelate();
+                articleRelate.setArticleId(articleId);
+                articleRelate.setRelateArticleId(relateId);
+                articleRelateMapper.insert(articleRelate);
+            }
+        }
     }
 }
