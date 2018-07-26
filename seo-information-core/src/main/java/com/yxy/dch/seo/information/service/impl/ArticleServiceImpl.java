@@ -166,34 +166,17 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public List<ArticleVO> hottest() {
-        List<ArticleVO> articleVOList = articleMapper.selectHottestArticles();
-        return articleVOList;
+        return articleMapper.selectHottestArticles();
     }
 
     @Override
     public List<ArticleVO> newest() {
-        Article article = new Article();
-        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(article).orderBy("updateTime", false));
-        List<ArticleVO> articleVOList = new ArrayList<>();
-        for (Article entity : articleList) {
-            ArticleVO vo = new ArticleVO();
-            BeanUtils.copyProperties(entity, vo);
-            articleVOList.add(vo);
-        }
-        return articleVOList;
+        return articleMapper.selectNewestArticles();
     }
 
     @Override
     public List<ArticleVO> recommended() {
-        Article article = new Article();
-        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(article).where("recommend={0}", 1));
-        List<ArticleVO> articleVOList = new ArrayList<>();
-        for (Article entity : articleList) {
-            ArticleVO vo = new ArticleVO();
-            BeanUtils.copyProperties(entity, vo);
-            articleVOList.add(vo);
-        }
-        return articleVOList;
+        return articleMapper.selectRecommendedArticles();
     }
 
     @Override
@@ -269,5 +252,25 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 articleRelateMapper.insert(articleRelate);
             }
         }
+    }
+
+    @Override
+    public List<ArticleVO> getArticlesByColNamePinyin(String namePinyin) {
+        return articleMapper.getArticlesByColNamePinyin(namePinyin);
+    }
+
+    @Override
+    public List<ArticleVO> dayTopArticles() {
+        return articleMapper.dayTopArticles();
+    }
+
+    @Override
+    public List<ArticleVO> weekTopArticles() {
+        return articleMapper.weekTopArticles();
+    }
+
+    @Override
+    public List<ArticleVO> getArticlesByTagId(String tagId) {
+        return articleMapper.getArticlesByTagId(tagId);
     }
 }

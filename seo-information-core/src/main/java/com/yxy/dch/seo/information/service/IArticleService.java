@@ -39,4 +39,12 @@ public interface IArticleService extends IService<Article> {
     ArticleVO read(ArticleVO param);
 
     void save(String articleId, String relateArticleIds);
+
+    List<ArticleVO> getArticlesByColNamePinyin(String namePinyin);
+
+    List<ArticleVO> dayTopArticles();
+
+    List<ArticleVO> weekTopArticles();
+
+    List<ArticleVO> getArticlesByTagId(String tagId);
 }

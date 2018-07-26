@@ -18,4 +18,18 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleVO> selectArticleList(Article article);
 
     List<ArticleVO> selectHottestArticles();
+
+    List<ArticleVO> selectNewestArticles();
+
+    List<ArticleVO> selectRecommendedArticles();
+
+    List<Article> selectArticlesByColumnId(String id);
+
+    List<ArticleVO> getArticlesByColNamePinyin(String namePinyin);
+
+    List<ArticleVO> dayTopArticles();
+
+    List<ArticleVO> weekTopArticles();
+
+    List<ArticleVO> getArticlesByTagId(String tagId);
 }

@@ -94,6 +94,7 @@ public class TagServiceImpl extends ServiceImpl<TagMapper, Tag> implements ITagS
             ArticleTagMapping entity=new ArticleTagMapping();
             entity.setArticleId(articleId);
             articleTagMapper.delete(new EntityWrapper<>(entity));
+            return;
         }
         String[] tagArray = tags.split(",");
 

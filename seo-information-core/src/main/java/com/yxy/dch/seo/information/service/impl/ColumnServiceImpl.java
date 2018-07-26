@@ -2,15 +2,18 @@ package com.yxy.dch.seo.information.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
+import com.yxy.dch.seo.information.mapper.ArticleMapper;
 import com.yxy.dch.seo.information.mapper.ChannelMapper;
 import com.yxy.dch.seo.information.mapper.ColumnMapper;
 import com.yxy.dch.seo.information.service.IChannelService;
 import com.yxy.dch.seo.information.service.IColumnService;
 import com.yxy.dch.seo.information.util.PinyinUtil;
+import com.yxy.dch.seo.information.vo.ArticleVO;
 import com.yxy.dch.seo.information.vo.ColumnVO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +37,8 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     private ChannelMapper channelMapper;
     @Autowired
     private IChannelService channelService;
+    @Autowired
+    private ArticleMapper articleMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -47,7 +52,8 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         Column column = new Column();
         BeanUtils.copyProperties(param, column);
         column.setChannelId(channel.getId());
-//        column.setUrl();
+        column.setNamePinyin(PinyinUtil.getPinYin(column.getName()));
+        column.setHref("/" + PinyinUtil.getPinYin(column.getName()) + "/");
         columnMapper.insert(column);
 
         // 查询新增的栏目
@@ -76,11 +82,15 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         if (column == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+
         BeanUtils.copyProperties(param, column);
+        column.setNamePinyin(PinyinUtil.getPinYin(column.getName()));
         columnMapper.updateById(column);
+
         Column modifiedColumn = columnMapper.selectById(column.getId());
         ColumnVO modifiedColumnVO = new ColumnVO();
         BeanUtils.copyProperties(modifiedColumn, modifiedColumnVO);
+
         return modifiedColumnVO;
     }
 
@@ -97,15 +107,6 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
 
     @Override
     public List<ColumnVO> listBy(ColumnVO param) {
-//        Column column = new Column();
-//        BeanUtils.copyProperties(param, column);
-//        List<Column> columnList = columnMapper.selectList(new EntityWrapper<>(column));
-//        List<ColumnVO> columnVOList = new ArrayList<>();
-//        for (Column entity : columnList) {
-//            ColumnVO vo = new ColumnVO();
-//            BeanUtils.copyProperties(entity, vo);
-//            columnVOList.add(vo);
-//        }
         return columnMapper.selectColumnList(param);
     }
 
@@ -127,10 +128,8 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     public List<ColumnVO> getColumnListByIndexPage() {
         List<ColumnVO> columnList = columnMapper.getColumnListByIndexPage();
         for (ColumnVO column : columnList) {
-            String name = column.getName();
-            String pinYin = PinyinUtil.getPinYin(name);
-            column.setNamePinyin(pinYin);
-            column.setHref(pinYin + "/");
+            List<Article> articleList = articleMapper.selectArticlesByColumnId(column.getId());
+            column.setArticleList(articleList);
         }
         return columnList;
     }

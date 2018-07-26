@@ -52,6 +52,7 @@
         <result property="column.desc" column="col_desc"/>
         <result property="column.channelId" column="col_channel_id"/>
         <result property="column.name" column="col_name"/>
+        <result property="column.namePinyin" column="col_name_pinyin"/>
         <result property="column.href" column="col_href"/>
         <result property="column.visible" column="col_visible"/>
         <result property="column.orderNum" column="col_order_num"/>
@@ -154,6 +155,7 @@ col.keyword AS col_keyword,
 col.desc AS col_desc,
 col.channel_id AS col_channel_id,
 col.name AS col_name,
+col.name_pinyin AS col_name_pinyin,
 col.href AS col_href,
 col.visible AS col_visible,
 col.order_num AS col_order_num,
@@ -185,6 +187,44 @@ where a.id = #{id}
 
     <select id="selectHottestArticles" resultMap="customVoResultMap">
         SELECT <include refid="columns"/> FROM t_seo_article a WHERE state = 1
+    </select>
+
+    <select id="selectNewestArticles" resultMap="customVoResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_article a WHERE state = 1 ORDER BY update_time DESC
+    </select>
+
+    <select id="selectRecommendedArticles" resultMap="customVoResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_article a WHERE state = 1 AND recommend = 1 ORDER BY update_time DESC
+    </select>
+    
+    <select id="selectArticlesByColumnId" resultMap="customResultMap">
+        SELECT <include refid="columns"/> FROM t_seo_article a WHERE state = 1 ORDER BY update_time DESC LIMIT 10
+    </select>
+
+    <select id="getArticlesByColNamePinyin" resultMap="customResultMap">
+        SELECT <include refid="columns"/>
+        FROM t_seo_article a
+        LEFT JOIN t_seo_column c ON a.column_id = c.id
+        WHERE c.name_pinyin = #{namePinyin} AND c.visible = 1 AND a.state = 1
+        ORDER BY a.update_time
+    </select>
+
+    <select id="dayTopArticles" resultMap="customResultMap">
+        SELECT <include refid="columns"/>
+        FROM t_seo_article a
+    </select>
+
+    <select id="weekTopArticles" resultMap="customResultMap">
+        SELECT <include refid="columns"/>
+        FROM t_seo_article a
+    </select>
+
+    <select id="getArticlesByTagId" resultMap="customResultMap">
+        SELECT <include refid="columns"/>
+        FROM t_seo_article a
+        LEFT JOIN t_seo_article_tag_mapping m ON a.id = m.article_id
+        WHERE m.tag_id = #{tagId} AND a.state = 1
+        ORDER BY a.update_time
     </select>
 
 </mapper>

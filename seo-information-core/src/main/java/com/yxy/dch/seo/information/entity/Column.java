@@ -49,6 +49,11 @@ public class Column extends Model<Column> {
     @TableField("name")
     private String name;
     /**
+     * 栏目名称拼音
+     */
+    @TableField("name_pinyin")
+    private String namePinyin;
+    /**
      * 栏目页
      */
     @TableField("href")

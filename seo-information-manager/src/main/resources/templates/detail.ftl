@@ -22,7 +22,7 @@
                     <ul class="tnav">
                         <#list columnList as column>
                         <li class="n1">
-                            <a href="${base}/${column.href}">
+                            <a href="${base}/${column.namePinyin}/">
                                 ${column.name}
                             </a>
                         </li>
@@ -32,41 +32,6 @@
                                 首页
                             </a>
                         </li>
-                        <#--<li class="n1">
-                            <a href="column.ftl">
-                        内容6
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容5
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容4
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容3
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容2
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容1
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="index.ftl" class="ore">
-                        首页
-                        </a>
-                        </li>-->
                     </ul>
                 </div>
             </div>
@@ -95,22 +60,16 @@
             <div class="detail-content">
                 <h1>${article.name}</h1>
                 <h4>
-                    <span>来源：<a href="${base}/${article.column.href}">${article.column.name}</a></span>
+                    <span>来源：<a href="${base}/${article.column.namePinyin}/">${article.column.name}</a></span>
                     <span>添加时间：${article.updateTime?date}</span>
                     <span>阅读量：${article.readingNum}</span>
                 </h4>
                 ${article.content}
-                <#--<p>
-                    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-                </p>
-                <p>
-                    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-                </p>-->
                 <div class="item-tag">
                     标签:
-                    <#list
-                    <a href="tag.ftl">标签名1</a><a href="tag.ftl">标签名2</a><a href="tag.ftl">标签名3</a>
-                    <#--标签:<a href="tag.ftl">标签名1</a><a href="tag.ftl">标签名2</a><a href="tag.ftl">标签名3</a>-->
+                    <#list article.tagList as tag>
+                        <a href="${base}/tag/${tag.id}">${tag.name}</a>
+                    </#list>
                 </div>
                 <!-- 上下篇 -->
                 <div class="item-next-prev">
@@ -121,19 +80,15 @@
                 <div class="item-recommend">
                     <ul class="list fl-l">
                         <h5>推荐文章</h5>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
+                        <#list recommended as atc>
+                            <li><a href="${base}/${atc.id}.html">${atc.name}</a></li>
+                        </#list>
                     </ul>
                     <ul class="list fl-r">
                         <h5>推荐文章</h5>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
-                        <li><a href="#">推荐文章名推荐文章名推荐文章名</a></li>
+                        <#list recommended as atc>
+                            <li><a href="${base}/${atc.id}.html">${atc.name}</a></li>
+                        </#list>
                     </ul>
                 </div>
             </div>
@@ -144,12 +99,9 @@
                     <span class="select">栏目</span>
                 </h3>
                 <div class="item-content">
-                    <a href="#" class="">栏目1</a>
-                    <a href="#" class="">栏目2</a>
-                    <a href="#" class="">栏目3</a>
-                    <a href="#" class="">栏目4</a>
-                    <a href="#" class="">栏目5</a>
-                    <a href="#" class="">栏目6</a>
+                    <#list columnList as column>
+                        <a href="${base}/${column.namePinyin}/" class="">${column.name}</a>
+                    </#list>
                 </div>
             </div>
             <a href="#">
@@ -162,24 +114,14 @@
                 </h3>
                 <div class="item-content">
                     <ul class="item-content-list select" style="display: block;">
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
+                        <#list hottest as article>
+                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a></li>
+                        </#list>
                     </ul>
                     <ul class="item-content-list">
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
+                        <#list recommended as article>
+                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a></li>
+                        </#list>
                     </ul>
                 </div>
             </div>
@@ -188,18 +130,9 @@
                     <span class="select">标签</span>
                 </h3>
                 <div class="item-content">
-                    <a href="#" class="tag tag1">理财小知识</a>
-                    <a href="#" class="tag tag2">理财</a>
-                    <a href="#" class="tag tag3">小知识</a>
-                    <a href="#" class="tag tag1">知识</a>
-                    <a href="#" class="tag tag2">小知识</a>
-                    <a href="#" class="tag tag3">理财小知识</a>
-                    <a href="#" class="tag tag1">知识</a>
-                    <a href="#" class="tag tag3">小知识</a>
-                    <a href="#" class="tag tag2">理财小知识</a>
-                    <a href="#" class="tag tag1">知识</a>
-                    <a href="#" class="tag tag2">理财小知识</a>
-                    <a href="#" class="tag tag3">理财小知识</a>
+                    <#list tagList as tag>
+                        <a href="${base}/tag/${tag.id}.html" class="tag tag1">${tag.name}</a>
+                    </#list>
                 </div>
             </div>
         </div>

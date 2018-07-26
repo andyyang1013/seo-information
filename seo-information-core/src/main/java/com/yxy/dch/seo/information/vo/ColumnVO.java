@@ -1,7 +1,10 @@
 package com.yxy.dch.seo.information.vo;
 
+import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.Column;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ColumnVO extends Column {
@@ -10,7 +13,7 @@ public class ColumnVO extends Column {
      */
     private String index;
     /**
-     * 栏目名称拼音
+     * 栏目下面的文章列表
      */
-    private String namePinyin;
+    private List<Article> articleList;
 }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <#assign base=springMacroRequestContext.contextPath />
+    <#assign indexPage="https://www.daicaihang.com/" />
     <link href="${base}/images/favicon.ico"  rel="icon" type="image/x-icon">
     <link rel="shortcut icon" href="${base}/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${base}/css/main.css">
@@ -18,40 +19,17 @@
             <div class="top_menu_R">
                 <div class="top_list">
                     <ul class="tnav">
+                        <#list columnList as column>
                         <li class="n1">
-                            <a href="column.ftl">
-                        内容6
-                        </a>
+                            <a href="${base}/${column.namePinyin}/">
+                                ${column.name}
+                            </a>
                         </li>
+                        </#list>
                         <li class="n1">
-                            <a href="column.ftl">
-                        内容5
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容4
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容3
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容2
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="column.ftl">
-                        内容1
-                        </a>
-                        </li>
-                        <li class="n1">
-                            <a href="index.ftl" class="ore">
-                        首页
-                        </a>
+                            <a href="${indexPage}" class="ore">
+                                首页
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -65,30 +43,15 @@
     <!-- 内容  -->
     <div class="container">
         <div class="content-l">
-            <div class="item">
-                <h4><a href="#">名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊</a><span>2018-08-01</span></h4>
-                <div class="item-content">
-                    文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息
-                    <a href="#">阅读全文&gt;&gt;</a>
+            <#list articleList as article>
+                <div class="item">
+                    <h4><a href="${base}/${article.id}.html">${article.name}</a><span>${article.updateTime?date}</span></h4>
+                    <div class="item-content">
+                        ${article.content}
+                        <a href="${base}/${article.id}.html">阅读全文&gt;&gt;</a>
+                    </div>
                 </div>
-                <div class="item-tag">标签:<a href="#">标签名1</a><a href="#">标签名2</a><a href="#">标签名3</a></div>
-            </div>
-            <div class="item">
-                <h4><a href="#">名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊</a><span>2018-08-01</span></h4>
-                <div class="item-content">
-                    文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息
-                    <a href="#">阅读全文&gt;&gt;</a>
-                </div>
-                <div class="item-tag">标签:<a href="#">标签名1</a><a href="#">标签名2</a><a href="#">标签名3</a></div>
-            </div>
-            <div class="item">
-                <h4><a href="#">名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊名字啊</a><span>2018-08-01</span></h4>
-                <div class="item-content">
-                    文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息信息文章信息文章信息息文章信息
-                    <a href="#">阅读全文&gt;&gt;</a>
-                </div>
-                <div class="item-tag">标签:<a href="#">标签名1</a><a href="#">标签名2</a><a href="#">标签名3</a></div>
-            </div>
+            </#list>
             <ul class="page-container">
                 <li><a href="javascript:;">首页</a></li>
                 <li><a href="javascript:;">上一页</a></li>
@@ -111,18 +74,9 @@
                     <span class="select">标签</span>
                 </h3>
                 <div class="item-content">
-                    <a href="#" class="tag tag1">理财小知识</a>
-                    <a href="#" class="tag tag2">理财</a>
-                    <a href="#" class="tag tag3">小知识</a>
-                    <a href="#" class="tag tag1">知识</a>
-                    <a href="#" class="tag tag2">小知识</a>
-                    <a href="#" class="tag tag3">理财小知识</a>
-                    <a href="#" class="tag tag1">知识</a>
-                    <a href="#" class="tag tag3">小知识</a>
-                    <a href="#" class="tag tag2">理财小知识</a>
-                    <a href="#" class="tag tag1">知识</a>
-                    <a href="#" class="tag tag2">理财小知识</a>
-                    <a href="#" class="tag tag3">理财小知识</a>
+                    <#list tagList as tag>
+                        <a href="${base}/tag/${tag.id}.html" class="tag tag1">${tag.name}</a>
+                    </#list>
                 </div>
             </div>
             <div class="item article-item">
@@ -132,24 +86,14 @@
                 </h3>
                 <div class="item-content">
                     <ul class="item-content-list select" style="display: block;">
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>1</span><a href="#">文章名称文章名称文章名称</a></li>
+                        <#list hottest as article>
+                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a></li>
+                        </#list>
                     </ul>
                     <ul class="item-content-list">
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
-                        <li><span>8</span><a href="#">文章名称文章名称文章名称</a></li>
+                        <#list recommended as article>
+                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a></li>
+                        </#list>
                     </ul>
                 </div>
             </div>
@@ -158,12 +102,9 @@
                     <span class="select">栏目</span>
                 </h3>
                 <div class="item-content">
-                    <a href="#" class="">栏目1</a>
-                    <a href="#" class="">栏目2</a>
-                    <a href="#" class="">栏目3</a>
-                    <a href="#" class="">栏目4</a>
-                    <a href="#" class="">栏目5</a>
-                    <a href="#" class="">栏目6</a>
+                    <#list columnList as column>
+                        <a href="${base}/${column.namePinyin}/" class="">${column.name}</a>
+                    </#list>
                 </div>
             </div>
         </div>

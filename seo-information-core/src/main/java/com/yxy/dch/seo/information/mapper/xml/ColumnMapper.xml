@@ -11,6 +11,7 @@
         <result property="desc" column="desc"/>
         <result property="channelId" column="channel_id"/>
         <result property="name" column="name"/>
+        <result property="namePinyin" column="name_pinyin"/>
         <result property="href" column="href"/>
         <result property="visible" column="visible"/>
         <result property="orderNum" column="order_num"/>
@@ -28,6 +29,7 @@
         <result property="desc" column="desc"/>
         <result property="channelId" column="channel_id"/>
         <result property="name" column="name"/>
+        <result property="namePinyin" column="name_pinyin"/>
         <result property="href" column="href"/>
         <result property="visible" column="visible"/>
         <result property="orderNum" column="order_num"/>
@@ -45,6 +47,7 @@
         	c.desc,
         	c.channel_id,
         	c.name,
+        	c.name_pinyin,
         	c.href,
         	c.visible,
         	c.order_num,

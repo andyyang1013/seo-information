@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <#assign base=springMacroRequestContext.contextPath />
     <#assign indexPage="https://www.daicaihang.com/" />
-    <link href="${base}/images/favicon.ico"  rel="icon" type="image/x-icon">
+    <link href="${base}/images/favicon.ico" rel="icon" type="image/x-icon">
     <link rel="shortcut icon" href="${base}/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${base}/jslib/swiper-4.1.6/swiper-4.1.6.min.css">
     <link rel="stylesheet" href="${base}/css/main.css">
@@ -22,7 +22,7 @@
                 <ul class="tnav">
                     <#list columnList as column>
                         <li class="n1">
-                            <a href="${base}/${column.href}">
+                            <a href="${base}/${column.namePinyin}/">
                                 ${column.name}
                             </a>
                         </li>
@@ -32,41 +32,6 @@
                             首页
                         </a>
                     </li>
-                <#--<li class="n1">-->
-                        <#--<a href="${base}/column.html">-->
-                            <#--内容6-->
-                        <#--</a>-->
-                    <#--</li>-->
-                    <#--<li class="n1">-->
-                        <#--<a href="${base}/column.html">-->
-                            <#--内容5-->
-                        <#--</a>-->
-                    <#--</li>-->
-                    <#--<li class="n1">-->
-                        <#--<a href="${base}/column.html">-->
-                            <#--内容4-->
-                        <#--</a>-->
-                    <#--</li>-->
-                    <#--<li class="n1">-->
-                        <#--<a href="${base}/column.html">-->
-                            <#--内容3-->
-                        <#--</a>-->
-                    <#--</li>-->
-                    <#--<li class="n1">-->
-                        <#--<a href="${base}/column.html">-->
-                            <#--内容2-->
-                        <#--</a>-->
-                    <#--</li>-->
-                    <#--<li class="n1">-->
-                        <#--<a href="${base}/column.html">-->
-                            <#--内容1-->
-                        <#--</a>-->
-                    <#--</li>-->
-                    <#--<li class="n1">-->
-                        <#--<a href="${base}/index.html" class="ore">-->
-                            <#--首页-->
-                        <#--</a>-->
-                    <#--</li>-->
                 </ul>
             </div>
         </div>
@@ -76,9 +41,12 @@
 <div class="banner-content">
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/xxpl_bankmana.html"><img src="${base}/images/banner01.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/dbsj.html"><img src="${base}/images/banner02.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/xxpl_progress.html"><img src="${base}/images/banner03.jpg" alt=""></a></div>
+            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/xxpl_bankmana.html"><img
+                    src="${base}/images/banner01.jpg" alt=""></a></div>
+            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/dbsj.html"><img
+                    src="${base}/images/banner02.jpg" alt=""></a></div>
+            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/xxpl_progress.html"><img
+                    src="${base}/images/banner03.jpg" alt=""></a></div>
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>
@@ -92,275 +60,42 @@
             <h3>热门文章</h3>
             <ul class="list">
                 <#list hottest as article>
-                    <li><a href="${base}/<#--${article.href}-->">${article.name}</a></li>
+                    <li><a href="${base}/${article.id}.html">${article.name}</a></li>
                 </#list>
-                <#--<li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>-->
             </ul>
         </div>
         <div class="article-item">
             <h3>最新文章</h3>
             <ul class="list">
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
+                <#list newest as article>
+                    <li><a href="${base}/${article.id}.html">${article.name}</a></li>
+                </#list>
             </ul>
         </div>
         <div class="article-item">
             <h3>推荐文章</h3>
             <ul class="list">
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
-                <li><a href="${base}/detail.html">文章名字文章名字文章名字文章名字</a></li>
+                <#list recommended as article>
+                    <li><a href="${base}/${article.id}.html">${article.name}</a></li>
+                </#list>
             </ul>
         </div>
     </div>
     <!-- 栏目区域 -->
     <div class="column-content">
-        <div class="column-item">
-            <h3>栏目一<a href="#">查看更多</a></h3>
-            <a href="#"><img src="${base}/images/banner01.jpg" alt=""></a>
-            <ul class="list">
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-            </ul>
-        </div>
-        <div class="column-item">
-            <h3>栏目二<a href="#">查看更多</a></h3>
-            <a href=""><img src="${base}/images/banner01.jpg" alt=""></a>
-            <ul class="list">
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-            </ul>
-        </div>
-        <div class="column-item">
-            <h3>栏目三<a href="#">查看更多</a></h3>
-            <a href=""><img src="${base}/images/banner01.jpg" alt=""></a>
-            <ul class="list">
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-            </ul>
-        </div>
-        <div class="column-item">
-            <h3>栏目四<a href="#">查看更多</a></h3>
-            <a href=""><img src="${base}/images/banner01.jpg" alt=""></a>
-            <ul class="list">
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-            </ul>
-        </div>
-        <div class="column-item">
-            <h3>栏目五<a href="#">查看更多</a></h3>
-            <a href=""><img src="${base}/images/banner01.jpg" alt=""></a>
-            <ul class="list">
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-            </ul>
-        </div>
-        <div class="column-item">
-            <h3>栏目六<a href="#">查看更多</a></h3>
-            <a href=""><img src="${base}/images/banner01.jpg" alt=""></a>
-            <ul class="list">
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-                <li>
-                    <a href="#">
-                        <p>文章名字文章名字文章名字文章名字</p><span>07-23</span></a>
-                </li>
-            </ul>
-        </div>
+            <#list columnList as column>
+                <div class="column-item">
+                    <h3>${column.name}<a href="${base}/${column.namePinyin}/">查看更多</a></h3>
+                    <a href="${base}/${column.namePinyin}"><img src="${column.pictureUrl}" alt=""></a>
+                    <ul class="list">
+                        <#list column.articleList as article>
+                            <li>
+                                <a href="${base}/${article.id}.html">${article.name}<span>${article.updateTime?date}</span></a>
+                            </li>
+                        </#list>
+                    </ul>
+                </div>
+            </#list>
     </div>
 </div>
 <!-- 页脚 -->
@@ -399,19 +134,36 @@
             <p class="p3">总部地址：辽宁省沈阳市沈河区
                 <br>北站路61号2706A</p>
         </div>
-        <p class="pa4"><a style="margin-right: 60px;color:#999;margin-left: 50px" target="_blank" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21010302000363" rel="nofollow">
-            <img src="http://static.daicash.cn/pc1/images/foticon.png" style="display: inline-block">辽公网安备 21010302000363号</a>
-            <span>2014-2018 辽宁贷财互联网科技有限公司 <a href="http://www.miibeian.gov.cn" rel="nofollow" style="color: #999">辽ICP备16013770号-1</a>|辽B2-20170199</span> 温馨提示：市场有风险，投资需谨慎
+        <p class="pa4"><a style="margin-right: 60px;color:#999;margin-left: 50px" target="_blank"
+                          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=21010302000363"
+                          rel="nofollow">
+            <img src="http://static.daicash.cn/pc1/images/foticon.png" style="display: inline-block">辽公网安备
+            21010302000363号</a>
+            <span>2014-2018 辽宁贷财互联网科技有限公司 <a href="http://www.miibeian.gov.cn" rel="nofollow" style="color: #999">辽ICP备16013770号-1</a>|辽B2-20170199</span>
+            温馨提示：市场有风险，投资需谨慎
         </p>
         <div class="pa5">
-            <a target="_blank" rel="nofollow" href="http://wljg.lngs.gov.cn/iciaicweb/dzbscheck.do?method=change&amp;id=E2017010300071190" alt="工商网监" title="工商网监"><img src="http://static.daicash.cn/pc1/images/bottom_02.png"></a>
-            <a rel="nofollow" target="_blank" alt="安全加密认证" title="安全加密认证"><img src="http://static.daicash.cn/pc1/images/comodo_sec.gif" width="83" height="35"></a>
-            <a rel="nofollow" target="_blank" alt="安全联盟" title="安全联盟" href="https://v.pinpaibao.com.cn/cert/site/?site=www.daicaihang.com&amp;at=business"><img src="http://static.daicash.cn/pc1/images/footer_aqlm.png?v=07171" width="83" height="35"></a>
-            <a rel="nofollow" target="_blank" alt="诚信网站" title="诚信网站" href="https://credit.szfw.org/CX20170407033562581517.html" id="___szfw_logo___"><img src="http://static.daicash.cn/pc1/images/footer_cxwz.png?v=07171" width="83" height="35"></a>
+            <a target="_blank" rel="nofollow"
+               href="http://wljg.lngs.gov.cn/iciaicweb/dzbscheck.do?method=change&amp;id=E2017010300071190" alt="工商网监"
+               title="工商网监"><img src="http://static.daicash.cn/pc1/images/bottom_02.png"></a>
+            <a rel="nofollow" target="_blank" alt="安全加密认证" title="安全加密认证"><img
+                    src="http://static.daicash.cn/pc1/images/comodo_sec.gif" width="83" height="35"></a>
+            <a rel="nofollow" target="_blank" alt="安全联盟" title="安全联盟"
+               href="https://v.pinpaibao.com.cn/cert/site/?site=www.daicaihang.com&amp;at=business"><img
+                    src="http://static.daicash.cn/pc1/images/footer_aqlm.png?v=07171" width="83" height="35"></a>
+            <a rel="nofollow" target="_blank" alt="诚信网站" title="诚信网站"
+               href="https://credit.szfw.org/CX20170407033562581517.html" id="___szfw_logo___"><img
+                    src="http://static.daicash.cn/pc1/images/footer_cxwz.png?v=07171" width="83" height="35"></a>
             <script type="text/javascript">
-                (function() { document.getElementById('___szfw_logo___').oncontextmenu = function() { return false; } })();
+                (function () {
+                    document.getElementById('___szfw_logo___').oncontextmenu = function () {
+                        return false;
+                    }
+                })();
             </script>
-            <a rel="nofollow" target="_blank" alt="互联网金融品牌官网" title="互联网金融品牌官网" id="_pingansec_bottomimagesmall_p2p" href="http://si.trustutn.org/info?sn=510170301000569641759&amp;certType=4"><img src="http://static.daicash.cn/pc1/images/footer_jrpp.png?v=07171" width="83" height="35"></a>
+            <a rel="nofollow" target="_blank" alt="互联网金融品牌官网" title="互联网金融品牌官网" id="_pingansec_bottomimagesmall_p2p"
+               href="http://si.trustutn.org/info?sn=510170301000569641759&amp;certType=4"><img
+                    src="http://static.daicash.cn/pc1/images/footer_jrpp.png?v=07171" width="83" height="35"></a>
         </div>
     </div>
 </div>
