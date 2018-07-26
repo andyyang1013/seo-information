@@ -71,10 +71,10 @@ public class ChannelController extends BaseController {
     @RequestMapping("/listByPage")
     public ResponseT<List<ChannelVO>> listByPage(ChannelVO param, Page page) {
         if (page == null || page.getPageSize() == null || page.getPageNum() == null) {
-            logger.error("分页查询频道列表参数错误({}):param={},page={}", CodeMsg.user_batch_query_num_out.getMsg(), JacksonUtil.toJson(param), JacksonUtil.toJson(page));
+            logger.error("分页查询频道列表参数错误({}):param={}", CodeMsg.user_batch_query_num_out.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.user_batch_query_num_out);
         }
-        logger.info("分页查询频道列表:param={},page={}", JacksonUtil.toJson(param), JacksonUtil.toJson(page));
+        logger.info("分页查询频道列表:param={}", JacksonUtil.toJson(param));
         PageHelper.startPage(page.getPageNum(), page.getPageSize(), true);
         List<ChannelVO> list = channelService.listBy(param);
         // 增加序号
