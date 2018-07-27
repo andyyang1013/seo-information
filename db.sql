@@ -1,22 +1,12 @@
--- --------------------------------------------------------
--- 主机:                           127.0.0.1
--- 服务器版本:                        5.7.22-log - MySQL Community Server (GPL)
--- 服务器操作系统:                      Win64
--- HeidiSQL 版本:                  9.5.0.5196
--- --------------------------------------------------------
-
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8 */;
 /*!50503 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
-
--- 导出 seo_information 的数据库结构
 CREATE DATABASE IF NOT EXISTS `seo_information` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `seo_information`;
 
--- 导出  表 seo_information.t_oauth 结构
 CREATE TABLE IF NOT EXISTS `t_oauth` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `user_info_id` bigint(20) DEFAULT NULL COMMENT '用户基础信息id',
@@ -32,8 +22,6 @@ CREATE TABLE IF NOT EXISTS `t_oauth` (
   UNIQUE KEY `uniq_oauth_access_token` (`oauth_access_token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='OAuth2.0认证表，包括微信、qq，新浪微博等';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_article 结构
 CREATE TABLE IF NOT EXISTS `t_seo_article` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
@@ -57,8 +45,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_article` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo文章表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_article_relate 结构
 CREATE TABLE IF NOT EXISTS `t_seo_article_relate` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `article_id` bigint(20) NOT NULL COMMENT '文章id',
@@ -70,8 +56,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_article_relate` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo相关文章表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_article_tag_mapping 结构
 CREATE TABLE IF NOT EXISTS `t_seo_article_tag_mapping` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `article_id` bigint(20) NOT NULL COMMENT '文章id',
@@ -83,8 +67,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_article_tag_mapping` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo文章标签关联表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_banner 结构
 CREATE TABLE IF NOT EXISTS `t_seo_banner` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `channel_id` bigint(20) NOT NULL COMMENT '频道id',
@@ -102,8 +84,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_banner` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo banner表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_channel 结构
 CREATE TABLE IF NOT EXISTS `t_seo_channel` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
@@ -117,8 +97,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_channel` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo频道表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_column 结构
 CREATE TABLE IF NOT EXISTS `t_seo_column` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
@@ -138,8 +116,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_column` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo栏目表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_seo_tag 结构
 CREATE TABLE IF NOT EXISTS `t_seo_tag` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `name` varchar(50) NOT NULL COMMENT '标签名称',
@@ -154,8 +130,6 @@ CREATE TABLE IF NOT EXISTS `t_seo_tag` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo标签表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_subsidiary_info 结构
 CREATE TABLE IF NOT EXISTS `t_subsidiary_info` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `subsidiary_name` varchar(255) DEFAULT NULL COMMENT '子公司名称',
@@ -172,8 +146,6 @@ CREATE TABLE IF NOT EXISTS `t_subsidiary_info` (
   UNIQUE KEY `uniq_api_key` (`api_key`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='子公司信息管理';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_user 结构
 CREATE TABLE IF NOT EXISTS `t_user` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `user_info_id` bigint(20) DEFAULT NULL COMMENT '用户基础信息id',
@@ -199,8 +171,6 @@ CREATE TABLE IF NOT EXISTS `t_user` (
   KEY `idx_phone` (`phone`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户认证表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_user_bind_relation 结构
 CREATE TABLE IF NOT EXISTS `t_user_bind_relation` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `user_id` bigint(20) NOT NULL COMMENT '当前用户id',
@@ -214,8 +184,6 @@ CREATE TABLE IF NOT EXISTS `t_user_bind_relation` (
   UNIQUE KEY `uniq_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户账号绑定关系表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_user_history_import_control 结构
 CREATE TABLE IF NOT EXISTS `t_user_history_import_control` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID，由于是底层，可以作为业务条件传入',
   `import_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '导入时间',
@@ -225,8 +193,6 @@ CREATE TABLE IF NOT EXISTS `t_user_history_import_control` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户历史数据导入控制表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_user_info 结构
 CREATE TABLE IF NOT EXISTS `t_user_info` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `nick_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户昵称',
@@ -242,8 +208,6 @@ CREATE TABLE IF NOT EXISTS `t_user_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户扩展信息表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_user_modify_record 结构
 CREATE TABLE IF NOT EXISTS `t_user_modify_record` (
   `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
   `user_id` bigint(20) DEFAULT NULL COMMENT '修改用户id',
@@ -258,8 +222,6 @@ CREATE TABLE IF NOT EXISTS `t_user_modify_record` (
   KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户信息修改记录表';
 
--- 数据导出被取消选择。
--- 导出  表 seo_information.t_user_temp 结构
 CREATE TABLE IF NOT EXISTS `t_user_temp` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `account` varchar(200) DEFAULT NULL COMMENT '用户名/账号',
@@ -280,7 +242,6 @@ CREATE TABLE IF NOT EXISTS `t_user_temp` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户信息临时表，为了接收历史数据';
 
--- 数据导出被取消选择。
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
