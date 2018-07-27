@@ -1,6 +1,5 @@
 package com.yxy.dch.seo.information;
 
-import com.yxy.dch.seo.information.service.IHtmlService;
 import com.yxy.dch.seo.information.service.IUserTempService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,8 +17,6 @@ public class InitOperateListener implements CommandLineRunner, EnvironmentAware 
 
     @Autowired
     private IUserTempService userTempService;
-    @Autowired
-    private IHtmlService htmlService;
 
     private boolean isDevEnvironment = false;
 

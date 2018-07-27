@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.ArticleRelate;
 import com.yxy.dch.seo.information.entity.ArticleTagMapping;
-import com.yxy.dch.seo.information.entity.enums.GenHtmlEventEnum;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
@@ -13,7 +12,6 @@ import com.yxy.dch.seo.information.mapper.ArticleRelateMapper;
 import com.yxy.dch.seo.information.mapper.ArticleTagMapper;
 import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.IArticleService;
-import com.yxy.dch.seo.information.service.IHtmlService;
 import com.yxy.dch.seo.information.service.ITagService;
 import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.ArticleRelateVO;
@@ -26,7 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,8 +44,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleTagMapper articleTagMapper;
     @Autowired
     private ArticleRelateMapper articleRelateMapper;
-    @Autowired
-    private IHtmlService htmlService;
     @Autowired
     private ITagService tagService;
 
@@ -136,9 +131,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         article.setUpTime(Toolkit.getCurDate());
         articleMapper.updateById(article);
 
-        // 生成html
-        htmlService.generateHtml(GenHtmlEventEnum.ARTICLE_UP);
-
         return articleMapper.selectArticleById(article.getId());
     }
 
@@ -177,32 +169,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<ArticleVO> recommended() {
         return articleMapper.selectRecommendedArticles();
-    }
-
-    @Override
-    public List<ArticleVO> filterByColumn(ArticleVO param) {
-        Article article = new Article();
-        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(article).where("column_id={0}", param.getColumnId()));
-        List<ArticleVO> articleVOList = new ArrayList<>();
-        for (Article entity : articleList) {
-            ArticleVO vo = new ArticleVO();
-            BeanUtils.copyProperties(entity, vo);
-            articleVOList.add(vo);
-        }
-        return articleVOList;
-    }
-
-    @Override
-    public List<ArticleVO> filterByTag(ArticleVO param) {
-        Article article = new Article();
-        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(article).like("tags", "%" + param.getTags() + "%"));
-        List<ArticleVO> articleVOList = new ArrayList<>();
-        for (Article entity : articleList) {
-            ArticleVO vo = new ArticleVO();
-            BeanUtils.copyProperties(entity, vo);
-            articleVOList.add(vo);
-        }
-        return articleVOList;
     }
 
     @Override

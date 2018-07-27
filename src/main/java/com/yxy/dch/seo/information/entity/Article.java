@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -26,11 +27,13 @@ public class Article extends Model<Article> {
     /**
      * 标题
      */
+    @Size(max = 50, message = "文章标题不能超过50位")
     @TableField("title")
     private String title;
     /**
      * 关键词
      */
+    @Size(max = 50, message = "文章关键词不能超过50位")
     @TableField("keyword")
     private String keyword;
     /**

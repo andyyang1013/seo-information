@@ -50,6 +50,19 @@
         SELECT
         <include refid="columns"/>
         FROM t_seo_channel c
+        WHERE 1 = 1
+        <if test="title != null and title != ''">
+            AND c.title like '%${title}%'
+        </if>
+        <if test="keyword != null and keyword != ''">
+            AND c.keyword like '%${keyword}%'
+        </if>
+        <if test="desc != null and desc != ''">
+            AND c.desc like '%${desc}%'
+        </if>
+        <if test="href != null and href != ''">
+            AND c.href like '%${href}%'
+        </if>
     </select>
 
 </mapper>

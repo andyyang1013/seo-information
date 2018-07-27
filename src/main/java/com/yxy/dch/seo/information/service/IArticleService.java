@@ -32,10 +32,6 @@ public interface IArticleService extends IService<Article> {
 
     List<ArticleVO> recommended();
 
-    List<ArticleVO> filterByColumn(ArticleVO param);
-
-    List<ArticleVO> filterByTag(ArticleVO param);
-
     ArticleVO read(ArticleVO param);
 
     void save(String articleId, String relateArticleIds);

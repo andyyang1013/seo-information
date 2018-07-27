@@ -178,11 +178,11 @@ where a.id = #{id}
         <include refid="columns"/>
         FROM t_seo_article a
         WHERE 1 = 1
-        <if test="name!=null and name!=''">
-            AND name LIKE '%${name}%'
+        <if test="name != null and name != ''">
+            AND a.name LIKE '%${name}%'
         </if>
-        <if test="tags!=null and tags!=''">
-            AND tags LIKE '%${tags}%'
+        <if test="tags != null and tags != ''">
+            AND a.tags LIKE '%${tags}%'
         </if>
         ORDER BY a.update_time DESC
     </select>

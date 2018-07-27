@@ -11,6 +11,7 @@
 + JDK 1.8
 + Redis 3.2.9
 + Mysql 5.7
++ Minio
 + lombok 插件
 
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ public class ArticleController extends BaseController {
      * @return 新增的文章
      */
     @PostMapping("/create")
-    public ArticleVO create(ArticleVO param) {
+    public ArticleVO create(@Valid ArticleVO param) {
         if (StringUtils.isBlank(param.getName()) || param.getColumnId() == null || param.getRecommend() == null || StringUtils.isBlank(param.getContent())) {
             logger.error("新增文章参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);

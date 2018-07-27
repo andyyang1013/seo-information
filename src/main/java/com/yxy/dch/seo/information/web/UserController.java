@@ -31,14 +31,14 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 会员相关api接口
+ * 用户controller
  *
  * @author yangzhen
  */
 @RestController
 @RequestMapping("/api")
 @Api
-public class MemberController extends BaseController {
+public class UserController extends BaseController {
 
     @Autowired
     private IUserService userService;

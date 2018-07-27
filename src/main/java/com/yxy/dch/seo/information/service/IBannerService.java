@@ -22,5 +22,4 @@ public interface IBannerService extends IService<Banner> {
 
     List<BannerVO> listBy(BannerVO param);
 
-    List<BannerVO> listOrderBy(BannerVO param);
 }

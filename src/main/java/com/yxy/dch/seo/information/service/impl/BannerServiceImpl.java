@@ -1,6 +1,5 @@
 package com.yxy.dch.seo.information.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Banner;
 import com.yxy.dch.seo.information.entity.Channel;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -91,29 +89,7 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
 
     @Override
     public List<BannerVO> listBy(BannerVO param) {
-//        Banner banner = new Banner();
-//        BeanUtils.copyProperties(param, banner);
-//        List<Banner> bannerList = bannerMapper.selectList(new EntityWrapper<>(banner));
-//        List<BannerVO> bannerVOList = new ArrayList<>();
-//        for (Banner entity : bannerList) {
-//            BannerVO vo = new BannerVO();
-//            BeanUtils.copyProperties(entity, vo);
-//            bannerVOList.add(vo);
-//        }
         return bannerMapper.selectBannerList(param);
     }
 
-    @Override
-    public List<BannerVO> listOrderBy(BannerVO param) {
-        Banner banner = new Banner();
-        BeanUtils.copyProperties(param, banner);
-        List<Banner> bannerList = bannerMapper.selectList(new EntityWrapper<>(banner).where("visible={0}", 1).orderBy("orderNum", true));
-        List<BannerVO> bannerVOList = new ArrayList<>();
-        for (Banner entity : bannerList) {
-            BannerVO vo = new BannerVO();
-            BeanUtils.copyProperties(entity, vo);
-            bannerVOList.add(vo);
-        }
-        return bannerVOList;
-    }
 }
