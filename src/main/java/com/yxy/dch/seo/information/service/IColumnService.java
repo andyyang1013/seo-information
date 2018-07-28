@@ -23,4 +23,6 @@ public interface IColumnService extends IService<Column> {
     List<ColumnVO> listBy(ColumnVO param);
 
     List<ColumnVO> getColumnListByIndexPage();
+
+    ColumnVO selectColumnByNamePinyin(String namePinyin);
 }

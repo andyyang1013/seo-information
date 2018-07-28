@@ -115,4 +115,9 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         }
         return columnList;
     }
+
+    @Override
+    public ColumnVO selectColumnByNamePinyin(String namePinyin) {
+        return columnMapper.selectColumnByNamePinyin(namePinyin);
+    }
 }

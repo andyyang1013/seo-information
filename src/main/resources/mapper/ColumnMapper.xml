@@ -70,5 +70,11 @@
         FROM t_seo_column c ORDER BY c.update_time DESC
     </select>
 
+    <select id="selectColumnByNamePinyin" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_column c WHERE c.name_pinyin = #{namePinyin}
+    </select>
+
 </mapper>
 

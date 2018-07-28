@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="${tag.desc}">
+    <meta name="keywords" content="${tag.keyword}">
     <#assign base=springMacroRequestContext.contextPath />
     <#assign indexPage="https://www.daicaihang.com/" />
     <link href="${base}/images/favicon.ico" rel="icon" type="image/x-icon">
     <link rel="shortcut icon" href="${base}/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${base}/css/main.css">
-    <title>贷财行SEO</title>
+    <title>${tag.title}</title>
 </head>
 <body>
 <!-- 页头 -->

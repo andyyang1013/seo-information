@@ -15,4 +15,6 @@ public interface ColumnMapper extends BaseMapper<Column> {
     List<ColumnVO> getColumnListByIndexPage();
 
     List<ColumnVO> selectColumnList(ColumnVO param);
+
+    ColumnVO selectColumnByNamePinyin(String namePinyin);
 }

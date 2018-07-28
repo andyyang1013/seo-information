@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="description" content="${article.desc}">
+    <meta name="keywords" content="${article.keyword}">
     <#assign base=springMacroRequestContext.contextPath />
     <#assign indexPage="https://www.daicaihang.com/" />
     <link href="${base}/images/favicon.ico" rel="icon" type="image/x-icon">
     <link rel="shortcut icon" href="${base}/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${base}/jslib/swiper-4.1.6/swiper-4.1.6.min.css">
     <link rel="stylesheet" href="${base}/css/main.css">
-    <title>贷财行SEO</title>
+    <title>${article.title}</title>
 </head>
 <body>
 <!-- 页头 -->

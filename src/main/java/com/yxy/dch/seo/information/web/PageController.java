@@ -2,13 +2,12 @@ package com.yxy.dch.seo.information.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
+import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.entity.Tag;
-import com.yxy.dch.seo.information.service.IArticleService;
-import com.yxy.dch.seo.information.service.IBannerService;
-import com.yxy.dch.seo.information.service.IColumnService;
-import com.yxy.dch.seo.information.service.ITagService;
+import com.yxy.dch.seo.information.service.*;
 import com.yxy.dch.seo.information.vo.ArticleVO;
+import com.yxy.dch.seo.information.vo.ColumnVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,12 +27,17 @@ public class PageController {
     private IColumnService columnService;
     @Autowired
     private ITagService tagService;
+    @Autowired
+    private IChannelService channelService;
     private static final String domain = "http://www.daicaihang.com/news/";
 
     @RequestMapping("/")
     public ModelAndView index() {
         // 频道首页
         ModelAndView modelAndView = new ModelAndView("index");
+        // 频道
+        Channel channel = channelService.getDefaultChannel(null);
+        modelAndView.addObject("channel",channel);
         // 栏目列表（包含栏目下的文章）
         modelAndView.addObject("columnList", columnService.getColumnListByIndexPage());
         // 热门文章
@@ -49,6 +53,9 @@ public class PageController {
     public ModelAndView column(@PathVariable("namePinyin") String namePinyin) {
         // 栏目页
         ModelAndView modelAndView = new ModelAndView("column");
+        // 栏目
+        ColumnVO column = columnService.selectColumnByNamePinyin(namePinyin);
+        modelAndView.addObject("column",column);
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
@@ -76,6 +83,9 @@ public class PageController {
     public ModelAndView tag(@PathVariable("id") String id) {
         // 标签详细页
         ModelAndView modelAndView = new ModelAndView("tag");
+        // 标签
+        Tag tag = tagService.selectById(id);
+        modelAndView.addObject("tag",tag);
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
