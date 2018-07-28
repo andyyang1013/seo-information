@@ -61,19 +61,11 @@
                 </div>
             </#list>
         <ul class="page-container">
-            <li><a href="javascript:;">首页</a></li>
-            <li><a href="javascript:;">上一页</a></li>
-            <li><a href="javascript:;" class="select">1</a></li>
-            <li><a href="javascript:;">2</a></li>
-            <li><a href="javascript:;">3</a></li>
-            <li><a href="javascript:;">...</a></li>
-            <li><a href="javascript:;">10</a></li>
-            <li><a href="javascript:;">下一页</a></li>
-            <li><a href="javascript:;">尾页</a></li>
-            <li>
-                <input type="text">
-            </li>
-            <li><a href="javascript:;">go</a></li>
+            <#if pageCount != 1>
+                    <#list 1..pageCount as i>
+                        <li><a href="${base}/tag/${tag.id}.html/i">${i}</a></li>
+                    </#list>
+            </#if>
         </ul>
     </div>
     <div class="content-r">

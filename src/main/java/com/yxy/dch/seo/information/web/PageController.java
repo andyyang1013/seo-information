@@ -2,6 +2,7 @@ package com.yxy.dch.seo.information.web;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.entity.Tag;
@@ -63,7 +64,43 @@ public class PageController {
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
+        PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
+        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
+        // 栏目列表
+        modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
+        // 热门文章
+        modelAndView.addObject("hottest", articleService.hottest());
+        // 推荐文章
+        modelAndView.addObject("recommended", articleService.recommended());
+        // 日排行榜
+        PageHelper.startPage(1, 10, true);
+        List<ArticleVO> topArticles = articleService.dayTopArticles();
+        modelAndView.addObject("dayTopArticles", topArticles);
+        // 周排行榜
+        PageHelper.startPage(1, 10, true);
+        List<ArticleVO> weekTopArticles = articleService.weekTopArticles();
+        modelAndView.addObject("weekTopArticles", weekTopArticles);
+        // 标签列表
+        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        return modelAndView;
+    }
+
+    @RequestMapping("/{namePinyin}/{index}")
+    public ModelAndView column(@PathVariable("namePinyin") String namePinyin,@PathVariable("index") Integer index) {
+        // 栏目页
+        ModelAndView modelAndView = new ModelAndView("column");
+        // 栏目
+        ColumnVO column = columnService.selectColumnByNamePinyin(namePinyin);
+        modelAndView.addObject("column",column);
+        // 频道
+        modelAndView.addObject("channel",channelService.selectById(column.getChannelId()));
+        // 文章列表
+        PageHelper.startPage(index, 10, true);
+        List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
+        PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
+        modelAndView.addObject("articleList", articleList);
+        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 热门文章
@@ -96,6 +133,34 @@ public class PageController {
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
         modelAndView.addObject("articleList", articleList);
+        PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
+        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
+        // 栏目列表
+        modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
+        // 热门文章
+        modelAndView.addObject("hottest", articleService.hottest());
+        // 推荐文章
+        modelAndView.addObject("recommended", articleService.recommended());
+        // 标签列表
+        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        return modelAndView;
+    }
+
+    @RequestMapping("/tag/{id}.html/{index}")
+    public ModelAndView tag(@PathVariable("id") String id, @PathVariable("index") Integer index) {
+        // 标签详细页
+        ModelAndView modelAndView = new ModelAndView("tag");
+        // 标签
+        Tag tag = tagService.selectById(id);
+        modelAndView.addObject("tag",tag);
+        // 频道
+        modelAndView.addObject("channel",channelService.getDefaultChannel(null));
+        // 文章列表
+        PageHelper.startPage(index, 10, true);
+        List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
+        modelAndView.addObject("articleList", articleList);
+        PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
+        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 热门文章
