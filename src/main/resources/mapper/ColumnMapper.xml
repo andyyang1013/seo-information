@@ -76,5 +76,9 @@
         FROM t_seo_column c WHERE c.name_pinyin = #{namePinyin}
     </select>
 
+    <select id="getMaxOrderNum" resultType="java.lang.Integer">
+        SELECT MAX(c.order_num) FROM t_seo_column c WHERE c.channel_id = #{channelId}
+    </select>
+
 </mapper>
 

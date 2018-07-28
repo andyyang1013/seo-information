@@ -40,9 +40,19 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     @Transactional(rollbackFor = Exception.class)
     public ColumnVO create(ColumnVO param) {
 
+
         // 获取频道
         String channelId = param.getChannelId();
         Channel channel = channelService.getDefaultChannel(channelId);
+
+        // 排序检查
+        Integer maxOrderNum = columnMapper.getMaxOrderNum(channel.getId());
+        if (maxOrderNum == null) {
+            maxOrderNum = 0;
+        }
+        if (param.getOrderNum() > maxOrderNum + 1) {
+            throw new BizException(CodeMsg.seo_orderNum_error);
+        }
 
         // 新增栏目
         Column column = new Column();
@@ -77,6 +87,15 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         Column column = columnMapper.selectById(param.getId());
         if (column == null) {
             throw new BizException(CodeMsg.record_not_exist);
+        }
+
+        // 排序检查
+        Integer maxOrderNum = columnMapper.getMaxOrderNum(column.getChannelId());
+        if (maxOrderNum == null) {
+            maxOrderNum = 0;
+        }
+        if (param.getOrderNum() > maxOrderNum + 1) {
+            throw new BizException(CodeMsg.seo_orderNum_error);
         }
 
         BeanUtils.copyProperties(param, column);
