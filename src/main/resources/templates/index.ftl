@@ -43,12 +43,10 @@
 <div class="banner-content">
     <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/xxpl_bankmana.html"><img
-                    src="${base}/images/banner01.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/dbsj.html"><img
-                    src="${base}/images/banner02.jpg" alt=""></a></div>
-            <div class="swiper-slide"><a href="https://www.daicaihang.com/index/front/xxpl_progress.html"><img
-                    src="${base}/images/banner03.jpg" alt=""></a></div>
+            <#list bannerList as banner>
+                <div class="swiper-slide"><a href="${banner.url}"><img
+                        src="${banner.pictureUrl}" alt=""></a></div>
+            </#list>
         </div>
         <!-- Add Pagination -->
         <div class="swiper-pagination"></div>

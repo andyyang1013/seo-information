@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.ArticleRelate;
 import com.yxy.dch.seo.information.entity.ArticleTagMapping;
+import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
@@ -12,6 +13,7 @@ import com.yxy.dch.seo.information.mapper.ArticleRelateMapper;
 import com.yxy.dch.seo.information.mapper.ArticleTagMapper;
 import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.IArticleService;
+import com.yxy.dch.seo.information.service.IColumnService;
 import com.yxy.dch.seo.information.service.ITagService;
 import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.ArticleRelateVO;
@@ -46,10 +48,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleRelateMapper articleRelateMapper;
     @Autowired
     private ITagService tagService;
+    @Autowired
+    private IColumnService columnService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ArticleVO create(ArticleVO param) {
+
+        // 栏目是否存在
+        Column column = columnService.selectById(param.getColumnId());
+        if (column == null){
+            logger.error("栏目不存在({})",param.getColumnId());
+            throw new BizException(CodeMsg.record_not_exist);
+        }
+
         // 保存文章
         Article article = new Article();
         BeanUtils.copyProperties(param, article);

@@ -40,6 +40,8 @@ public class PageController {
         modelAndView.addObject("channel",channel);
         // 栏目列表（包含栏目下的文章）
         modelAndView.addObject("columnList", columnService.getColumnListByIndexPage());
+        // banner列表
+        modelAndView.addObject("bannerList",bannerService.selectDisplayableBannerList(channel.getId()));
         // 热门文章
         modelAndView.addObject("hottest", articleService.hottest());
         // 最新文章
@@ -112,6 +114,8 @@ public class PageController {
         modelAndView.addObject("article", article);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
+        // banner列表
+        modelAndView.addObject("bannerList",bannerService.selectDisplayableBannerList(article.getColumn().getChannelId()));
         // 热门文章
         modelAndView.addObject("hottest", articleService.hottest());
         // 推荐文章

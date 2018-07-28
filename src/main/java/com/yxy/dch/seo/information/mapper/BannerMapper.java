@@ -13,4 +13,6 @@ import java.util.List;
  */
 public interface BannerMapper extends BaseMapper<Banner> {
     List<BannerVO> selectBannerList(BannerVO param);
+
+    List<BannerVO> selectDisplayableBannerList(String channelId);
 }

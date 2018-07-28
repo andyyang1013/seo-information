@@ -21,10 +21,10 @@
         <div class="top_menu_R">
             <div class="top_list">
                 <ul class="tnav">
-                        <#list columnList as column>
+                        <#list columnList as col>
                         <li class="n1">
-                            <a href="${base}/${column.namePinyin}/">
-                                ${column.name}
+                            <a href="${base}/${col.namePinyin}/">
+                                ${col.name}
                             </a>
                         </li>
                         </#list>
@@ -77,8 +77,8 @@
                 <span class="select">栏目</span>
             </h3>
             <div class="item-content">
-                    <#list columnList as column>
-                        <a href="${base}/${column.namePinyin}/" class="">${column.name}</a>
+                    <#list columnList as col>
+                        <a href="${base}/${col.namePinyin}/" class="">${col.name}</a>
                     </#list>
             </div>
         </div>

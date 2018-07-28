@@ -43,7 +43,7 @@ public class ArticleController extends BaseController {
      */
     @PostMapping("/create")
     public ArticleVO create(@Valid ArticleVO param) {
-        if (StringUtils.isBlank(param.getName()) || param.getColumnId() == null || param.getRecommend() == null || StringUtils.isBlank(param.getContent())) {
+        if (StringUtils.isBlank(param.getName()) || StringUtils.isBlank(param.getColumnId()) || param.getRecommend() == null || StringUtils.isBlank(param.getContent())) {
             logger.error("新增文章参数错误({}):param={}", CodeMsg.param_note_blank.getMsg(), JacksonUtil.toJson(param));
             throw new BizException(CodeMsg.param_note_blank);
         }

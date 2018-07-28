@@ -22,4 +22,5 @@ public interface IBannerService extends IService<Banner> {
 
     List<BannerVO> listBy(BannerVO param);
 
+    List<BannerVO> selectDisplayableBannerList(String channelId);
 }

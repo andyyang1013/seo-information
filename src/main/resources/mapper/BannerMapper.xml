@@ -58,5 +58,11 @@
         FROM t_seo_banner b WHERE 1 = 1 ORDER BY b.update_time DESC
     </select>
 
+    <select id="selectDisplayableBannerList" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_banner b WHERE b.channel_id = #{channelId} AND b.visible = 1
+    </select>
+
 </mapper>
 

@@ -77,8 +77,8 @@
                 <span class="select">标签</span>
             </h3>
             <div class="item-content">
-                    <#list tagList as tag>
-                        <a href="${base}/tag/${tag.id}.html" class="tag tag1">${tag.name}</a>
+                    <#list tagList as tg>
+                        <a href="${base}/tag/${tg.id}.html" class="tag tag1">${tg.name}</a>
                     </#list>
             </div>
         </div>
