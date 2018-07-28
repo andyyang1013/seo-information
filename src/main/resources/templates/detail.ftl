@@ -54,7 +54,12 @@
 </div>
 <!-- 面包屑 -->
 <div class="breadcrumb" style="margin-top: 0;">
-    当前位置：<a href="#">频道</a><span>&gt;</span><a href="column.ftl">栏目1</a>
+    当前位置：
+    <a href="${base}">${channel.title}</a>
+    <span>&gt;</span>
+    <a href="${base}/${article.column.namePinyin}/">${article.column.name}</a>
+    <span>&gt;</span>
+    <a href="${base}/${article.id}.html">${article.name}</a>
 </div>
 <!-- 内容  -->
 <div class="container ">

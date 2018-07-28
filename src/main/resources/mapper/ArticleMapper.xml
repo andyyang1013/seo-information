@@ -61,6 +61,9 @@
         <result property="column.createUid" column="col_create_uid"/>
         <result property="column.updateTime" column="col_update_time"/>
         <result property="column.updateUid" column="col_update_uid"/>
+
+        <result property="columnName" column="col_name"/>
+
         <collection property="tagList" ofType="com.yxy.dch.seo.information.entity.Tag">
             <id property="id" column="tag_id"/>
             <result property="name" column="tag_name"/>
@@ -175,8 +178,24 @@ where a.id = #{id}
 
     <select id="selectArticleList" resultMap="customVoResultMap">
         SELECT
-        <include refid="columns"/>
+        <include refid="columns"/>,
+        col.id AS col_id,
+        col.title AS col_title,
+        col.keyword AS col_keyword,
+        col.desc AS col_desc,
+        col.channel_id AS col_channel_id,
+        col.name AS col_name,
+        col.name_pinyin AS col_name_pinyin,
+        col.href AS col_href,
+        col.visible AS col_visible,
+        col.order_num AS col_order_num,
+        col.picture_url AS col_picture_url,
+        col.create_time AS col_create_time,
+        col.create_uid AS col_create_uid,
+        col.update_time AS col_update_time,
+        col.update_uid AS col_update_uid
         FROM t_seo_article a
+        LEFT JOIN t_seo_column col ON a.column_id = col.id
         WHERE 1 = 1
         <if test="name != null and name != ''">
             AND a.name LIKE '%${name}%'

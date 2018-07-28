@@ -58,6 +58,8 @@ public class PageController {
         // 栏目
         ColumnVO column = columnService.selectColumnByNamePinyin(namePinyin);
         modelAndView.addObject("column",column);
+        // 频道
+        modelAndView.addObject("channel",channelService.selectById(column.getChannelId()));
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
@@ -88,6 +90,8 @@ public class PageController {
         // 标签
         Tag tag = tagService.selectById(id);
         modelAndView.addObject("tag",tag);
+        // 频道
+        modelAndView.addObject("channel",channelService.getDefaultChannel(null));
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
@@ -112,6 +116,8 @@ public class PageController {
         param.setId(id);
         ArticleVO article = articleService.view(param);
         modelAndView.addObject("article", article);
+        // 频道
+        modelAndView.addObject("channel",channelService.selectById(article.getColumn().getChannelId()));
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // banner列表
@@ -120,6 +126,19 @@ public class PageController {
         modelAndView.addObject("hottest", articleService.hottest());
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended());
+        // 标签列表
+        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        return modelAndView;
+    }
+
+    @RequestMapping("/tag/")
+    public ModelAndView tagHome(){
+        // 标签首页页
+        ModelAndView modelAndView = new ModelAndView("tag_home");
+        // 栏目列表
+        modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
+        // 频道
+        modelAndView.addObject("channel",channelService.getDefaultChannel(null));
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
         return modelAndView;

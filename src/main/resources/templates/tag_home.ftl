@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <#assign base=springMacroRequestContext.contextPath />
+    <#assign indexPage="https://www.daicaihang.com/" />
     <link href="${base}/images/favicon.ico" rel="icon" type="image/x-icon">
     <link rel="shortcut icon" href="${base}/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${base}/css/main.css">
-    <title>贷财行SEO</title>
+    <title>${channel.title}</title>
 </head>
 <body>
 <!-- 页头 -->
@@ -18,38 +19,15 @@
         <div class="top_menu_R">
             <div class="top_list">
                 <ul class="tnav">
+                    <#list columnList as column>
+                        <li class="n1">
+                            <a href="${base}/${column.namePinyin}/">
+                                ${column.name}
+                            </a>
+                        </li>
+                    </#list>
                     <li class="n1">
-                        <a href="column.ftl">
-                            内容6
-                        </a>
-                    </li>
-                    <li class="n1">
-                        <a href="column.ftl">
-                            内容5
-                        </a>
-                    </li>
-                    <li class="n1">
-                        <a href="column.ftl">
-                            内容4
-                        </a>
-                    </li>
-                    <li class="n1">
-                        <a href="column.ftl">
-                            内容3
-                        </a>
-                    </li>
-                    <li class="n1">
-                        <a href="column.ftl">
-                            内容2
-                        </a>
-                    </li>
-                    <li class="n1">
-                        <a href="column.ftl">
-                            内容1
-                        </a>
-                    </li>
-                    <li class="n1">
-                        <a href="index.ftl" class="ore">
+                        <a href="${indexPage}" class="ore">
                             首页
                         </a>
                     </li>
@@ -60,21 +38,13 @@
 </div>
 <!-- 面包屑 -->
 <div class="breadcrumb">
-    当前位置：<a href="#">频道</a><span>&gt;</span><a href="#">标签首页</a>
+    当前位置：<a href="${base}">${channel.title}</a><span>&gt;</span><a href="#">标签首页</a>
 </div>
 <!-- 内容 -->
 <div class="container tag-home-container">
-    <a href="#" class="tag1">理财小知识</a>
-    <a href="#" class="tag2">理财小知识</a>
-    <a href="#" class="tag3">理财小知识</a>
-    <a href="#" class="tag1">理财小知识</a>
-    <a href="#" class="tag2">理财小知识</a>
-    <a href="#" class="tag3">理财小知识</a>
-    <a href="#" class="tag2">理财小知识</a>
-    <a href="#" class="tag3">理财小知识</a>
-    <a href="#" class="tag3">理财小知识</a>
-    <a href="#" class="tag2">理财小知识</a>
-    <a href="#" class="tag3">理财小知识</a>
+    <#list tagList as tag>
+        <a href="${base}/${tag.id}.html" class="tag1">${tag.name}</a>
+    </#list>
 </div>
 <!-- 页脚 -->
 <div class="footer">

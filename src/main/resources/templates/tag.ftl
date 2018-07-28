@@ -40,7 +40,12 @@
 </div>
 <!-- 面包屑 -->
 <div class="breadcrumb">
-    当前位置：<a href="#">频道</a><span>&gt;</span><a href="#">栏目1</a>
+    当前位置：
+    <a href="${base}">${channel.title}</a>
+    <span>&gt;</span>
+    <a href="${base}/tag/">标签首页</a>
+    <span>&gt;</span>
+    <a href="${base}/tag/${tag.id}.html">${tag.name}</a>
 </div>
 <!-- 内容  -->
 <div class="container">

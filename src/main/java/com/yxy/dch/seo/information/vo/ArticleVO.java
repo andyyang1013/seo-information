@@ -30,4 +30,8 @@ public class ArticleVO extends Article {
      * 所属栏目
      */
     private Column column;
+    /**
+     * 栏目名称
+     */
+    private String columnName;
 }
