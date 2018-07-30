@@ -33,6 +33,7 @@ public class PageController extends BaseController {
 
     /**
      * 访问频道主页
+     *
      * @return 频道主页
      */
     @RequestMapping("/")
@@ -42,41 +43,43 @@ public class PageController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("index");
         // 频道
         Channel channel = channelService.getDefaultChannel(null);
-        modelAndView.addObject("channel",channel);
+        modelAndView.addObject("channel", channel);
         // 栏目列表（包含栏目下的文章）
         modelAndView.addObject("columnList", columnService.getColumnListByIndexPage());
         // banner列表
-        modelAndView.addObject("bannerList",bannerService.selectDisplayableBannerList(channel.getId()));
+        modelAndView.addObject("bannerList", bannerService.selectDisplayableBannerList(channel.getId()));
         // 热门文章
         modelAndView.addObject("hottest", articleService.hottest());
         // 最新文章
         modelAndView.addObject("newest", articleService.newest());
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended());
+        logger.info("访问频道主页返回{}", modelAndView);
         return modelAndView;
     }
 
     /**
      * 访问栏目页
+     *
      * @param namePinyin 栏目名称拼音
      * @return 栏目页
      */
     @RequestMapping("/{namePinyin}/")
     public ModelAndView column(@PathVariable("namePinyin") String namePinyin) {
-        logger.info("访问栏目页");
+        logger.info("访问栏目页,param={}", namePinyin);
         // 栏目页
         ModelAndView modelAndView = new ModelAndView("column");
         // 栏目
         ColumnVO column = columnService.selectColumnByNamePinyin(namePinyin);
-        modelAndView.addObject("column",column);
+        modelAndView.addObject("column", column);
         // 频道
-        modelAndView.addObject("channel",channelService.selectById(column.getChannelId()));
+        modelAndView.addObject("channel", channelService.selectById(column.getChannelId()));
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
-        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
+        modelAndView.addObject("pageCount", pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 热门文章
@@ -93,31 +96,33 @@ public class PageController extends BaseController {
         modelAndView.addObject("weekTopArticles", weekTopArticles);
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        logger.info("访问栏目页返回{}", modelAndView);
         return modelAndView;
     }
 
     /**
      * 访问栏目页(分页)
+     *
      * @param namePinyin 栏目名称拼音
-     * @param index 页码
+     * @param index      页码
      * @return 栏目页
      */
 //    @RequestMapping("/{namePinyin}/{index}")
-    public ModelAndView column(@PathVariable("namePinyin") String namePinyin,@PathVariable("index") Integer index) {
+    public ModelAndView column(@PathVariable("namePinyin") String namePinyin, @PathVariable("index") Integer index) {
         logger.info("访问栏目页(分页)");
         // 栏目页
         ModelAndView modelAndView = new ModelAndView("column");
         // 栏目
         ColumnVO column = columnService.selectColumnByNamePinyin(namePinyin);
-        modelAndView.addObject("column",column);
+        modelAndView.addObject("column", column);
         // 频道
-        modelAndView.addObject("channel",channelService.selectById(column.getChannelId()));
+        modelAndView.addObject("channel", channelService.selectById(column.getChannelId()));
         // 文章列表
         PageHelper.startPage(index, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
-        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
+        modelAndView.addObject("pageCount", pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 热门文章
@@ -139,25 +144,26 @@ public class PageController extends BaseController {
 
     /**
      * 访问标签详细页
+     *
      * @param id 标签id
      * @return 标签详细页
      */
     @RequestMapping("/tag/{id}.html")
     public ModelAndView tag(@PathVariable("id") String id) {
-        logger.info("访问标签详细页");
+        logger.info("访问标签详细页,param={}", id);
         // 标签详细页
         ModelAndView modelAndView = new ModelAndView("tag");
         // 标签
         Tag tag = tagService.selectById(id);
-        modelAndView.addObject("tag",tag);
+        modelAndView.addObject("tag", tag);
         // 频道
-        modelAndView.addObject("channel",channelService.getDefaultChannel(null));
+        modelAndView.addObject("channel", channelService.getDefaultChannel(null));
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
         modelAndView.addObject("articleList", articleList);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
-        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
+        modelAndView.addObject("pageCount", pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 热门文章
@@ -166,12 +172,14 @@ public class PageController extends BaseController {
         modelAndView.addObject("recommended", articleService.recommended());
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        logger.info("访问标签详细页返回{}", modelAndView);
         return modelAndView;
     }
 
     /**
      * 访问标签详情页(分页)
-     * @param id 标签id
+     *
+     * @param id    标签id
      * @param index 页码
      * @return 标签详情页
      */
@@ -182,15 +190,15 @@ public class PageController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("tag");
         // 标签
         Tag tag = tagService.selectById(id);
-        modelAndView.addObject("tag",tag);
+        modelAndView.addObject("tag", tag);
         // 频道
-        modelAndView.addObject("channel",channelService.getDefaultChannel(null));
+        modelAndView.addObject("channel", channelService.getDefaultChannel(null));
         // 文章列表
         PageHelper.startPage(index, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
         modelAndView.addObject("articleList", articleList);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
-        modelAndView.addObject("pageCount",pageInfo.getTotal()/10==0?1:pageInfo.getTotal()/10);
+        modelAndView.addObject("pageCount", pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10);
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 热门文章
@@ -204,6 +212,7 @@ public class PageController extends BaseController {
 
     /**
      * 访问文章页
+     *
      * @param id 文章id
      * @return 文章页
      */
@@ -218,35 +227,38 @@ public class PageController extends BaseController {
         ArticleVO article = articleService.view(param);
         modelAndView.addObject("article", article);
         // 频道
-        modelAndView.addObject("channel",channelService.selectById(article.getColumn().getChannelId()));
+        modelAndView.addObject("channel", channelService.selectById(article.getColumn().getChannelId()));
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // banner列表
-        modelAndView.addObject("bannerList",bannerService.selectDisplayableBannerList(article.getColumn().getChannelId()));
+        modelAndView.addObject("bannerList", bannerService.selectDisplayableBannerList(article.getColumn().getChannelId()));
         // 热门文章
         modelAndView.addObject("hottest", articleService.hottest());
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended());
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        logger.info("访问文章页返回{}", modelAndView);
         return modelAndView;
     }
 
     /**
      * 访问标签首页
+     *
      * @return 标签首页
      */
     @RequestMapping("/tag/")
-    public ModelAndView tagHome(){
+    public ModelAndView tagHome() {
         logger.info("访问标签首页");
         // 标签首页页
         ModelAndView modelAndView = new ModelAndView("tag_home");
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectList(new EntityWrapper<>(new Column())));
         // 频道
-        modelAndView.addObject("channel",channelService.getDefaultChannel(null));
+        modelAndView.addObject("channel", channelService.getDefaultChannel(null));
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        logger.info("访问标签首页返回{}", modelAndView);
         return modelAndView;
     }
 
