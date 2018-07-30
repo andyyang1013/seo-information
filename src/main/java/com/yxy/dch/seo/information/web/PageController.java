@@ -19,7 +19,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/")
-public class PageController {
+public class PageController extends BaseController {
     @Autowired
     private IArticleService articleService;
     @Autowired
@@ -30,10 +30,14 @@ public class PageController {
     private ITagService tagService;
     @Autowired
     private IChannelService channelService;
-    private static final String domain = "http://www.daicaihang.com/news/";
 
+    /**
+     * 访问频道主页
+     * @return 频道主页
+     */
     @RequestMapping("/")
     public ModelAndView index() {
+        logger.info("访问频道主页");
         // 频道首页
         ModelAndView modelAndView = new ModelAndView("index");
         // 频道
@@ -52,8 +56,14 @@ public class PageController {
         return modelAndView;
     }
 
+    /**
+     * 访问栏目页
+     * @param namePinyin 栏目名称拼音
+     * @return 栏目页
+     */
     @RequestMapping("/{namePinyin}/")
     public ModelAndView column(@PathVariable("namePinyin") String namePinyin) {
+        logger.info("访问栏目页");
         // 栏目页
         ModelAndView modelAndView = new ModelAndView("column");
         // 栏目
@@ -86,8 +96,15 @@ public class PageController {
         return modelAndView;
     }
 
-    @RequestMapping("/{namePinyin}/{index}")
+    /**
+     * 访问栏目页(分页)
+     * @param namePinyin 栏目名称拼音
+     * @param index 页码
+     * @return 栏目页
+     */
+//    @RequestMapping("/{namePinyin}/{index}")
     public ModelAndView column(@PathVariable("namePinyin") String namePinyin,@PathVariable("index") Integer index) {
+        logger.info("访问栏目页(分页)");
         // 栏目页
         ModelAndView modelAndView = new ModelAndView("column");
         // 栏目
@@ -120,8 +137,14 @@ public class PageController {
         return modelAndView;
     }
 
+    /**
+     * 访问标签详细页
+     * @param id 标签id
+     * @return 标签详细页
+     */
     @RequestMapping("/tag/{id}.html")
     public ModelAndView tag(@PathVariable("id") String id) {
+        logger.info("访问标签详细页");
         // 标签详细页
         ModelAndView modelAndView = new ModelAndView("tag");
         // 标签
@@ -146,8 +169,15 @@ public class PageController {
         return modelAndView;
     }
 
-    @RequestMapping("/tag/{id}.html/{index}")
+    /**
+     * 访问标签详情页(分页)
+     * @param id 标签id
+     * @param index 页码
+     * @return 标签详情页
+     */
+//    @RequestMapping("/tag/{id}.html/{index}")
     public ModelAndView tag(@PathVariable("id") String id, @PathVariable("index") Integer index) {
+        logger.info("访问标签详情页(分页)");
         // 标签详细页
         ModelAndView modelAndView = new ModelAndView("tag");
         // 标签
@@ -172,8 +202,14 @@ public class PageController {
         return modelAndView;
     }
 
+    /**
+     * 访问文章页
+     * @param id 文章id
+     * @return 文章页
+     */
     @RequestMapping("/{id}.html")
     public ModelAndView detail(@PathVariable("id") String id) {
+        logger.info("访问文章页");
         // 文章页
         ModelAndView modelAndView = new ModelAndView("detail");
         // 文章
@@ -196,8 +232,13 @@ public class PageController {
         return modelAndView;
     }
 
+    /**
+     * 访问标签首页
+     * @return 标签首页
+     */
     @RequestMapping("/tag/")
     public ModelAndView tagHome(){
+        logger.info("访问标签首页");
         // 标签首页页
         ModelAndView modelAndView = new ModelAndView("tag_home");
         // 栏目列表
