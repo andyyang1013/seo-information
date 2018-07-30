@@ -20,7 +20,6 @@ import com.yxy.dch.seo.information.mapper.UserInfoMapper;
 import com.yxy.dch.seo.information.mapper.UserMapper;
 import com.yxy.dch.seo.information.mapper.UserModifyRecordMapper;
 import com.yxy.dch.seo.information.repository.IRedisRepository;
-import com.yxy.dch.seo.information.service.INoticeService;
 import com.yxy.dch.seo.information.service.IUserService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.ObjectUtil;
@@ -65,9 +64,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     private IRedisRepository redisRepository;
-
-    @Autowired
-    private INoticeService noticeService;
 
     @Override
     public void updateLastLoginTimeById(User user) {
@@ -306,12 +302,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 paramMap.put("account", info.getAccount());
                 paramMap.put("password", pwd);
                 String param = JSON.toJSONString(paramMap);
-                //推送短信或邮箱
-                if (!ObjectUtil.isBlank(info.getPhone())) {
-                    noticeService.sendMsg(info.getPhone(), param);
-                } else if (!ObjectUtil.isBlank(info.getEmail())) {
-                    noticeService.sendEmail(info.getEmail(), param);
-                }
                 //生成随机盐
                 salt = Toolkit.generateSalt();
                 //一次加密
