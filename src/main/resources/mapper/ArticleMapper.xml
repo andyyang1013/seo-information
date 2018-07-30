@@ -122,7 +122,7 @@
 	</sql>
 
     <select id="selectArticleById" resultMap="customVoResultMap">
-        SELECT a.`*`,
+        SELECT <include refid="columns"/>,
 t.tag_id AS tag_id,
 t.create_time AS tag_create_time,
 t.create_uid AS tag_create_uid,
