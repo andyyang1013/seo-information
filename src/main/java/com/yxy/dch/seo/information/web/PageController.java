@@ -7,6 +7,7 @@ import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.entity.Tag;
 import com.yxy.dch.seo.information.service.*;
+import com.yxy.dch.seo.information.service.front.*;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import com.yxy.dch.seo.information.vo.ColumnVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ import java.util.List;
 @RequestMapping("/")
 public class PageController extends BaseController {
     @Autowired
-    private IArticleService articleService;
+    private IFrontArticleService articleService;
     @Autowired
-    private IBannerService bannerService;
+    private IFrontBannerService bannerService;
     @Autowired
-    private IColumnService columnService;
+    private IFrontColumnService columnService;
     @Autowired
-    private ITagService tagService;
+    private IFrontTagService tagService;
     @Autowired
-    private IChannelService channelService;
+    private IFrontChannelService channelService;
 
     /**
      * 访问频道主页

@@ -2,10 +2,7 @@ package com.yxy.dch.seo.information.service.impl;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.yxy.dch.seo.information.entity.Article;
-import com.yxy.dch.seo.information.entity.ArticleRelate;
-import com.yxy.dch.seo.information.entity.ArticleTagMapping;
-import com.yxy.dch.seo.information.entity.Column;
+import com.yxy.dch.seo.information.entity.*;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
@@ -13,8 +10,10 @@ import com.yxy.dch.seo.information.mapper.ArticleRelateMapper;
 import com.yxy.dch.seo.information.mapper.ArticleTagMapper;
 import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.IArticleService;
+import com.yxy.dch.seo.information.service.IChannelService;
 import com.yxy.dch.seo.information.service.IColumnService;
 import com.yxy.dch.seo.information.service.ITagService;
+import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.ArticleRelateVO;
 import com.yxy.dch.seo.information.vo.ArticleVO;
@@ -26,7 +25,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章service实现类
@@ -50,6 +52,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ITagService tagService;
     @Autowired
     private IColumnService columnService;
+    @Autowired
+    private IChannelService channelService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -168,33 +172,35 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public List<ArticleVO> hottest() {
-        return articleMapper.selectHottestArticles();
-    }
-
-    @Override
-    public List<ArticleVO> newest() {
-        return articleMapper.selectNewestArticles();
-    }
-
-    @Override
-    public List<ArticleVO> recommended() {
-        return articleMapper.selectRecommendedArticles();
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
-    public ArticleVO read(ArticleVO param) {
-        Article article = articleMapper.selectById(param.getId());
+    public Map<String, Object> read(ArticleVO param) {
+        if (param == null || StringUtils.isBlank(param.getId())) {
+            logger.error("阅读文章参数错误,param={}",JacksonUtil.toJson(param));
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        Article article = this.selectById(param.getId());
         if (article == null) {
+            logger.error("阅读文章错误{}",CodeMsg.record_not_exist.getMsg());
             throw new BizException(CodeMsg.record_not_exist);
         }
+
+        // 文章id
+        String articleId = article.getId();
 
         // 阅读数+1
         article.setReadingNum(article.getReadingNum() + 1);
         articleMapper.updateById(article);
 
-        return articleMapper.selectArticleById(article.getId());
+        Map<String,Object> model = new HashMap<>();
+        ArticleVO articleVO = articleMapper.selectArticleById(articleId);
+        model.put("article",articleVO);
+
+        // 频道id
+        String channelId=articleVO.getColumn().getChannelId();
+        Channel channel = channelService.selectById(channelId);
+        model.put("channel",channel);
+
+        return model;
     }
 
     @Override
@@ -229,26 +235,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 articleRelateMapper.insert(articleRelate);
             }
         }
-    }
-
-    @Override
-    public List<ArticleVO> getArticlesByColNamePinyin(String namePinyin) {
-        return articleMapper.getArticlesByColNamePinyin(namePinyin);
-    }
-
-    @Override
-    public List<ArticleVO> dayTopArticles() {
-        return articleMapper.dayTopArticles();
-    }
-
-    @Override
-    public List<ArticleVO> weekTopArticles() {
-        return articleMapper.weekTopArticles();
-    }
-
-    @Override
-    public List<ArticleVO> getArticlesByTagId(String tagId) {
-        return articleMapper.getArticlesByTagId(tagId);
     }
 
     @Override

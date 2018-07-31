@@ -92,9 +92,4 @@ public class BannerServiceImpl extends ServiceImpl<BannerMapper, Banner> impleme
         return bannerMapper.selectBannerList(param);
     }
 
-    @Override
-    public List<BannerVO> selectDisplayableBannerList(String channelId) {
-        return bannerMapper.selectDisplayableBannerList(channelId);
-    }
-
 }

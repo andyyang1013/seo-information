@@ -32,8 +32,6 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     @Autowired
     private IChannelService channelService;
     @Autowired
-    private ArticleMapper articleMapper;
-    @Autowired
     private IArticleService articleService;
 
     @Override
@@ -126,18 +124,4 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         return columnMapper.selectColumnList(param);
     }
 
-    @Override
-    public List<ColumnVO> getColumnListByIndexPage() {
-        List<ColumnVO> columnList = columnMapper.getColumnListByIndexPage();
-        for (ColumnVO column : columnList) {
-            List<Article> articleList = articleMapper.selectArticlesByColumnId(column.getId());
-            column.setArticleList(articleList);
-        }
-        return columnList;
-    }
-
-    @Override
-    public ColumnVO selectColumnByNamePinyin(String namePinyin) {
-        return columnMapper.selectColumnByNamePinyin(namePinyin);
-    }
 }

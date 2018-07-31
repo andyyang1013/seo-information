@@ -5,6 +5,7 @@ import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章service接口
@@ -26,23 +27,9 @@ public interface IArticleService extends IService<Article> {
 
     List<ArticleVO> listBy(ArticleVO param);
 
-    List<ArticleVO> hottest();
-
-    List<ArticleVO> newest();
-
-    List<ArticleVO> recommended();
-
-    ArticleVO read(ArticleVO param);
+    Map<String, Object> read(ArticleVO param);
 
     void save(String articleId, String relateArticleIds);
-
-    List<ArticleVO> getArticlesByColNamePinyin(String namePinyin);
-
-    List<ArticleVO> dayTopArticles();
-
-    List<ArticleVO> weekTopArticles();
-
-    List<ArticleVO> getArticlesByTagId(String tagId);
 
     void removeByColumnId(String columnId);
 }
