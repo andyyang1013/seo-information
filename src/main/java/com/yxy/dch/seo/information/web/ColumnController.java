@@ -30,7 +30,7 @@ import java.util.List;
  * @author yangzhen
  */
 @RestController
-@RequestMapping("/column")
+@RequestMapping("/api/column")
 @Api
 public class ColumnController extends BaseController {
     @Autowired

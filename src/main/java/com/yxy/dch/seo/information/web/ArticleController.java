@@ -27,7 +27,7 @@ import java.util.List;
  * @author yangzhen
  */
 @RestController
-@RequestMapping("/article")
+@RequestMapping("/api/article")
 @Api
 public class ArticleController extends BaseController {
     @Autowired

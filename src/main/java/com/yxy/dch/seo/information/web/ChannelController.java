@@ -25,7 +25,7 @@ import java.util.List;
  * @author yangzhen
  */
 @RestController
-@RequestMapping("/channel")
+@RequestMapping("/api/channel")
 @Api
 public class ChannelController extends BaseController {
     @Autowired

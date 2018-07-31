@@ -29,7 +29,7 @@ import java.util.List;
  * @author yangzhen
  */
 @RestController
-@RequestMapping("/banner")
+@RequestMapping("/api/banner")
 @Api
 public class BannerController extends BaseController {
     @Autowired
