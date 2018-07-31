@@ -1,5 +1,6 @@
 package com.yxy.dch.seo.information.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.Channel;
@@ -77,6 +78,9 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         if (column == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+        Article article = new Article();
+        article.setColumnId(column.getId());
+        articleMapper.delete(new EntityWrapper<>(article));
         columnMapper.deleteById(column.getId());
         return true;
     }
