@@ -1,6 +1,5 @@
 package com.yxy.dch.seo.information.service.impl;
 
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.Channel;
@@ -8,8 +7,8 @@ import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
-import com.yxy.dch.seo.information.mapper.ChannelMapper;
 import com.yxy.dch.seo.information.mapper.ColumnMapper;
+import com.yxy.dch.seo.information.service.IArticleService;
 import com.yxy.dch.seo.information.service.IChannelService;
 import com.yxy.dch.seo.information.service.IColumnService;
 import com.yxy.dch.seo.information.util.PinyinUtil;
@@ -31,11 +30,11 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
     @Autowired
     private ColumnMapper columnMapper;
     @Autowired
-    private ChannelMapper channelMapper;
-    @Autowired
     private IChannelService channelService;
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private IArticleService articleService;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -78,9 +77,7 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         if (column == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
-        Article article = new Article();
-        article.setColumnId(column.getId());
-        articleMapper.delete(new EntityWrapper<>(article));
+        articleService.removeByColumnId(column.getId());
         columnMapper.deleteById(column.getId());
         return true;
     }

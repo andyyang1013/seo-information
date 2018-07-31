@@ -58,7 +58,7 @@
         <ul class="page-container">
                 <#if pageCount != 1>
                     <#list 1..pageCount as i>
-                        <li><a href="${base}/${column.namePinyin}/i">${i}</a></li>
+                        <li><a href="${base}/${column.namePinyin}?${i}">${i}</a></li>
                     </#list>
                 </#if>
         </ul>

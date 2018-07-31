@@ -43,4 +43,6 @@ public interface IArticleService extends IService<Article> {
     List<ArticleVO> weekTopArticles();
 
     List<ArticleVO> getArticlesByTagId(String tagId);
+
+    void removeByColumnId(String columnId);
 }

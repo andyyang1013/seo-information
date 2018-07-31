@@ -57,8 +57,8 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
         // 栏目是否存在
         Column column = columnService.selectById(param.getColumnId());
-        if (column == null){
-            logger.error("栏目不存在({})",param.getColumnId());
+        if (column == null) {
+            logger.error("栏目不存在({})", param.getColumnId());
             throw new BizException(CodeMsg.record_not_exist);
         }
 
@@ -84,7 +84,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
-//        if (article.getState() == 1)
 
         // 删除文章标签关联
         ArticleTagMapping articleTagMapping = new ArticleTagMapping();
@@ -250,5 +249,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<ArticleVO> getArticlesByTagId(String tagId) {
         return articleMapper.getArticlesByTagId(tagId);
+    }
+
+    @Override
+    public void removeByColumnId(String columnId) {
+        if (StringUtils.isBlank(columnId)) {
+            throw new BizException(CodeMsg.param_note_blank);
+        }
+        Article param = new Article();
+        param.setColumnId(columnId);
+        List<Article> articleList = articleMapper.selectList(new EntityWrapper<>(param));
+        if (articleList == null || articleList.size() == 0) {
+            return;
+        }
+        for (Article obj : articleList) {
+            ArticleVO article = new ArticleVO();
+            article.setId(obj.getId());
+            this.remove(article);
+        }
+
     }
 }
