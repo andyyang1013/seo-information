@@ -168,9 +168,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         userInfo.setName(userVO.getName());
         userInfo.setIdNumber(userVO.getIdNumber());
         userInfo.setIdNumberState(IdNumStateEnum.NO_VERIFY.getState());
-        userInfo.setCreateUid(1L);
+        userInfo.setCreateUid(String.valueOf(1L));
         userInfo.setCreateTime(Toolkit.getCurDate());
-        userInfo.setUpdateUid(1L);
+        userInfo.setUpdateUid(String.valueOf(1L));
         userInfo.setUpdateTime(Toolkit.getCurDate());
         userInfoMapper.insert(userInfo);
 
@@ -198,9 +198,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         user.setSubsidiaryCode(userVO.getSubsidiaryCode());
         user.setRegTime(Toolkit.getCurDate());
         user.setDelFlag(DelFlagEnum.NO_DELETE.getState());
-        user.setCreateUid(1L);
+        user.setCreateUid(String.valueOf(1L));
         user.setCreateTime(Toolkit.getCurDate());
-        user.setUpdateUid(1L);
+        user.setUpdateUid(String.valueOf(1L));
         user.setUpdateTime(Toolkit.getCurDate());
         userMapper.insert(user);
 
@@ -315,7 +315,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         UserVO user = new UserVO();
         user.setPassword(password);
         user.setSalt(salt);
-        user.setId(id);
+        user.setId(String.valueOf(id));
         int result = userMapper.updateUser(user);
 
         //手动删除缓存
@@ -336,7 +336,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     public UserVO updateUserInfo(Long opeUid, Date curDate, String subsidiaryCode, UserVO userParam) {
 
         // 根据userId查询用户是否存在
-        UserVO userVO = userMapper.selectByUserId(userParam.getId());
+        UserVO userVO = userMapper.selectByUserId(Long.valueOf(userParam.getId()));
         if (userVO == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
@@ -359,9 +359,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         // 用户ID
-        Long userId = userVO.getId();
+        Long userId = Long.valueOf(userVO.getId());
         // 用户信息ID
-        Long userInfoId = userVO.getUserInfoId();
+        Long userInfoId = Long.valueOf(userVO.getUserInfoId());
 
         UserVO resourceUserVO = userMapper.selectByUserId(userId);
 
@@ -369,29 +369,29 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 修改除账号外的所有信息
         BeanUtils.copyProperties(userParam, user, "account");
         user.setUpdateTime(curDate);
-        user.setUpdateUid(opeUid);
+        user.setUpdateUid(String.valueOf(opeUid));
         userMapper.updateById(user);
 
         // 修改个人资料
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(userParam, userInfo);
-        userInfo.setId(userInfoId);
+        userInfo.setId(String.valueOf(userInfoId));
         userInfo.setUpdateTime(curDate);
-        userInfo.setUpdateUid(opeUid);
+        userInfo.setUpdateUid(String.valueOf(opeUid));
         userInfoMapper.updateById(userInfo);
 
         UserVO modifiedUserVO = userMapper.selectByUserId(userId);
 
         // 记录修改记录
         UserModifyRecord modifyRecord = new UserModifyRecord();
-        modifyRecord.setUserId(userId);
+        modifyRecord.setUserId(String.valueOf(userId));
         modifyRecord.setSubsidiaryCode(subsidiaryCode);
         modifyRecord.setResourceContent(JacksonUtil.toJson(resourceUserVO));
         modifyRecord.setModifyContent(JacksonUtil.toJson(modifiedUserVO));
         modifyRecord.setCreateTime(curDate);
-        modifyRecord.setCreateUid(opeUid);
+        modifyRecord.setCreateUid(String.valueOf(opeUid));
         modifyRecord.setUpdateTime(curDate);
-        modifyRecord.setUpdateUid(opeUid);
+        modifyRecord.setUpdateUid(String.valueOf(opeUid));
         userModifyRecordMapper.insert(modifyRecord);
 
         //手动删除缓存
@@ -426,7 +426,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         // 用户ID
-        Long userId = userVO.getId();
+        Long userId = Long.valueOf(userVO.getId());
         // 操作时间
         Date curDate = Toolkit.getCurDate();
 
@@ -437,10 +437,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 修改密码
         User account = new User();
-        account.setId(userId);
+        account.setId(String.valueOf(userId));
         account.setPassword(password);
         account.setEncryptType(modifiedEncryptType);
-        account.setUpdateUid(opeUid);
+        account.setUpdateUid(String.valueOf(opeUid));
         account.setUpdateTime(curDate);
         userMapper.updateById(account);
 
@@ -448,14 +448,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 记录修改记录
         UserModifyRecord modifyRecord = new UserModifyRecord();
-        modifyRecord.setUserId(userId);
+        modifyRecord.setUserId(String.valueOf(userId));
         modifyRecord.setSubsidiaryCode(subsidiaryCode);
         modifyRecord.setResourceContent(JacksonUtil.toJson(userVO));
         modifyRecord.setModifyContent(JacksonUtil.toJson(modifiedUserVO));
         modifyRecord.setCreateTime(curDate);
-        modifyRecord.setCreateUid(opeUid);
+        modifyRecord.setCreateUid(String.valueOf(opeUid));
         modifyRecord.setUpdateTime(curDate);
-        modifyRecord.setUpdateUid(opeUid);
+        modifyRecord.setUpdateUid(String.valueOf(opeUid));
         userModifyRecordMapper.insert(modifyRecord);
 
         //手动删除缓存
@@ -564,7 +564,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
     @Caching(evict = {@CacheEvict(value = CommonConstant.CACHE_NAME_FOLDER, key = "#userVO.getId()+''")})
     private UserVO procResetPass(UserVO userVO, Long opeUid, String subsidiaryCode, String newPassword) {
         // 用户ID
-        Long userId = userVO.getId();
+        Long userId = Long.valueOf(userVO.getId());
         // 操作时间
         Date curDate = Toolkit.getCurDate();
 
@@ -578,10 +578,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 修改密码
         User account = new User();
-        account.setId(userId);
+        account.setId(String.valueOf(userId));
         account.setPassword(password);
         account.setEncryptType(newEncryptType);
-        account.setUpdateUid(opeUid);
+        account.setUpdateUid(String.valueOf(opeUid));
         account.setUpdateTime(curDate);
         userMapper.updateById(account);
 
@@ -589,14 +589,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         // 记录修改记录
         UserModifyRecord modifyRecord = new UserModifyRecord();
-        modifyRecord.setUserId(userId);
+        modifyRecord.setUserId(String.valueOf(userId));
         modifyRecord.setSubsidiaryCode(subsidiaryCode);
         modifyRecord.setResourceContent(JacksonUtil.toJson(userVO));
         modifyRecord.setModifyContent(JacksonUtil.toJson(modifiedUserVO));
         modifyRecord.setCreateTime(curDate);
-        modifyRecord.setCreateUid(opeUid);
+        modifyRecord.setCreateUid(String.valueOf(opeUid));
         modifyRecord.setUpdateTime(curDate);
-        modifyRecord.setUpdateUid(opeUid);
+        modifyRecord.setUpdateUid(String.valueOf(opeUid));
         userModifyRecordMapper.insert(modifyRecord);
 
         //手动删除缓存

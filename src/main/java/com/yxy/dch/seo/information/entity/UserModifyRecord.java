@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  *
  * @author yangzhen
  */
+@Data
 @TableName("t_user_modify_record")
 public class UserModifyRecord extends Model<UserModifyRecord> {
 
@@ -20,12 +22,12 @@ public class UserModifyRecord extends Model<UserModifyRecord> {
     /**
      * 主键ID
      */
-    private Long id;
+    private String id;
     /**
      * 修改用户id
      */
     @TableField("user_id")
-    private Long userId;
+    private String userId;
     /**
      * 原对象内容
      */
@@ -50,7 +52,7 @@ public class UserModifyRecord extends Model<UserModifyRecord> {
      * 创建用户Id
      */
     @TableField("create_uid")
-    private Long createUid;
+    private String createUid;
     /**
      * 更新时间
      */
@@ -60,80 +62,7 @@ public class UserModifyRecord extends Model<UserModifyRecord> {
      * 更新用户id
      */
     @TableField("update_uid")
-    private Long updateUid;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getResourceContent() {
-        return resourceContent;
-    }
-
-    public void setResourceContent(String resourceContent) {
-        this.resourceContent = resourceContent;
-    }
-
-    public String getModifyContent() {
-        return modifyContent;
-    }
-
-    public void setModifyContent(String modifyContent) {
-        this.modifyContent = modifyContent;
-    }
-
-    public String getSubsidiaryCode() {
-        return subsidiaryCode;
-    }
-
-    public void setSubsidiaryCode(String subsidiaryCode) {
-        this.subsidiaryCode = subsidiaryCode;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreateUid() {
-        return createUid;
-    }
-
-    public void setCreateUid(Long createUid) {
-        this.createUid = createUid;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdateUid() {
-        return updateUid;
-    }
-
-    public void setUpdateUid(Long updateUid) {
-        this.updateUid = updateUid;
-    }
+    private String updateUid;
 
     @Override
     protected Serializable pkVal() {

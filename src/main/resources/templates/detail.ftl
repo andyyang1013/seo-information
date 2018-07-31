@@ -80,10 +80,10 @@
                     </#list>
             </div>
             <!-- 上下篇 -->
-            <div class="item-next-prev">
-                <a href="#" class="fl-l"><strong>上一篇：</strong>上一篇名字</a>
-                <a href="#" class="fl-r"><strong>下一篇：</strong>下一篇名字</a>
-            </div>
+            <#--<div class="item-next-prev">-->
+                <#--<a href="#" class="fl-l"><strong>上一篇：</strong>上一篇名字</a>-->
+                <#--<a href="#" class="fl-r"><strong>下一篇：</strong>下一篇名字</a>-->
+            <#--</div>-->
             <!-- 推荐 -->
             <div class="item-recommend">
                 <ul class="list fl-l">

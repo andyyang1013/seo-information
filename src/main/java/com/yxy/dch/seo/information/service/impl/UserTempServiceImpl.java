@@ -86,16 +86,16 @@ public class UserTempServiceImpl extends ServiceImpl<UserTempMapper, UserTemp> i
             for (UserTemp userTemp : userTempList) {
                 //用户扩展信息表
                 userInfo = new UserInfo();
-                userInfo.setId(IdWorker.getId());
+                userInfo.setId(String.valueOf(IdWorker.getId()));
                 userInfo.setNickName(userTemp.getNickName());
                 userInfo.setSex(userTemp.getSex());
                 userInfo.setImage(userTemp.getImage());
                 userInfo.setName(userTemp.getName());
                 userInfo.setIdNumber(userTemp.getIdNumber());
                 userInfo.setIdNumberState(IdNumStateEnum.NO_VERIFY.getState());
-                userInfo.setCreateUid(1L);
+                userInfo.setCreateUid(String.valueOf(1L));
                 userInfo.setCreateTime(currentDate);
-                userInfo.setUpdateUid(1L);
+                userInfo.setUpdateUid(String.valueOf(1L));
                 userInfo.setUpdateTime(currentDate);
                 userInfos.add(userInfo);
                 //用户认证信息表
@@ -112,9 +112,9 @@ public class UserTempServiceImpl extends ServiceImpl<UserTempMapper, UserTemp> i
                 user.setRegTime(userTemp.getRegTime());
                 user.setLastLoginTime(userTemp.getLastLoginTime());
                 user.setDelFlag(DelFlagEnum.NO_DELETE.getState());
-                user.setCreateUid(1L);
+                user.setCreateUid(String.valueOf(1L));
                 user.setCreateTime(currentDate);
-                user.setUpdateUid(1L);
+                user.setUpdateUid(String.valueOf(1L));
                 user.setUpdateTime(currentDate);
                 users.add(user);
             }

@@ -57,36 +57,36 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //拦截所有的请求，api文档暂时放过
-//        registry.addInterceptor(apiInterceptor())
-//                .addPathPatterns("/**")
-//                .excludePathPatterns(
-//                        "/data/import",
-//                        "/swagger/**",
-//                        "/swagger-resources/**"
-//                );
+        registry.addInterceptor(apiInterceptor())
+                .addPathPatterns("/**")
+                .excludePathPatterns(
+                        "/data/import",
+                        "/swagger/**",
+                        "/swagger-resources/**"
+                );
         //排除拦截的url:登录接口、登录状态接口；根据具体情况排除
-//        registry.addInterceptor(loginInterceptor())
-//                .addPathPatterns("/**")
-//                .excludePathPatterns(
-//                        "/data/import",
-//                        "/api/login",
-//                        "/api/loginDiff",
-//                        "/api/loginWithVerifyCode",
-//                        "/api/checkLoginStatus",
-//                        "/api/loginOut",
-//                        "/api/queryUserInfo",
-//                        "/api/queryUserInfoById",
-//                        "/api/exsistUser",
-//                        "/api/batchQueryUserInfo",
-//                        "/api/account/modifyPassword",
-//                        "/api/account/resetPassword",
-//                        "/api/account/resetPassByPhone",
-//                        "/api/account/resetPassByEmail",
-//                        "/api/register",
-//                        "/api/registerConfirm",
-//                        "/swagger/**",
-//                        "/swagger-resources/**"
-//                );
+        registry.addInterceptor(loginInterceptor())
+                .addPathPatterns("/article/**","/banner/**","/channel/**","/column/**","/tag/**")
+                .excludePathPatterns(
+                        "/data/import",
+                        "/api/login",
+                        "/api/loginDiff",
+                        "/api/loginWithVerifyCode",
+                        "/api/checkLoginStatus",
+                        "/api/loginOut",
+                        "/api/queryUserInfo",
+                        "/api/queryUserInfoById",
+                        "/api/exsistUser",
+                        "/api/batchQueryUserInfo",
+                        "/api/account/modifyPassword",
+                        "/api/account/resetPassword",
+                        "/api/account/resetPassByPhone",
+                        "/api/account/resetPassByEmail",
+                        "/api/register",
+                        "/api/registerConfirm",
+                        "/swagger/**",
+                        "/swagger-resources/**"
+                );
         super.addInterceptors(registry);
     }
 

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import org.hibernate.validator.constraints.Email;
 
 import javax.validation.constraints.Pattern;
@@ -16,6 +17,7 @@ import java.util.Date;
  *
  * @author yangzhen
  */
+@Data
 @TableName("t_user")
 public class User extends Model<User> {
 
@@ -24,12 +26,12 @@ public class User extends Model<User> {
     /**
      * 主键ID
      */
-    private Long id;
+    private String id;
     /**
      * 用户基础信息id
      */
     @TableField("user_info_id")
-    private Long userInfoId;
+    private String userInfoId;
     /**
      * 用户名/账号
      */
@@ -102,7 +104,7 @@ public class User extends Model<User> {
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @TableField("create_uid")
-    private Long createUid;
+    private String createUid;
     /**
      * 更新时间
      */
@@ -114,144 +116,7 @@ public class User extends Model<User> {
      */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @TableField("update_uid")
-    private Long updateUid;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getUserInfoId() {
-        return userInfoId;
-    }
-
-    public void setUserInfoId(Long userInfoId) {
-        this.userInfoId = userInfoId;
-    }
-
-    public String getAccount() {
-        return account;
-    }
-
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt;
-    }
-
-    public String getEncryptType() {
-        return encryptType;
-    }
-
-    public void setEncryptType(String encryptType) {
-        this.encryptType = encryptType;
-    }
-
-    public String getSubsidiaryCode() {
-        return subsidiaryCode;
-    }
-
-    public void setSubsidiaryCode(String subsidiaryCode) {
-        this.subsidiaryCode = subsidiaryCode;
-    }
-
-    public String getSubsidiaryUserId() {
-        return subsidiaryUserId;
-    }
-
-    public void setSubsidiaryUserId(String subsidiaryUserId) {
-        this.subsidiaryUserId = subsidiaryUserId;
-    }
-
-    public Date getRegTime() {
-        return regTime;
-    }
-
-    public void setRegTime(Date regTime) {
-        this.regTime = regTime;
-    }
-
-    public Date getLastLoginTime() {
-        return lastLoginTime;
-    }
-
-    public void setLastLoginTime(Date lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
-    public Integer getDelFlag() {
-        return delFlag;
-    }
-
-    public void setDelFlag(Integer delFlag) {
-        this.delFlag = delFlag;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getCreateUid() {
-        return createUid;
-    }
-
-    public void setCreateUid(Long createUid) {
-        this.createUid = createUid;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Long getUpdateUid() {
-        return updateUid;
-    }
-
-    public void setUpdateUid(Long updateUid) {
-        this.updateUid = updateUid;
-    }
+    private String updateUid;
 
     @Override
     protected Serializable pkVal() {

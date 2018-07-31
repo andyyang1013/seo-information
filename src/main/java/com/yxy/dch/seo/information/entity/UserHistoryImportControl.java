@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.entity;
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,6 +13,7 @@ import java.util.Date;
  *
  * @author yangzhen
  */
+@Data
 @TableName("t_user_history_import_control")
 public class UserHistoryImportControl extends Model<UserHistoryImportControl> {
 
@@ -40,47 +42,6 @@ public class UserHistoryImportControl extends Model<UserHistoryImportControl> {
      */
     @TableField("consume_time")
     private Long consumeTime;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Date getImportTime() {
-        return importTime;
-    }
-
-    public void setImportTime(Date importTime) {
-        this.importTime = importTime;
-    }
-
-    public Long getImportNum() {
-        return importNum;
-    }
-
-    public void setImportNum(Long importNum) {
-        this.importNum = importNum;
-    }
-
-    public Integer getState() {
-        return state;
-    }
-
-    public void setState(Integer state) {
-        this.state = state;
-    }
-
-    public Long getConsumeTime() {
-        return consumeTime;
-    }
-
-    public void setConsumeTime(Long consumeTime) {
-        this.consumeTime = consumeTime;
-    }
 
     @Override
     protected Serializable pkVal() {

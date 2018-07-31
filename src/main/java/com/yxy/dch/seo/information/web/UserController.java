@@ -267,7 +267,10 @@ public class UserController extends BaseController {
     private void recordToken(UserVO loginUser) {
         long tokenExpireTime = Constant.USER_TOKEN_EXPIRE;
         try {
-            tokenExpireTime = Long.parseLong(request.getHeader("tokenExpireTime"));
+            String expireTime = request.getHeader("tokenExpireTime");
+            if (StringUtils.isNotBlank(expireTime)){
+                tokenExpireTime = Long.parseLong(expireTime);
+            }
         } catch (NumberFormatException e) {
             logger.info("客户端传递的过期时间格式，无法解析成long类型", e);
         }
@@ -577,17 +580,17 @@ public class UserController extends BaseController {
         UserBindRelation curUserBind = userBindRelationService.selectByUserId(curUserId);
         if (curUserBind == null || curUserBind.getId() == null) {
             UserBindRelation userBind = new UserBindRelation();
-            userBind.setUserId(curUserId);
+            userBind.setUserId(String.valueOf(curUserId));
             userBind.setBindUserIds(bindUserIds);
             userBind.setCreateTime(Toolkit.getCurDate());
-            userBind.setCreateUid(curUserId);
+            userBind.setCreateUid(String.valueOf(curUserId));
             userBind.setUpdateTime(Toolkit.getCurDate());
-            userBind.setUpdateUid(curUserId);
+            userBind.setUpdateUid(String.valueOf(curUserId));
             userBindRelationService.insert(userBind);
         } else {
             curUserBind.setBindUserIds(bindUserIds);
             curUserBind.setUpdateTime(Toolkit.getCurDate());
-            curUserBind.setUpdateUid(curUserId);
+            curUserBind.setUpdateUid(String.valueOf(curUserId));
             userBindRelationService.updateById(curUserBind);
         }
         logger.info("账号关联成功");

@@ -153,7 +153,7 @@ public class UserReqContextUtil {
         if (reqContextLocal.get() == null || reqContextLocal.get().getUser() == null) {
             return -1L;
         }
-        return reqContextLocal.get().getUser().getId();
+        return Long.valueOf(reqContextLocal.get().getUser().getId());
     }
 
 
