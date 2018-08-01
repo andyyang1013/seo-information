@@ -141,7 +141,7 @@ public class UserController extends BaseController {
      * @return
      */
     @PostMapping("/login")
-    public UserVO login(String account, String password) {
+    public String login(String account, String password) {
         logger.info("登录：account=" + account + ",password=" + password + ",token过期时间：" + request.getHeader("tokenExpireTime"));
 
         List<UserVO> matchUsers = new ArrayList<>();
@@ -171,10 +171,9 @@ public class UserController extends BaseController {
 
         //默认取最后登录时间最晚的一条记录，查询已经按照最后登录时间倒叙，所以取第一条记录即可。
         UserVO loginUser = matchUsers.get(0);
-        //记录最后登录时间和token
-        recordToken(loginUser);
 
-        return loginUser;
+        //记录最后登录时间和token
+        return recordToken(loginUser);
     }
 
     /**
@@ -264,7 +263,7 @@ public class UserController extends BaseController {
      * @return
      */
 
-    private void recordToken(UserVO loginUser) {
+    private String recordToken(UserVO loginUser) {
         long tokenExpireTime = Constant.USER_TOKEN_EXPIRE;
         try {
             String expireTime = request.getHeader("tokenExpireTime");
@@ -293,8 +292,8 @@ public class UserController extends BaseController {
         String token = Toolkit.makeToken();
         redisRepository.set(String.format(Constant.USER_TOKEN_REDIS_KEY, token), loginUser, tokenExpireTime, TimeUnit.SECONDS);
         CookieUtil.add(response, Constant.USER_TOKEN, token, (int) tokenExpireTime);
-        response.setHeader("Cookie","token=" + token);
         logger.info("登录成功：userToken=" + token);
+        return token;
     }
 
     /**
