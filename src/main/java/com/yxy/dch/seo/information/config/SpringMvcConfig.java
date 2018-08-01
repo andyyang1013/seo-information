@@ -69,7 +69,8 @@ public class SpringMvcConfig extends WebMvcConfigurerAdapter {
                         "/swagger/**",
                         "/swagger-resources/**")
                 .excludePathPatterns(
-                        "/api/login"
+                        "/api/login",
+                        "/api/account/resetPassword"
                 );
         super.addInterceptors(registry);
     }
