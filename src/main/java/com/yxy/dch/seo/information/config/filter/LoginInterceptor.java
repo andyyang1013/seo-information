@@ -43,6 +43,9 @@ public class LoginInterceptor implements HandlerInterceptor {
             clientIp = clientIp.split(",")[0];
         }
         String token = CookieUtil.getCookieValue(request, Constant.USER_TOKEN);
+        if (StringUtils.isBlank(token)){
+            token = request.getHeader("token");
+        }
         UserReqContextUtil.setRequestClientIp(clientIp);
         UserReqContextUtil.setToken(token);
         if (StringUtils.isEmpty(token)) {
