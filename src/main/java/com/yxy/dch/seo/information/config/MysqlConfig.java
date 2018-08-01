@@ -103,7 +103,7 @@ public class MysqlConfig {
         globalConfig.setDbType(DBType.MYSQL.name());// 数据库类型
 
         // ID 策略 AUTO->`0`("数据库ID自增") INPUT->`1`(用户输入ID") ID_WORKER->`2`("全局唯一ID") UUID->`3`("全局唯一ID")
-        globalConfig.setIdType(5);
+        globalConfig.setIdType(0);
         globalConfig.setSqlInjector(new com.baomidou.mybatisplus.mapper.AutoSqlInjector());
 
         // MP 属性下划线 转 驼峰 , 如果原生配置 mc.setMapUnderscoreToCamelCase(true)
