@@ -293,6 +293,7 @@ public class UserController extends BaseController {
         String token = Toolkit.makeToken();
         redisRepository.set(String.format(Constant.USER_TOKEN_REDIS_KEY, token), loginUser, tokenExpireTime, TimeUnit.SECONDS);
         CookieUtil.add(response, Constant.USER_TOKEN, token, (int) tokenExpireTime);
+        response.setHeader("Cookie","token=" + token);
         logger.info("登录成功：userToken=" + token);
     }
 
