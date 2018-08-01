@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> implements IFrontArticleService {
+public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IFrontArticleService {
     @Autowired
     private ArticleMapper articleMapper;
 
@@ -58,6 +58,9 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper,Article> 
         if (articleVO == null) {
             throw new BizException(CodeMsg.record_not_exist);
         }
+        // 阅读数+1
+        articleVO.setReadingNum(articleVO.getReadingNum() + 1);
+        articleMapper.updateById(articleVO);
         return articleVO;
     }
 }
