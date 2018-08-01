@@ -12,8 +12,10 @@
         <result property="href" column="href"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ChannelVO">
@@ -24,8 +26,10 @@
         <result property="href" column="href"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <sql id="columns">
@@ -36,8 +40,10 @@
         	c.href,
         	c.create_time,
         	c.create_uid,
+        	c.create_uaccount,
         	c.update_time,
-        	c.update_uid
+        	c.update_uid,
+        	c.update_uaccount
 	</sql>
 
     <select id="getDefaultChannel" resultMap="customResultMap">

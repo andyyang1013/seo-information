@@ -53,6 +53,16 @@ public class ArticleRelate extends Model<ArticleRelate> {
      */
     @TableField("update_uid")
     private String updateUid;
+    /**
+     * 创建人用户名
+     */
+    @TableField("create_uaccount")
+    private String createUaccount;
+    /**
+     * 修改人用户名
+     */
+    @TableField("update_uaccount")
+    private String updateUaccount;
 
     @Override
     protected Serializable pkVal() {

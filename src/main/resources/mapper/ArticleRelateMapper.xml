@@ -10,8 +10,10 @@
         <result property="relateArticleId" column="relate_article_id"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ArticleRelateVO">
@@ -20,8 +22,10 @@
         <result property="relateArticleId" column="relate_article_id"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <sql id="columns">
@@ -30,8 +34,10 @@
         	r.relate_article_id,
         	r.create_time,
         	r.create_uid,
+        	r.create_uaccount,
         	r.update_time,
-        	r.update_uid
+        	r.update_uid,
+        	r.update_uaccount
 	</sql>
 
     <delete id="deleteArticleRelate">

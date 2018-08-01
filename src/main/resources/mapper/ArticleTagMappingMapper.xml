@@ -10,8 +10,10 @@
         <result property="tagId" column="tag_id"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.ArticleTagMappingVO">
@@ -20,8 +22,10 @@
         <result property="tagId" column="tag_id"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
         <result property="article.id" column="article_id"/>
         <result property="article.title" column="article_title"/>
         <result property="article.keyword" column="article_keyword"/>
@@ -59,8 +63,10 @@
         	m.tag_id,
         	m.create_time,
         	m.create_uid,
+        	m.create_uaccount,
         	m.update_time,
-        	m.update_uid
+        	m.update_uid,
+        	m.update_uaccount
 	</sql>
 
     <select id="selectMappingList" resultMap="customVoResultMap">

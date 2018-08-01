@@ -90,7 +90,7 @@ public class Article extends Model<Article> {
      * 创建用户id
      */
     @TableField("create_uid")
-    private Long createUid;
+    private String createUid;
     /**
      * 更新用户id
      */
@@ -100,7 +100,7 @@ public class Article extends Model<Article> {
      * 更新用户id
      */
     @TableField("update_uid")
-    private Long updateUid;
+    private String updateUid;
     /**
      * 文章标签,用逗号分隔
      */
@@ -116,6 +116,16 @@ public class Article extends Model<Article> {
      */
     @TableField("href")
     private String href;
+    /**
+     * 创建人用户名
+     */
+    @TableField("create_uaccount")
+    private String createUaccount;
+    /**
+     * 修改人用户名
+     */
+    @TableField("update_uaccount")
+    private String updateUaccount;
 
     @Override
     protected Serializable pkVal() {

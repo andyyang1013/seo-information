@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.web;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yxy.dch.seo.information.config.filter.UserReqContextUtil;
+import com.yxy.dch.seo.information.entity.User;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IChannelService;
@@ -39,10 +40,12 @@ public class ChannelController extends BaseController {
      */
     @PostMapping("/create")
     public ChannelVO create(@Valid ChannelVO param) {
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setCreateUid(String.valueOf(opeUid));
-        param.setUpdateUid(String.valueOf(opeUid));
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setCreateUid(user.getId());
+        param.setCreateUaccount(user.getAccount());
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         return channelService.create(param);
     }
 
@@ -54,9 +57,10 @@ public class ChannelController extends BaseController {
      */
     @PostMapping("/modify")
     public ChannelVO modify(@Valid ChannelVO param) {
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setUpdateUid(String.valueOf(opeUid));
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         return channelService.modify(param);
     }
 

@@ -13,8 +13,10 @@
         <result property="href" column="href"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <resultMap id="customVoResultMap" type="com.yxy.dch.seo.information.vo.TagVO">
@@ -26,8 +28,10 @@
         <result property="href" column="href"/>
         <result property="createTime" column="create_time"/>
         <result property="createUid" column="create_uid"/>
+        <result property="createUaccount" column="create_uaccount"/>
         <result property="updateTime" column="update_time"/>
         <result property="updateUid" column="update_uid"/>
+        <result property="updateUaccount" column="update_uaccount"/>
     </resultMap>
 
     <sql id="columns">
@@ -39,8 +43,10 @@
         	t.href,
         	t.create_time,
         	t.create_uid,
+        	t.create_uaccount,
         	t.update_time,
-        	t.update_uid
+        	t.update_uid,
+        	t.update_uaccount
 	</sql>
 
     <select id="selectTagList" resultMap="customVoResultMap">

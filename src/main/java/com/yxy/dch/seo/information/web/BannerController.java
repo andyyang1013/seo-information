@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yxy.dch.seo.information.config.filter.UserReqContextUtil;
 import com.yxy.dch.seo.information.config.pros.MinioProperties;
+import com.yxy.dch.seo.information.entity.User;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IBannerService;
@@ -50,10 +51,12 @@ public class BannerController extends BaseController {
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("新增banner:param={}", JacksonUtil.toJson(param));
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setCreateUid(String.valueOf(opeUid));
-        param.setUpdateUid(String.valueOf(opeUid));
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setCreateUid(user.getId());
+        param.setCreateUaccount(user.getAccount());
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         BannerVO bannerVO = bannerService.create(param);
         logger.info("新增banner成功,result={}", JacksonUtil.toJson(bannerVO));
         return bannerVO;
@@ -66,9 +69,10 @@ public class BannerController extends BaseController {
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("修改banner:param={}", JacksonUtil.toJson(param));
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setUpdateUid(String.valueOf(opeUid));
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         BannerVO bannerVO = bannerService.modify(param);
         logger.info("修改banner成功,result={}", JacksonUtil.toJson(bannerVO));
         return bannerVO;

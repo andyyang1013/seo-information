@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yxy.dch.seo.information.config.filter.UserReqContextUtil;
 import com.yxy.dch.seo.information.config.pros.MinioProperties;
+import com.yxy.dch.seo.information.entity.User;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IColumnService;
@@ -51,10 +52,12 @@ public class ColumnController extends BaseController {
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("新增栏目:param={}", JacksonUtil.toJson(param));
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setCreateUid(String.valueOf(opeUid));
-        param.setUpdateUid(String.valueOf(opeUid));
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setCreateUid(user.getId());
+        param.setCreateUaccount(user.getAccount());
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         ColumnVO columnVO = columnService.create(param);
         logger.info("新增栏目成功,result={}", JacksonUtil.toJson(columnVO));
         return columnVO;
@@ -91,9 +94,10 @@ public class ColumnController extends BaseController {
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("修改栏目:param={}", JacksonUtil.toJson(param));
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setUpdateUid(String.valueOf(opeUid));
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         ColumnVO columnVO = columnService.modify(param);
         logger.info("修改栏目成功,result={}", JacksonUtil.toJson(columnVO));
         return columnVO;

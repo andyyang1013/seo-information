@@ -4,9 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.yxy.dch.seo.information.config.filter.UserReqContextUtil;
 import com.yxy.dch.seo.information.config.pros.MinioProperties;
+import com.yxy.dch.seo.information.entity.User;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.IArticleService;
+import com.yxy.dch.seo.information.service.IUserService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.MinioUtil;
 import com.yxy.dch.seo.information.vo.*;
@@ -34,6 +36,8 @@ public class ArticleController extends BaseController {
     private IArticleService articleService;
     @Autowired
     private MinioProperties minioProperties;
+    @Autowired
+    private IUserService userService;
 
     /**
      * 新增文章
@@ -48,10 +52,12 @@ public class ArticleController extends BaseController {
             throw new BizException(CodeMsg.param_note_blank);
         }
         logger.info("新增文章:param={}", JacksonUtil.toJson(param));
-        // 操作用户ID
-        Long opeUid = UserReqContextUtil.getRequestUserId();
-        param.setCreateUid(opeUid);
-        param.setUpdateUid(opeUid);
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setCreateUid(user.getId());
+        param.setCreateUaccount(user.getAccount());
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         ArticleVO articleVO = articleService.create(param);
         logger.info("新增文章成功,result={}", JacksonUtil.toJson(articleVO));
         return articleVO;
@@ -88,6 +94,11 @@ public class ArticleController extends BaseController {
             throw new BizException(CodeMsg.id_param_blank);
         }
         logger.info("修改文章:param={}", JacksonUtil.toJson(param));
+
+        // 操作用户
+        User user = UserReqContextUtil.getRequestUser();
+        param.setUpdateUid(user.getId());
+        param.setUpdateUaccount(user.getAccount());
         ArticleVO articleVO = articleService.modify(param);
         logger.info("修改文章成功:result={}", JacksonUtil.toJson(articleVO));
         return articleVO;
