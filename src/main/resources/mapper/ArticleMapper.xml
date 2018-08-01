@@ -216,19 +216,19 @@ where a.id = #{id}
     <select id="selectHottestArticles" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_article a WHERE state = 1
+        FROM t_seo_article a WHERE state = 1 ORDER BY reading_num DESC lIMIT 10
     </select>
 
     <select id="selectNewestArticles" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_article a WHERE state = 1 ORDER BY update_time DESC
+        FROM t_seo_article a WHERE state = 1 ORDER BY update_time DESC LIMIT 10
     </select>
 
     <select id="selectRecommendedArticles" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_article a WHERE state = 1 AND recommend = 1 ORDER BY update_time DESC
+        FROM t_seo_article a WHERE state = 1 AND recommend = 1 ORDER BY update_time DESC LIMIT 10
     </select>
 
     <select id="selectArticlesByColumnId" resultMap="customResultMap">
