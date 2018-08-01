@@ -23,52 +23,58 @@ CREATE TABLE IF NOT EXISTS `t_oauth` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='OAuth2.0认证表，包括微信、qq，新浪微博等';
 
 CREATE TABLE IF NOT EXISTS `t_seo_article` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
   `keyword` varchar(50) DEFAULT NULL COMMENT '关键词',
   `desc` varchar(500) DEFAULT NULL COMMENT '描述',
   `column_id` bigint(20) NOT NULL COMMENT '栏目id',
   `name` varchar(50) NOT NULL COMMENT '文章名称',
-  `content` varchar(1000) NOT NULL COMMENT '文章内容',
+  `content` varchar(3000) NOT NULL COMMENT '文章内容',
   `content_url` varchar(255) DEFAULT NULL COMMENT '文章内容URL',
   `recommend` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否推荐,1推荐/0不推荐',
   `reading_num` int(11) NOT NULL DEFAULT '0' COMMENT '阅读数',
-  `state` tinyint(1) NOT NULL DEFAULT '0' COMMENT '文章状态,0下架/1上架',
+  `state` tinyint(1) NOT NULL DEFAULT '1' COMMENT '文章状态,0下架/1上架',
   `tags` varchar(500) DEFAULT NULL COMMENT '文章标签',
   `relate_article_ids` varchar(500) DEFAULT NULL COMMENT '相关文章',
   `up_time` datetime(3) DEFAULT NULL COMMENT '上架时间',
   `href` varchar(255) DEFAULT NULL COMMENT '文章页',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-  `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
+  `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo文章表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_article_relate` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `article_id` bigint(20) NOT NULL COMMENT '文章id',
   `relate_article_id` bigint(20) NOT NULL COMMENT '相关文章id',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-  `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
+  `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo相关文章表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_article_tag_mapping` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `article_id` bigint(20) NOT NULL COMMENT '文章id',
   `tag_id` bigint(20) NOT NULL COMMENT '标签id',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-  `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
+  `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo文章标签关联表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_banner` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `channel_id` bigint(20) NOT NULL COMMENT '频道id',
   `name` varchar(50) NOT NULL COMMENT '名称',
   `visible` tinyint(1) NOT NULL DEFAULT '1' COMMENT '显示状态,1显示/0不显示',
@@ -78,27 +84,31 @@ CREATE TABLE IF NOT EXISTS `t_seo_banner` (
   `order_num` int(11) DEFAULT '0' COMMENT '顺序',
   `picture_url` varchar(255) DEFAULT NULL COMMENT '图片URL',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-  `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
+  `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo banner表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_channel` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
   `keyword` varchar(50) DEFAULT NULL COMMENT '关键词',
   `desc` varchar(500) DEFAULT NULL COMMENT '描述',
   `href` varchar(255) DEFAULT NULL COMMENT '频道页',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-  `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
+  `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo频道表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='seo频道表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_column` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
   `keyword` varchar(50) DEFAULT NULL COMMENT '关键词',
   `desc` varchar(500) DEFAULT NULL COMMENT '描述',
@@ -111,27 +121,31 @@ CREATE TABLE IF NOT EXISTS `t_seo_column` (
   `picture_url` varchar(255) NOT NULL COMMENT '图片URL',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
   `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
   `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo栏目表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_tag` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `name` varchar(50) NOT NULL COMMENT '标签名称',
   `title` varchar(50) DEFAULT NULL COMMENT '标题',
   `keyword` varchar(50) DEFAULT NULL COMMENT '关键词',
   `desc` varchar(500) DEFAULT NULL COMMENT '描述',
   `href` varchar(255) DEFAULT NULL COMMENT '标签页',
   `create_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '创建时间',
-  `create_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '创建用户id',
+  `create_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '创建用户id',
+  `create_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '创建用户名',
   `update_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) ON UPDATE CURRENT_TIMESTAMP(3) COMMENT '更新时间',
-  `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '修改用户id',
+  `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '修改用户id',
+  `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '修改用户名',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo标签表';
 
 CREATE TABLE IF NOT EXISTS `t_subsidiary_info` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `subsidiary_name` varchar(255) DEFAULT NULL COMMENT '子公司名称',
   `subsidiary_code` varchar(20) DEFAULT NULL COMMENT '子公司标识，可以为公司名的简写',
   `api_key` varchar(64) DEFAULT NULL COMMENT 'apiKey',
@@ -144,10 +158,10 @@ CREATE TABLE IF NOT EXISTS `t_subsidiary_info` (
   `update_uid` bigint(20) DEFAULT NULL COMMENT '更新用户id',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `uniq_api_key` (`api_key`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='子公司信息管理';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='子公司信息管理';
 
 CREATE TABLE IF NOT EXISTS `t_user` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `user_info_id` bigint(20) DEFAULT NULL COMMENT '用户基础信息id',
   `account` varchar(50) DEFAULT NULL COMMENT '用户名/账号',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
@@ -169,10 +183,10 @@ CREATE TABLE IF NOT EXISTS `t_user` (
   KEY `idx_account` (`account`),
   KEY `idx_email` (`email`),
   KEY `idx_phone` (`phone`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户认证表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='账户认证表';
 
 CREATE TABLE IF NOT EXISTS `t_user_bind_relation` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `user_id` bigint(20) NOT NULL COMMENT '当前用户id',
   `bind_user_ids` varchar(200) NOT NULL COMMENT '绑定的用户id集合',
   `del_flag` tinyint(1) DEFAULT '0' COMMENT '删除状态，0 未删除 1 已删除 默认 0',
@@ -185,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `t_user_bind_relation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户账号绑定关系表';
 
 CREATE TABLE IF NOT EXISTS `t_user_history_import_control` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID，由于是底层，可以作为业务条件传入',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID，由于是底层，可以作为业务条件传入',
   `import_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '导入时间',
   `import_num` bigint(20) DEFAULT NULL COMMENT '导入记录条数',
   `state` tinyint(2) DEFAULT '1' COMMENT '导入状态，0失败 1成功',
@@ -194,7 +208,7 @@ CREATE TABLE IF NOT EXISTS `t_user_history_import_control` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='用户历史数据导入控制表';
 
 CREATE TABLE IF NOT EXISTS `t_user_info` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `nick_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户昵称',
   `sex` tinyint(1) DEFAULT '0' COMMENT '性别,0 保密1 男 2 女 默认为0',
   `image` varchar(255) DEFAULT NULL COMMENT '头像url地址',
@@ -206,10 +220,10 @@ CREATE TABLE IF NOT EXISTS `t_user_info` (
   `update_time` datetime(3) DEFAULT NULL COMMENT '更新时间',
   `update_uid` bigint(20) DEFAULT NULL COMMENT '更新用户id',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='账户扩展信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='账户扩展信息表';
 
 CREATE TABLE IF NOT EXISTS `t_user_modify_record` (
-  `id` bigint(20) unsigned NOT NULL COMMENT '主键ID',
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
   `user_id` bigint(20) DEFAULT NULL COMMENT '修改用户id',
   `resource_content` varchar(1000) DEFAULT NULL COMMENT '原对象内容',
   `modify_content` varchar(1000) DEFAULT NULL COMMENT '修改后的内容',
