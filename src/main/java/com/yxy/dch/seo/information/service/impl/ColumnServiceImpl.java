@@ -48,9 +48,9 @@ public class ColumnServiceImpl extends ServiceImpl<ColumnMapper, Column> impleme
         if (maxOrderNum == null) {
             maxOrderNum = 0;
         }
-        if (param.getOrderNum() > maxOrderNum + 1) {
-            throw new BizException(CodeMsg.seo_orderNum_error);
-        }
+//        if (param.getOrderNum() > maxOrderNum + 1) {
+//            throw new BizException(CodeMsg.seo_orderNum_error);
+//        }
 
         // 新增栏目
         Column column = new Column();
