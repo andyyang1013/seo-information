@@ -12,7 +12,7 @@ import java.util.List;
  * @author yangzhen
  */
 public interface ColumnMapper extends BaseMapper<Column> {
-    List<ColumnVO> getColumnListByIndexPage();
+    List<ColumnVO> getColumnListByIndexPage(String channelId);
 
     List<ColumnVO> selectColumnList(ColumnVO param);
 

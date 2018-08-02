@@ -7,7 +7,7 @@ import com.yxy.dch.seo.information.vo.ColumnVO;
 import java.util.List;
 
 public interface IFrontColumnService extends IService<Column> {
-    List<ColumnVO> getColumnListByIndexPage();
+    List<ColumnVO> getColumnListByIndexPage(String channelId);
 
     ColumnVO selectColumnByNamePinyin(String namePinyin);
 }

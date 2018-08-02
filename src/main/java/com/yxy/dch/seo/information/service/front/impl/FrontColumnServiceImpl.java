@@ -20,8 +20,8 @@ public class FrontColumnServiceImpl extends ServiceImpl<ColumnMapper,Column> imp
     private ArticleMapper articleMapper;
 
     @Override
-    public List<ColumnVO> getColumnListByIndexPage() {
-        List<ColumnVO> columnList = columnMapper.getColumnListByIndexPage();
+    public List<ColumnVO> getColumnListByIndexPage(String channelId) {
+        List<ColumnVO> columnList = columnMapper.getColumnListByIndexPage(channelId);
         for (ColumnVO column : columnList) {
             List<Article> articleList = articleMapper.selectArticlesByColumnId(column.getId());
             column.setArticleList(articleList);

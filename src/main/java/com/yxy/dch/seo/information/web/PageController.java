@@ -6,6 +6,8 @@ import com.github.pagehelper.PageInfo;
 import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.entity.Tag;
+import com.yxy.dch.seo.information.exception.BizException;
+import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.service.*;
 import com.yxy.dch.seo.information.service.front.*;
 import com.yxy.dch.seo.information.vo.ArticleVO;
@@ -44,9 +46,14 @@ public class PageController extends BaseController {
         ModelAndView modelAndView = new ModelAndView("index");
         // 频道
         Channel channel = channelService.getDefaultChannel(null);
+        if (channel == null){
+            logger.error("访问频道首页错误{}",CodeMsg.seo_channel_not_exist.getMsg());
+            throw new BizException(CodeMsg.seo_channel_not_exist);
+        }
         modelAndView.addObject("channel", channel);
         // 栏目列表（包含栏目下的文章）
-        modelAndView.addObject("columnList", columnService.getColumnListByIndexPage());
+        List<ColumnVO> columnList = columnService.getColumnListByIndexPage(channel.getId());
+        modelAndView.addObject("columnList", columnList);
         // banner列表
         modelAndView.addObject("bannerList", bannerService.selectDisplayableBannerList(channel.getId()));
         // 热门文章
@@ -228,10 +235,10 @@ public class PageController extends BaseController {
         ArticleVO article = articleService.view(param);
         modelAndView.addObject("article", article);
         // 上一篇文章
-        ArticleVO lastArticle = articleService.selectLastArticle(article.getId());
+        ArticleVO lastArticle = articleService.selectLastArticle(article.getColumnId(),article.getId());
         modelAndView.addObject("lastArticle",lastArticle);
         // 下一篇文章
-        ArticleVO nextArticle = articleService.selectNextArticle(article.getId());
+        ArticleVO nextArticle = articleService.selectNextArticle(article.getColumnId(),article.getId());
         modelAndView.addObject("nextArticle",nextArticle);
         // 频道
         modelAndView.addObject("channel", channelService.selectById(article.getColumn().getChannelId()));

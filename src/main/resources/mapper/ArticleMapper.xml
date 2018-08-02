@@ -271,7 +271,7 @@ where a.id = #{id}
         SELECT
         <include refid="columns"/>
         FROM t_seo_article a
-        WHERE a.id &gt; #{id}
+        WHERE a.column_id = #{columnId} AND a.id &gt; #{id}
         ORDER BY a.id LIMIT 1
     </select>
 
@@ -279,7 +279,7 @@ where a.id = #{id}
         SELECT
         <include refid="columns"/>
         FROM t_seo_article a
-        WHERE a.id &lt; #{id}
+        WHERE a.column_id = #{columnId} AND a.id &lt; #{id}
         ORDER BY a.id DESC LIMIT 1
     </select>
 

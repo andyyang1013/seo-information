@@ -67,7 +67,7 @@
     <select id="getColumnListByIndexPage" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_column c WHERE visible = 1 ORDER BY order_num
+        FROM t_seo_column c WHERE c.channel_id = #{channelId} AND c.visible = 1 ORDER BY c.order_num
     </select>
 
     <select id="selectColumnList" resultMap="customVoResultMap">
@@ -79,7 +79,7 @@
     <select id="selectColumnByNamePinyin" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_column c WHERE c.name_pinyin = #{namePinyin}
+        FROM t_seo_column c WHERE c.name_pinyin = #{namePinyin} AND c.visible = 1
     </select>
 
     <select id="getMaxOrderNum" resultType="java.lang.Integer">

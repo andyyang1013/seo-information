@@ -53,13 +53,13 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     }
 
     @Override
-    public ArticleVO selectLastArticle(String id) {
-        return articleMapper.selectLastArticle(id);
+    public ArticleVO selectLastArticle(String columnId, String id) {
+        return articleMapper.selectLastArticle(columnId, id);
     }
 
     @Override
-    public ArticleVO selectNextArticle(String id) {
-        return articleMapper.selectNextArticle(id);
+    public ArticleVO selectNextArticle(String columnId, String id) {
+        return articleMapper.selectNextArticle(columnId, id);
     }
 
     @Override

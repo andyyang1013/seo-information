@@ -23,7 +23,7 @@ public interface IFrontArticleService extends IService<Article> {
 
     List<ArticleVO> getArticlesByTagId(String tagId);
 
-    ArticleVO selectLastArticle(String id);
+    ArticleVO selectLastArticle(String columnId, String id);
 
-    ArticleVO selectNextArticle(String id);
+    ArticleVO selectNextArticle(String columnId, String id);
 }
