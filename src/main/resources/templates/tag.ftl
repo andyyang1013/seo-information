@@ -73,7 +73,7 @@
                     </#list>
             </#if>
             <#if pageCount <= 1>
-                    <li><a href="${base}/${column.namePinyin}?1">1</a></li>
+                    <li><a href="${base}/tag/${tag.id}.html?1">1</a></li>
             </#if>
         </ul>
     </div>
