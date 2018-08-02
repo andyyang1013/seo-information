@@ -76,7 +76,7 @@
             <div class="item-tag">
                 标签:
                     <#list article.tagList as tag>
-                        <a href="${base}/tag/${tag.id}">${tag.name}</a>
+                        <a href="${base}/tag/${tag.id}.html">${tag.name}</a>
                     </#list>
             </div>
             <!-- 上下篇 -->
