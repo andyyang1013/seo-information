@@ -51,13 +51,13 @@
                     </h4>
                     <div class="item-content">
                         ${article.content}
-                        <div class="item-tag">
-                            标签:
-                            <#list article.tagList as tag>
-                                <a href="${base}/tag/${tag.id}.html">${tag.name}</a>
-                            </#list>
-                        </div>
                         <a href="${base}/${article.id}.html">阅读全文&gt;&gt;</a>
+                    </div>
+                    <div class="item-tag">
+                        标签:
+                        <#list article.tagList as tag>
+                            <a href="${base}/tag/${tag.id}.html">${tag.name}</a>
+                        </#list>
                     </div>
                 </div>
             </#list>
