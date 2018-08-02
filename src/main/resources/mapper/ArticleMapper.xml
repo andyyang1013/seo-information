@@ -286,7 +286,7 @@ where a.id = #{id}
         FROM t_seo_article a
         LEFT JOIN t_seo_article_tag_mapping t ON a.id = t.article_id
         LEFT JOIN t_seo_tag tag ON t.tag_id = tag.id
-        WHERE m.tag_id = #{tagId} AND a.state = 1
+        WHERE t.tag_id = #{tagId} AND a.state = 1
         ORDER BY a.update_time DESC
     </select>
 
