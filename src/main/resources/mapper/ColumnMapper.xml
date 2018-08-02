@@ -67,7 +67,7 @@
     <select id="getColumnListByIndexPage" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_column c WHERE visible = 1 ORDER BY order_num DESC
+        FROM t_seo_column c WHERE visible = 1 ORDER BY order_num
     </select>
 
     <select id="selectColumnList" resultMap="customVoResultMap">
