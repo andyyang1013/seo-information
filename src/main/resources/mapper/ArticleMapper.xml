@@ -270,7 +270,7 @@ where a.id = #{id}
         FROM t_seo_article a
     </select>
 
-    <select id="getArticlesByTagId" resultMap="customResultMap">
+    <select id="getArticlesByTagId" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>,
         t.tag_id AS tag_id,
