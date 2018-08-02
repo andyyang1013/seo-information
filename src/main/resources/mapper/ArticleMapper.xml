@@ -243,7 +243,7 @@ where a.id = #{id}
         FROM t_seo_article a
         LEFT JOIN t_seo_column c ON a.column_id = c.id
         WHERE c.name_pinyin = #{namePinyin} AND c.visible = 1 AND a.state = 1
-        ORDER BY a.update_time
+        ORDER BY a.update_time DESC
     </select>
 
     <select id="dayTopArticles" resultMap="customResultMap">
@@ -267,7 +267,7 @@ where a.id = #{id}
         ORDER BY a.update_time
     </select>
 
-    <select id="selectNextArticle" resultMap="customResultMap">
+    <select id="selectNextArticle" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
         FROM t_seo_article a
@@ -275,7 +275,7 @@ where a.id = #{id}
         ORDER BY a.id LIMIT 1
     </select>
 
-    <select id="selectLastArticle" resultMap="customResultMap">
+    <select id="selectLastArticle" resultMap="customVoResultMap">
         SELECT
         <include refid="columns"/>
         FROM t_seo_article a
