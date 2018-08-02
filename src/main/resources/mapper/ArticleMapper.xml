@@ -237,11 +237,23 @@ where a.id = #{id}
         FROM t_seo_article a WHERE a.column_id = #{columnId} AND state = 1 ORDER BY update_time DESC LIMIT 10
     </select>
 
-    <select id="getArticlesByColNamePinyin" resultMap="customResultMap">
+    <select id="getArticlesByColNamePinyin" resultMap="customVoResultMap">
         SELECT
-        <include refid="columns"/>
+        <include refid="columns"/>,
+        t.tag_id AS tag_id,
+        t.create_time AS tag_create_time,
+        t.create_uid AS tag_create_uid,
+        t.update_time AS tag_update_time,
+        t.update_uid AS tag_update_uid,
+        tag.name AS tag_name,
+        tag.title AS tag_title,
+        tag.keyword AS tag_keyword,
+        tag.`desc` AS tag_desc,
+        tag.`href` AS tag_href
         FROM t_seo_article a
         LEFT JOIN t_seo_column c ON a.column_id = c.id
+        LEFT JOIN t_seo_article_tag_mapping t ON a.id = t.article_id
+        LEFT JOIN t_seo_tag tag ON t.tag_id = tag.id
         WHERE c.name_pinyin = #{namePinyin} AND c.visible = 1 AND a.state = 1
         ORDER BY a.update_time DESC
     </select>
