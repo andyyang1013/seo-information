@@ -67,6 +67,8 @@
                 </div>
             </#list>
         <ul class="page-container">
+            <li><a href="${base}/tag/${tag.id}.html?1">首页</a></li>
+            <li><a href="${base}/tag/${tag.id}.html?${lastPage}">上一页</a></li>
             <#if pageCount != 1>
                     <#list 1..pageCount as i>
                         <li><a href="${base}/tag/${tag.id}.html?${i}">${i}</a></li>
@@ -75,6 +77,12 @@
             <#if pageCount <= 1>
                     <li><a href="${base}/tag/${tag.id}.html?1">1</a></li>
             </#if>
+            <li><a href="${base}/tag/${tag.id}.html?${nextPage}">下一页</a></li>
+            <li><a href="${base}/tag/${tag.id}.html?${pageCount}">尾页</a></li>
+            <li>
+                <input type="text">
+            </li>
+            <li><a href="javascript:;">go</a></li>
         </ul>
     </div>
     <div class="content-r">
