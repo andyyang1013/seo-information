@@ -23,7 +23,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     List<ArticleVO> selectRecommendedArticles();
 
-    List<Article> selectArticlesByColumnId(String id);
+    List<Article> selectArticlesByColumnId(String columnId);
 
     List<ArticleVO> getArticlesByColNamePinyin(String namePinyin);
 
