@@ -272,11 +272,22 @@ where a.id = #{id}
 
     <select id="getArticlesByTagId" resultMap="customResultMap">
         SELECT
-        <include refid="columns"/>
+        <include refid="columns"/>,
+        t.tag_id AS tag_id,
+        t.create_time AS tag_create_time,
+        t.create_uid AS tag_create_uid,
+        t.update_time AS tag_update_time,
+        t.update_uid AS tag_update_uid,
+        tag.name AS tag_name,
+        tag.title AS tag_title,
+        tag.keyword AS tag_keyword,
+        tag.`desc` AS tag_desc,
+        tag.`href` AS tag_href
         FROM t_seo_article a
-        LEFT JOIN t_seo_article_tag_mapping m ON a.id = m.article_id
+        LEFT JOIN t_seo_article_tag_mapping t ON a.id = t.article_id
+        LEFT JOIN t_seo_tag tag ON t.tag_id = tag.id
         WHERE m.tag_id = #{tagId} AND a.state = 1
-        ORDER BY a.update_time
+        ORDER BY a.update_time DESC
     </select>
 
     <select id="selectNextArticle" resultMap="customVoResultMap">

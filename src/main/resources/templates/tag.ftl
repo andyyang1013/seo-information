@@ -58,6 +58,12 @@
                         ${article.content}
                         <a href="${base}/${article.id}.html">阅读全文&gt;&gt;</a>
                     </div>
+                    <div class="item-tag">
+                        标签:
+                        <#list article.tagList as tag>
+                            <a href="${base}/tag/${tag.id}.html">${tag.name}</a>
+                        </#list>
+                    </div>
                 </div>
             </#list>
         <ul class="page-container">
