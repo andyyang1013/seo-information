@@ -67,6 +67,9 @@
                         <li><a href="${base}/${column.namePinyin}?${i}">${i}</a></li>
                     </#list>
                 </#if>
+                <#if pageCount <= 1>
+                    <li><a href="${base}/${column.namePinyin}?1">1</a></li>
+                </#if>
         </ul>
     </div>
     <div class="content-r">
