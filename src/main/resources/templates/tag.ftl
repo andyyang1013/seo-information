@@ -79,10 +79,6 @@
             </#if>
             <li><a href="${base}/tag/${tag.id}.html?${nextPage}">下一页</a></li>
             <li><a href="${base}/tag/${tag.id}.html?${pageCount}">尾页</a></li>
-            <li>
-                <input type="text">
-            </li>
-            <li><a href="javascript:;">go</a></li>
         </ul>
     </div>
     <div class="content-r">

@@ -74,10 +74,6 @@
                 </#if>
                 <li><a href="${base}/${column.namePinyin}?${nextPage}">下一页</a></li>
                 <li><a href="${base}/${column.namePinyin}?${pageCount}">尾页</a></li>
-                <li>
-                    <input type="text">
-                </li>
-                <li><a href="javascript:;">go</a></li>
         </ul>
     </div>
     <div class="content-r">
