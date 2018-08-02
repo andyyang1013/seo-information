@@ -22,4 +22,8 @@ public interface IFrontArticleService extends IService<Article> {
     List<ArticleVO> weekTopArticles();
 
     List<ArticleVO> getArticlesByTagId(String tagId);
+
+    ArticleVO selectLastArticle(String id);
+
+    ArticleVO selectNextArticle(String id);
 }

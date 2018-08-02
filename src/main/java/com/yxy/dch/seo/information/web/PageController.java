@@ -227,6 +227,12 @@ public class PageController extends BaseController {
         param.setId(id);
         ArticleVO article = articleService.view(param);
         modelAndView.addObject("article", article);
+        // 上一篇文章
+        ArticleVO lastArticle = articleService.selectLastArticle(article.getId());
+        modelAndView.addObject("lastArticle",lastArticle);
+        // 下一篇文章
+        ArticleVO nextArticle = articleService.selectNextArticle(article.getId());
+        modelAndView.addObject("nextArticle",nextArticle);
         // 频道
         modelAndView.addObject("channel", channelService.selectById(article.getColumn().getChannelId()));
         // 栏目列表

@@ -267,5 +267,21 @@ where a.id = #{id}
         ORDER BY a.update_time
     </select>
 
+    <select id="selectNextArticle" resultMap="customResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_article a
+        WHERE a.id &gt; #{id}
+        ORDER BY a.id LIMIT 1
+    </select>
+
+    <select id="selectLastArticle" resultMap="customResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_article a
+        WHERE a.id &lt; #{id}
+        ORDER BY a.id DESC LIMIT 1
+    </select>
+
 </mapper>
 

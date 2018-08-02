@@ -60,7 +60,7 @@
             <h3>热门文章</h3>
             <ul class="list">
                 <#list hottest as article>
-                    <li><a href="${base}/${article.id}.html">${article.name}</a></li>
+                    <li><a href="${base}/${article.id}.html"><p>${article.name}</p></a></li>
                 </#list>
             </ul>
         </div>
@@ -68,7 +68,7 @@
             <h3>最新文章</h3>
             <ul class="list">
                 <#list newest as article>
-                    <li><a href="${base}/${article.id}.html">${article.name}</a></li>
+                    <li><a href="${base}/${article.id}.html"><p>${article.name}</p></a></li>
                 </#list>
             </ul>
         </div>
@@ -76,7 +76,7 @@
             <h3>推荐文章</h3>
             <ul class="list">
                 <#list recommended as article>
-                    <li><a href="${base}/${article.id}.html">${article.name}</a></li>
+                    <li><a href="${base}/${article.id}.html"><p>${article.name}</p></a></li>
                 </#list>
             </ul>
         </div>
@@ -90,7 +90,7 @@
                     <ul class="list">
                         <#list column.articleList as article>
                             <li>
-                                <a href="${base}/${article.id}.html">${article.name}
+                                <a href="${base}/${article.id}.html"><p>${article.name}</p>
                                     <span>${article.updateTime?date}</span></a>
                             </li>
                         </#list>
