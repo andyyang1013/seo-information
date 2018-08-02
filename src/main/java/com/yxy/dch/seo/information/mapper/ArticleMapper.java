@@ -33,7 +33,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     List<ArticleVO> getArticlesByTagId(String tagId);
 
-    ArticleVO selectLastArticle(String columnId, String id);
+    ArticleVO selectLastArticle(@Param("columnId") String columnId, @Param("id") String id);
 
-    ArticleVO selectNextArticle(String columnId, String id);
+    ArticleVO selectNextArticle(@Param("columnId") String columnId, @Param("id") String id);
 }
