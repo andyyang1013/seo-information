@@ -62,6 +62,8 @@
                 </div>
             </#list>
         <ul class="page-container">
+                <li><a href="${base}/${column.namePinyin}?1">首页</a></li>
+                <li><a href="${base}/${column.namePinyin}?${lastPage}">上一页</a></li>
                 <#if pageCount != 1>
                     <#list 1..pageCount as i>
                         <li><a href="${base}/${column.namePinyin}?${i}">${i}</a></li>
@@ -70,6 +72,12 @@
                 <#if pageCount <= 1>
                     <li><a href="${base}/${column.namePinyin}?1">1</a></li>
                 </#if>
+                <li><a href="${base}/${column.namePinyin}?${nextPage}">下一页</a></li>
+                <li><a href="${base}/${column.namePinyin}?${pageCount}">尾页</a></li>
+                <li>
+                    <input type="text">
+                </li>
+                <li><a href="javascript:;">go</a></li>
         </ul>
     </div>
     <div class="content-r">
