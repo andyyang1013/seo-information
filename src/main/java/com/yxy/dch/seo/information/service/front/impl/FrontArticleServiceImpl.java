@@ -3,16 +3,19 @@ package com.yxy.dch.seo.information.service.front.impl;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
 import com.yxy.dch.seo.information.entity.ArticleReadRecord;
+import com.yxy.dch.seo.information.entity.Tag;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
 import com.yxy.dch.seo.information.mapper.ArticleReadRecordMapper;
 import com.yxy.dch.seo.information.service.front.IFrontArticleService;
 import com.yxy.dch.seo.information.vo.ArticleVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -54,7 +57,23 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
 
     @Override
     public List<ArticleVO> getArticlesByTagId(String tagId) {
-        return articleMapper.getArticlesByTagId(tagId);
+        List<ArticleVO> articleList = articleMapper.getArticlesByTagId(tagId);
+        for (ArticleVO article : articleList) {
+            String tags = article.getTags();
+            if (StringUtils.isNotBlank(tags)) {
+                String[] tagArray = StringUtils.split(tags, ",");
+                if (tagArray != null && tagArray.length > 0) {
+                    List<Tag> tagList = new ArrayList<>();
+                    for (String tagName : tagArray) {
+                        Tag tag = new Tag();
+                        tag.setName(tagName);
+                        tagList.add(tag);
+                    }
+                    article.setTagList(tagList);
+                }
+            }
+        }
+        return articleList;
     }
 
     @Override
