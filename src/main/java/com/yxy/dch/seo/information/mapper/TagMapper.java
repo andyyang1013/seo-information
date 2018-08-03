@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.mapper;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.yxy.dch.seo.information.entity.Tag;
 import com.yxy.dch.seo.information.vo.TagVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ import java.util.List;
  */
 public interface TagMapper extends BaseMapper<Tag> {
     List<TagVO> selectTagList(TagVO param);
+
+    List<TagVO> selectDisplayTagList(@Param("limit") Integer limit);
 }

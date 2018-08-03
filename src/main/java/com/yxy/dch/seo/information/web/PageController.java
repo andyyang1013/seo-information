@@ -111,7 +111,7 @@ public class PageController extends BaseController {
         List<ArticleReadRecord> weekTopArticles = articleReadRecordService.weekTopArticles();
         modelAndView.addObject("weekTopArticles", weekTopArticles);
         // 标签列表
-        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        modelAndView.addObject("tagList", tagService.selectTagList(15));
         logger.info("访问栏目页返回{}", modelAndView);
         return modelAndView;
     }
@@ -160,7 +160,7 @@ public class PageController extends BaseController {
         List<ArticleReadRecord> weekTopArticles = articleReadRecordService.weekTopArticles();
         modelAndView.addObject("weekTopArticles", weekTopArticles);
         // 标签列表
-        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        modelAndView.addObject("tagList", tagService.selectTagList(15));
         return modelAndView;
     }
 
@@ -199,7 +199,7 @@ public class PageController extends BaseController {
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended(8));
         // 标签列表
-        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        modelAndView.addObject("tagList", tagService.selectTagList(15));
         logger.info("访问标签详细页返回{}", modelAndView);
         return modelAndView;
     }
@@ -240,7 +240,7 @@ public class PageController extends BaseController {
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended(8));
         // 标签列表
-        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        modelAndView.addObject("tagList", tagService.selectTagList(15));
         return modelAndView;
     }
 
@@ -286,7 +286,7 @@ public class PageController extends BaseController {
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended(8));
         // 标签列表
-        modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
+        modelAndView.addObject("tagList", tagService.selectTagList(15));
         logger.info("访问文章页返回{}", modelAndView);
         return modelAndView;
     }
