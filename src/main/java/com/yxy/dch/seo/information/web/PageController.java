@@ -270,10 +270,10 @@ public class PageController extends BaseController {
         modelAndView.addObject("article", article);
         // 上一篇文章
         ArticleVO lastArticle = articleService.selectLastArticle(article.getColumnId(),article.getId());
-        modelAndView.addObject("lastArticle",lastArticle);
+        modelAndView.addObject("lastArticle",lastArticle == null ? article : lastArticle);
         // 下一篇文章
         ArticleVO nextArticle = articleService.selectNextArticle(article.getColumnId(),article.getId());
-        modelAndView.addObject("nextArticle",nextArticle);
+        modelAndView.addObject("nextArticle",nextArticle == null ? article : nextArticle);
         // 频道
         Channel channel = channelService.selectById(article.getColumn().getChannelId());
         modelAndView.addObject("channel", channel);
