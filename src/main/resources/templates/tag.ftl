@@ -41,7 +41,7 @@
 <!-- 面包屑 -->
 <div class="breadcrumb">
     当前位置：
-    <a href="${base}">頻道</a>
+    <a href="${base}/">頻道</a>
     <span>&gt;</span>
     <a href="${base}/tag/">标签首页</a>
     <span>&gt;</span>
