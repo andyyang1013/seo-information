@@ -33,4 +33,9 @@ public class FrontColumnServiceImpl extends ServiceImpl<ColumnMapper,Column> imp
     public ColumnVO selectColumnByNamePinyin(String namePinyin) {
         return columnMapper.selectColumnByNamePinyin(namePinyin);
     }
+
+    @Override
+    public List<ColumnVO> selectColumnList(String channelId) {
+        return columnMapper.selectDisplayColumnList(channelId);
+    }
 }

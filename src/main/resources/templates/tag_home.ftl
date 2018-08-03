@@ -43,7 +43,7 @@
 <!-- 内容 -->
 <div class="container tag-home-container">
     <#list tagList as tag>
-        <a href="${base}/${tag.id}.html" class="tag1">${tag.name}</a>
+        <a href="${base}/tag/${tag.id}.html" class="tag1">${tag.name}</a>
     </#list>
 </div>
 <!-- 页脚 -->

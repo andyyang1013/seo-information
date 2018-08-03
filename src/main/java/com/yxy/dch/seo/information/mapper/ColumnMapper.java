@@ -19,4 +19,6 @@ public interface ColumnMapper extends BaseMapper<Column> {
     ColumnVO selectColumnByNamePinyin(String namePinyin);
 
     Integer getMaxOrderNum(String id);
+
+    List<ColumnVO> selectDisplayColumnList(String channelId);
 }
