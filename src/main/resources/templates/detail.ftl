@@ -82,10 +82,10 @@
             <!-- 上下篇 -->
             <div class="item-next-prev">
                 <div class="fl-l">
-                    <strong>上一篇：</strong><a href="${base}/${lastArticle.id}.html" class="fl-l">${lastArticle.name}</a>
+                    <strong>上一篇：</strong><a href="${base}/${lastArticle.id}.html">${lastArticle.name}</a>
                 </div>
                 <div class="fl-r">
-                    <strong>下一篇：</strong><a href="${base}/${nextArticle.id}.html" class="fl-r">${nextArticle.name}</a>
+                    <strong>下一篇：</strong><a href="${base}/${nextArticle.id}.html">${nextArticle.name}</a>
                 </div>
             </div>
             <!-- 推荐 -->
