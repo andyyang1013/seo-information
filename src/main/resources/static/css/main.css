@@ -65,8 +65,9 @@ em,i {font-style:normal;}
 .list li {margin-bottom:20px;color:#dddddd;position:relative;}
 .list li:before {content:"";display:block;width:7px;height:7px;background:#dddddd;border-radius:50%;position:absolute;left:-15px;top:8px;}
 .list li:last-child {margin-bottom:0px;}
-.list li a {font-size:18px;color:#333;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
+.list li a {font-size:18px;color:#333;}
 .list li a:hover {color:#ff7612;text-decoration:underline;}
+.list li a p{max-width:350px;word-break:keep-all;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block;}
 /*推荐文章*/
 .article-content {padding:20px 0 15px 0;background:#fff;overflow:hidden;position:relative;margin-bottom:20px;border:1px solid #e5e5e5;}
 .article-content .article-item {float:left;display:inline-block;width:33.33%;padding-left:15px;border-right:2px dashed #f5f5f5;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
