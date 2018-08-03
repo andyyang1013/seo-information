@@ -17,11 +17,11 @@ public interface ArticleMapper extends BaseMapper<Article> {
 
     List<ArticleVO> selectArticleList(Article article);
 
-    List<ArticleVO> selectHottestArticles();
+    List<ArticleVO> selectHottestArticles(@Param("limit") Integer limit);
 
-    List<ArticleVO> selectNewestArticles();
+    List<ArticleVO> selectNewestArticles(@Param("limit") Integer limit);
 
-    List<ArticleVO> selectRecommendedArticles();
+    List<ArticleVO> selectRecommendedArticles(@Param("limit") Integer limit);
 
     List<Article> selectArticlesByColumnId(String columnId);
 

@@ -23,18 +23,18 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     private ArticleReadRecordMapper articleReadRecordMapper;
 
     @Override
-    public List<ArticleVO> hottest() {
-        return articleMapper.selectHottestArticles();
+    public List<ArticleVO> hottest(Integer limit) {
+        return articleMapper.selectHottestArticles(limit);
     }
 
     @Override
-    public List<ArticleVO> newest() {
-        return articleMapper.selectNewestArticles();
+    public List<ArticleVO> newest(Integer limit) {
+        return articleMapper.selectNewestArticles(limit);
     }
 
     @Override
-    public List<ArticleVO> recommended() {
-        return articleMapper.selectRecommendedArticles();
+    public List<ArticleVO> recommended(Integer limit) {
+        return articleMapper.selectRecommendedArticles(limit);
     }
 
     @Override

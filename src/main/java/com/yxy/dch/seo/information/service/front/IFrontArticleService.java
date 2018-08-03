@@ -7,11 +7,11 @@ import com.yxy.dch.seo.information.vo.ArticleVO;
 import java.util.List;
 
 public interface IFrontArticleService extends IService<Article> {
-    List<ArticleVO> hottest();
+    List<ArticleVO> hottest(Integer limit);
 
-    List<ArticleVO> newest();
+    List<ArticleVO> newest(Integer limit);
 
-    List<ArticleVO> recommended();
+    List<ArticleVO> recommended(Integer limit);
 
     ArticleVO view(ArticleVO param);
 
