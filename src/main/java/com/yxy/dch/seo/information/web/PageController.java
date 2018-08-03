@@ -99,9 +99,9 @@ public class PageController extends BaseController {
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
-        modelAndView.addObject("hottest", articleService.hottest(6));
+        modelAndView.addObject("hottest", articleService.hottest(8));
         // 推荐文章
-        modelAndView.addObject("recommended", articleService.recommended(6));
+        modelAndView.addObject("recommended", articleService.recommended(8));
         // 日排行榜
         PageHelper.startPage(1, 8, true);
         List<ArticleReadRecord> topArticles = articleReadRecordService.dayTopArticles();
@@ -148,9 +148,9 @@ public class PageController extends BaseController {
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
-        modelAndView.addObject("hottest", articleService.hottest(6));
+        modelAndView.addObject("hottest", articleService.hottest(8));
         // 推荐文章
-        modelAndView.addObject("recommended", articleService.recommended(6));
+        modelAndView.addObject("recommended", articleService.recommended(8));
         // 日排行榜
         PageHelper.startPage(1, 8, true);
         List<ArticleReadRecord> topArticles = articleReadRecordService.dayTopArticles();
@@ -195,9 +195,9 @@ public class PageController extends BaseController {
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
-        modelAndView.addObject("hottest", articleService.hottest(6));
+        modelAndView.addObject("hottest", articleService.hottest(8));
         // 推荐文章
-        modelAndView.addObject("recommended", articleService.recommended(6));
+        modelAndView.addObject("recommended", articleService.recommended(8));
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
         logger.info("访问标签详细页返回{}", modelAndView);
@@ -236,9 +236,9 @@ public class PageController extends BaseController {
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
-        modelAndView.addObject("hottest", articleService.hottest(6));
+        modelAndView.addObject("hottest", articleService.hottest(8));
         // 推荐文章
-        modelAndView.addObject("recommended", articleService.recommended(6));
+        modelAndView.addObject("recommended", articleService.recommended(8));
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
         return modelAndView;
@@ -282,9 +282,9 @@ public class PageController extends BaseController {
         // banner列表
         modelAndView.addObject("bannerList", bannerService.selectDisplayableBannerList(article.getColumn().getChannelId()));
         // 热门文章
-        modelAndView.addObject("hottest", articleService.hottest(6));
+        modelAndView.addObject("hottest", articleService.hottest(8));
         // 推荐文章
-        modelAndView.addObject("recommended", articleService.recommended(6));
+        modelAndView.addObject("recommended", articleService.recommended(8));
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
         logger.info("访问文章页返回{}", modelAndView);
