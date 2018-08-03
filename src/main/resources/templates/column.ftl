@@ -95,13 +95,13 @@
             <div class="item-content">
                 <ul class="item-content-list select" style="display: block;">
                         <#list hottest as article>
-                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a>
+                            <li><span>${article_index + 1}</span><a href="${base}/${article.id}.html">${article.name}</a>
                             </li>
                         </#list>
                 </ul>
                 <ul class="item-content-list">
                         <#list recommended as article>
-                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a>
+                            <li><span>${article_index + 1}</span><a href="${base}/${article.id}.html">${article.name}</a>
                             </li>
                         </#list>
                 </ul>
@@ -115,13 +115,13 @@
             <div class="item-content">
                 <ul class="item-content-list select" style="display: block;">
                         <#list dayTopArticles as article>
-                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a>
+                            <li><span>${article_index + 1}</span><a href="${base}/${article.articleId}.html">${article.articleName}</a>
                             </li>
                         </#list>
                 </ul>
                 <ul class="item-content-list">
                         <#list weekTopArticles as article>
-                            <li><span>${article_index}</span><a href="${base}/${article.id}.html">${article.name}</a>
+                            <li><span>${article_index + 1}</span><a href="${base}/${article.articleId}.html">${article.articleName}</a>
                             </li>
                         </#list>
                 </ul>

@@ -34,4 +34,8 @@ public class ArticleVO extends Article {
      * 栏目名称
      */
     private String columnName;
+    /**
+     * 客户端IP
+     */
+    private String clientIp;
 }

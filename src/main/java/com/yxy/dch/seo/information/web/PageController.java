@@ -3,6 +3,7 @@ package com.yxy.dch.seo.information.web;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.yxy.dch.seo.information.entity.ArticleReadRecord;
 import com.yxy.dch.seo.information.entity.Channel;
 import com.yxy.dch.seo.information.entity.Column;
 import com.yxy.dch.seo.information.entity.Tag;
@@ -12,6 +13,7 @@ import com.yxy.dch.seo.information.service.*;
 import com.yxy.dch.seo.information.service.front.*;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import com.yxy.dch.seo.information.vo.ColumnVO;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +35,8 @@ public class PageController extends BaseController {
     private IFrontTagService tagService;
     @Autowired
     private IFrontChannelService channelService;
+    @Autowired
+    private IFrontArticleReadRecordService articleReadRecordService;
 
     /**
      * 访问频道主页
@@ -100,12 +104,12 @@ public class PageController extends BaseController {
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended());
         // 日排行榜
-        PageHelper.startPage(1, 10, true);
-        List<ArticleVO> topArticles = articleService.dayTopArticles();
+        PageHelper.startPage(1, 8, true);
+        List<ArticleReadRecord> topArticles = articleReadRecordService.dayTopArticles();
         modelAndView.addObject("dayTopArticles", topArticles);
         // 周排行榜
-        PageHelper.startPage(1, 10, true);
-        List<ArticleVO> weekTopArticles = articleService.weekTopArticles();
+        PageHelper.startPage(1, 8, true);
+        List<ArticleReadRecord> weekTopArticles = articleReadRecordService.weekTopArticles();
         modelAndView.addObject("weekTopArticles", weekTopArticles);
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
@@ -148,12 +152,12 @@ public class PageController extends BaseController {
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended());
         // 日排行榜
-        PageHelper.startPage(1, 10, true);
-        List<ArticleVO> topArticles = articleService.dayTopArticles();
+        PageHelper.startPage(1, 8, true);
+        List<ArticleReadRecord> topArticles = articleReadRecordService.dayTopArticles();
         modelAndView.addObject("dayTopArticles", topArticles);
         // 周排行榜
-        PageHelper.startPage(1, 10, true);
-        List<ArticleVO> weekTopArticles = articleService.weekTopArticles();
+        PageHelper.startPage(1, 8, true);
+        List<ArticleReadRecord> weekTopArticles = articleReadRecordService.weekTopArticles();
         modelAndView.addObject("weekTopArticles", weekTopArticles);
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectList(new EntityWrapper<>(new Tag())));
@@ -247,11 +251,19 @@ public class PageController extends BaseController {
     @RequestMapping("/{id}.html")
     public ModelAndView detail(@PathVariable("id") String id) {
         logger.info("访问文章页");
+        //经过nginx代理，获取真实的客户端请求地址.如果为空直接取客户端地址
+        String clientIp = request.getHeader("X-Forwarded-For");
+        if (StringUtils.isEmpty(clientIp)) {
+            clientIp = request.getRemoteAddr();
+        } else {
+            clientIp = clientIp.split(",")[0];
+        }
         // 文章页
         ModelAndView modelAndView = new ModelAndView("detail");
         // 文章
         ArticleVO param = new ArticleVO();
         param.setId(id);
+        param.setClientIp(clientIp);
         ArticleVO article = articleService.view(param);
         modelAndView.addObject("article", article);
         // 上一篇文章

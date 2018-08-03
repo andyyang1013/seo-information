@@ -2,13 +2,16 @@ package com.yxy.dch.seo.information.service.front.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.yxy.dch.seo.information.entity.Article;
+import com.yxy.dch.seo.information.entity.ArticleReadRecord;
 import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
+import com.yxy.dch.seo.information.mapper.ArticleReadRecordMapper;
 import com.yxy.dch.seo.information.service.front.IFrontArticleService;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +19,8 @@ import java.util.List;
 public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements IFrontArticleService {
     @Autowired
     private ArticleMapper articleMapper;
+    @Autowired
+    private ArticleReadRecordMapper articleReadRecordMapper;
 
     @Override
     public List<ArticleVO> hottest() {
@@ -63,6 +68,7 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ArticleVO view(ArticleVO param) {
         ArticleVO articleVO = articleMapper.selectArticleById(param.getId());
         if (articleVO == null) {
@@ -71,6 +77,12 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
         // 阅读数+1
         articleVO.setReadingNum(articleVO.getReadingNum() + 1);
         articleMapper.updateById(articleVO);
+        // 保存文章阅读记录
+        ArticleReadRecord articleReadRecord = new ArticleReadRecord();
+        articleReadRecord.setArticleId(articleVO.getId());
+        articleReadRecord.setArticleName(articleVO.getName());
+        articleReadRecord.setClientIp(param.getClientIp());
+        articleReadRecordMapper.insert(articleReadRecord);
         return articleVO;
     }
 }
