@@ -81,8 +81,8 @@
             </div>
             <!-- 上下篇 -->
             <div class="item-next-prev">
-                <a href="${base}/${lastArticle.id}.html" class="fl-l"><strong>上一篇：</strong>${lastArticle.name}</a>
-                <a href="${base}/${nextArticle.id}.html" class="fl-r"><strong>下一篇：</strong>${nextArticle.name}</a>
+                <strong>上一篇：</strong><a href="${base}/${lastArticle.id}.html" class="fl-l">${lastArticle.name}</a>
+                <strong>下一篇：</strong><a href="${base}/${nextArticle.id}.html" class="fl-r">${nextArticle.name}</a>
             </div>
             <!-- 推荐 -->
             <div class="item-recommend">
