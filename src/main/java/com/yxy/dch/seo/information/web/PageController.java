@@ -90,6 +90,7 @@ public class PageController extends BaseController {
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
+        logger.info("pageInfo======================={}",pageInfo);
         long pageCount = pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10;
         modelAndView.addObject("pageCount", pageCount);
         // 上一页码
@@ -147,6 +148,7 @@ public class PageController extends BaseController {
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
+        logger.info("pageInfo======================={}",pageInfo);
         long pageCount = pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10;
         modelAndView.addObject("pageCount", pageCount);
         // 上一页码
