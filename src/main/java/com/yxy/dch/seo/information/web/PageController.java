@@ -90,12 +90,11 @@ public class PageController extends BaseController {
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
-        long pageCount = pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10;
-        modelAndView.addObject("pageCount", pageCount);
+        modelAndView.addObject("pageCount", pageInfo.getPages());
         // 上一页码
-        modelAndView.addObject("lastPage",1);
+        modelAndView.addObject("lastPage",pageInfo.getPrePage());
         // 下一页码
-        modelAndView.addObject("nextPage",pageCount > 1 ? 2 : 1);
+        modelAndView.addObject("nextPage",pageInfo.getNextPage());
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
@@ -147,12 +146,11 @@ public class PageController extends BaseController {
         List<ArticleVO> articleList = articleService.getArticlesByColNamePinyin(namePinyin);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
         modelAndView.addObject("articleList", articleList);
-        long pageCount = pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10;
-        modelAndView.addObject("pageCount", pageCount);
+        modelAndView.addObject("pageCount", pageInfo.getPages());
         // 上一页码
-        modelAndView.addObject("lastPage",index == 1 ? 1 : index - 1);
+        modelAndView.addObject("lastPage",pageInfo.getPrePage());
         // 下一页码
-        modelAndView.addObject("nextPage",index == pageCount ? pageCount : index + 1);
+        modelAndView.addObject("nextPage",pageInfo.getNextPage());
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
@@ -192,14 +190,13 @@ public class PageController extends BaseController {
         // 文章列表
         PageHelper.startPage(1, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
-        modelAndView.addObject("articleList", articleList);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
-        long pageCount = pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10;
-        modelAndView.addObject("pageCount", pageCount);
+        modelAndView.addObject("articleList", articleList);
+        modelAndView.addObject("pageCount", pageInfo.getPages());
         // 上一页码
-        modelAndView.addObject("lastPage",1);
+        modelAndView.addObject("lastPage",pageInfo.getPrePage());
         // 下一页码
-        modelAndView.addObject("nextPage",pageCount > 1 ? 2 : 1);
+        modelAndView.addObject("nextPage",pageInfo.getNextPage());
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
@@ -233,14 +230,13 @@ public class PageController extends BaseController {
         // 文章列表
         PageHelper.startPage(index, 10, true);
         List<ArticleVO> articleList = articleService.getArticlesByTagId(id);
-        modelAndView.addObject("articleList", articleList);
         PageInfo<ArticleVO> pageInfo = new PageInfo<>(articleList);
-        long pageCount = pageInfo.getTotal() / 10 == 0 ? 1 : pageInfo.getTotal() / 10;
-        modelAndView.addObject("pageCount", pageCount);
+        modelAndView.addObject("articleList", articleList);
+        modelAndView.addObject("pageCount", pageInfo.getPages());
         // 上一页码
-        modelAndView.addObject("lastPage",index == 1 ? 1 : index - 1);
+        modelAndView.addObject("lastPage",pageInfo.getPrePage());
         // 下一页码
-        modelAndView.addObject("nextPage",index == pageCount ? pageCount : index + 1);
+        modelAndView.addObject("nextPage",pageInfo.getNextPage());
         // 栏目列表
         modelAndView.addObject("columnList", columnService.selectColumnList(channel.getId()));
         // 热门文章
