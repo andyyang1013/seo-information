@@ -64,6 +64,7 @@
         SELECT
         <include refid="columns"/>
         FROM t_seo_tag t
+        ORDER BY t.create_time DESC
         LIMIT ${limit}
     </select>
 
