@@ -7,7 +7,7 @@
     <link href="${base}/images/favicon.ico" rel="icon" type="image/x-icon">
     <link rel="shortcut icon" href="${base}/images/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="${base}/css/main.css">
-    <title>${channel.title}</title>
+    <title>${channel.title} - 贷财行</title>
 </head>
 <body>
 <!-- 页头 -->
