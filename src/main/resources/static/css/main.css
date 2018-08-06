@@ -106,6 +106,8 @@ em,i {font-style:normal;}
 .content-l .item .item-content {overflow:hidden;font-size:16px;color:#666666;line-height:30px;height:90px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;position:relative;}
 .content-l .item .item-content a {font-size:16px;color:#ff7612;position:absolute;bottom:0;right:0;background:#fff;padding-left:7px;}
 .content-l .item .item-content img{display:none!important}
+.content-l .item .item-content p,
+.content-l .item .item-content span{text-align:left!important;}
 /*分页*/
 .page-container {position:relative;margin:0 auto;overflow:hidden;text-align:center;margin:25px 0;font-size:0;}
 .page-container li {display:inline-block;overflow:hidden;}
