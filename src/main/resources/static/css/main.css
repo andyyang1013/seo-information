@@ -157,3 +157,9 @@ em,i {font-style:normal;}
 .content-r .column-item a:nth-child(2n) {margin-right:0;}
 .content-r .column-item a:hover {background:#ff7612;border:1px solid #ff7612;color:#fff;}
 .content-r .img-item {display:block;width:100%;margin-bottom:15px;}
+.detail-content .item-next-prev>div{
+    width: 50%;
+    overflow: hidden;
+    word-break: keep-all;
+    white-space: nowrap;
+    text-overflow: ellipsis;}
