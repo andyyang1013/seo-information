@@ -284,5 +284,23 @@ where a.id = #{id}
         ORDER BY a.id DESC LIMIT 1
     </select>
 
+    <select id="recommendedByColumn" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_article a
+        WHERE a.column_id = #{columnId} AND a.state = 1 AND a.recommend = 1
+        ORDER BY a.up_time DESC
+        LIMIT ${limit}
+    </select>
+
+    <select id="newestByColumn" resultMap="customVoResultMap">
+        SELECT
+        <include refid="columns"/>
+        FROM t_seo_article a
+        WHERE a.column_id = #{columnId} AND a.state = 1
+        ORDER BY a.up_time DESC
+        LIMIT ${limit}
+    </select>
+
 </mapper>
 

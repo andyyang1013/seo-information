@@ -92,13 +92,13 @@
             <div class="item-recommend">
                 <ul class="list fl-l">
                     <h5>推荐文章</h5>
-                        <#list recommended as atc>
+                        <#list recommendedByColumn as atc>
                             <li><a href="${base}/${atc.id}.html">${atc.name}</a></li>
                         </#list>
                 </ul>
                 <ul class="list fl-r">
-                    <h5>推荐文章</h5>
-                        <#list recommended as atc>
+                    <h5>最新文章</h5>
+                        <#list newestByColumn as atc>
                             <li><a href="${base}/${atc.id}.html">${atc.name}</a></li>
                         </#list>
                 </ul>

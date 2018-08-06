@@ -91,6 +91,16 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     }
 
     @Override
+    public List<ArticleVO> recommendedByColumn(String columnId, Integer limit) {
+        return articleMapper.recommendedByColumn(columnId,limit);
+    }
+
+    @Override
+    public List<ArticleVO> newestByColumn(String columnId, Integer limit) {
+        return articleMapper.newestByColumn(columnId,limit);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public ArticleVO view(ArticleVO param) {
         ArticleVO articleVO = articleMapper.selectArticleById(param.getId());

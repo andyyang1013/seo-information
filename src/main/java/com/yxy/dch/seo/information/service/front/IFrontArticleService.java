@@ -26,4 +26,8 @@ public interface IFrontArticleService extends IService<Article> {
     ArticleVO selectLastArticle(String columnId, String id);
 
     ArticleVO selectNextArticle(String columnId, String id);
+
+    List<ArticleVO> recommendedByColumn(String columnId, Integer limit);
+
+    List<ArticleVO> newestByColumn(String columnId, Integer limit);
 }

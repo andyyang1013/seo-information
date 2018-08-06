@@ -293,6 +293,10 @@ public class PageController extends BaseController {
         modelAndView.addObject("hottest", articleService.hottest(8));
         // 推荐文章
         modelAndView.addObject("recommended", articleService.recommended(8));
+        // 同栏目推荐文章
+        modelAndView.addObject("recommendedByColumn",articleService.recommendedByColumn(article.getColumnId(),8));
+        // 同栏目最新文章
+        modelAndView.addObject("newestByColumn",articleService.newestByColumn(article.getColumnId(),8));
         // 标签列表
         modelAndView.addObject("tagList", tagService.selectTagList(15));
         logger.info("访问文章页返回{}", modelAndView);

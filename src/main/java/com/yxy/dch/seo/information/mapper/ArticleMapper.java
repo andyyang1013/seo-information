@@ -36,4 +36,8 @@ public interface ArticleMapper extends BaseMapper<Article> {
     ArticleVO selectLastArticle(@Param("columnId") String columnId, @Param("id") String id);
 
     ArticleVO selectNextArticle(@Param("columnId") String columnId, @Param("id") String id);
+
+    List<ArticleVO> recommendedByColumn(@Param("columnId") String columnId, @Param("limit") Integer limit);
+
+    List<ArticleVO> newestByColumn(@Param("columnId") String columnId, @Param("limit") Integer limit);
 }
