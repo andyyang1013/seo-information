@@ -234,7 +234,7 @@ where a.id = #{id}
     <select id="selectArticlesByColumnId" resultMap="customResultMap">
         SELECT
         <include refid="columns"/>
-        FROM t_seo_article a WHERE a.column_id = #{columnId} AND state = 1 ORDER BY a.up_time DESC LIMIT 10
+        FROM t_seo_article a WHERE a.column_id = #{columnId} AND state = 1 ORDER BY a.up_time DESC LIMIT 6
     </select>
 
     <select id="getArticlesByColNamePinyin" resultMap="customVoResultMap">
