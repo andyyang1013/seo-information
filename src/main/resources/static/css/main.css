@@ -134,7 +134,7 @@ em,i {font-style:normal;}
 .item-recommend {overflow:hidden;}
 .item-recommend .list {max-width:45%;}
 .item-recommend .list h5 {font-weight:600;margin-bottom:15px;}
-.item-recommend .list li {margin-bottom:15px;}
+.item-recommend .list li {margin-bottom:15px;overflow: hidden;word-break: keep-all;white-space: nowrap;text-overflow: ellipsis;}
 .item-recommend .list li a {color:#333333;font-size:14px;}
 .item-recommend .list li a:hover {color:#ff7612;text-decoration:underline;}
 /*右*/
