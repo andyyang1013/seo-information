@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_article` (
   `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
   `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='seo文章表';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='seo文章表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_article_read_record` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_article_read_record` (
   `client_ip` varchar(50) NOT NULL COMMENT '客户端IP',
   `read_time` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3) COMMENT '阅读时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='seo文章阅读记录表';
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8 COMMENT='seo文章阅读记录表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_article_relate` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_article_relate` (
   `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
   `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo相关文章表';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='seo相关文章表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_article_tag_mapping` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_article_tag_mapping` (
   `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
   `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='seo文章标签关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='seo文章标签关联表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_banner` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_banner` (
   `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '更新用户id',
   `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='seo banner表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='seo banner表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_channel` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_column` (
   `update_uid` bigint(20) NOT NULL DEFAULT '1' COMMENT '更新用户id',
   `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '更新用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='seo栏目表';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='seo栏目表';
 
 CREATE TABLE IF NOT EXISTS `t_seo_tag` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
@@ -151,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `t_seo_tag` (
   `update_uid` bigint(20) NOT NULL DEFAULT '-1' COMMENT '修改用户id',
   `update_uaccount` varchar(50) NOT NULL DEFAULT 'system' COMMENT '修改用户名',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='seo标签表';
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8 COMMENT='seo标签表';
 
 CREATE TABLE IF NOT EXISTS `t_subsidiary_info` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键ID',
