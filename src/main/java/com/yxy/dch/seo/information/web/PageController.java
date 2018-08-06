@@ -124,7 +124,7 @@ public class PageController extends BaseController {
      * @param index      页码
      * @return 栏目页
      */
-    @RequestMapping("/{namePinyin}?{index}")
+    @RequestMapping("/{namePinyin}/{index}")
     public ModelAndView column(@PathVariable("namePinyin") String namePinyin, @PathVariable("index") Integer index) {
         logger.info("访问栏目页(分页)(namePinyin={},index={})",namePinyin,index);
         // 栏目页
