@@ -125,14 +125,22 @@ public class PageController extends BaseController {
      */
     @RequestMapping("/{namePinyin}?{index}")
     public ModelAndView column(@PathVariable("namePinyin") String namePinyin, @PathVariable("index") Integer index) {
-        logger.info("访问栏目页(分页)");
+        logger.info("访问栏目页(分页)(namePinyin={},index={})",namePinyin,index);
         // 栏目页
         ModelAndView modelAndView = new ModelAndView("column");
         // 栏目
         ColumnVO column = columnService.selectColumnByNamePinyin(namePinyin);
+        if (column == null) {
+            logger.error("访问栏目页(分页)错误({}),(namePinyin={},index={})", CodeMsg.seo_column_not_exist.getMsg(), namePinyin, index);
+            throw new BizException(CodeMsg.seo_column_not_exist);
+        }
         modelAndView.addObject("column", column);
         // 频道
         Channel channel = channelService.selectById(column.getChannelId());
+        if (channel == null){
+            logger.error("访问栏目页(分页)错误({}),(namePinyin={},index={})", CodeMsg.seo_channel_not_exist.getMsg(), namePinyin, index);
+            throw new BizException(CodeMsg.seo_channel_not_exist);
+        }
         modelAndView.addObject("channel", channel);
         // 文章列表
         PageHelper.startPage(index, 10, true);

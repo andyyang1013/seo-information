@@ -54,6 +54,7 @@ public enum CodeMsg {
     role_name_exist("用户组已存在", "biz_030"),
     seo_orderNum_error("排序序号错误", "biz_031"),
     seo_channel_not_exist("频道不存在", "biz_032"),
+    seo_column_not_exist("栏目不存在", "biz_033"),
 
     //资源异常
     file_system_error("文件服务器异常", "res_001");
