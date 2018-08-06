@@ -8,6 +8,7 @@ import com.yxy.dch.seo.information.exception.BizException;
 import com.yxy.dch.seo.information.exception.CodeMsg;
 import com.yxy.dch.seo.information.mapper.ArticleMapper;
 import com.yxy.dch.seo.information.mapper.ArticleReadRecordMapper;
+import com.yxy.dch.seo.information.mapper.TagMapper;
 import com.yxy.dch.seo.information.service.front.IFrontArticleService;
 import com.yxy.dch.seo.information.vo.ArticleVO;
 import org.apache.commons.lang3.StringUtils;
@@ -24,6 +25,8 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
     private ArticleMapper articleMapper;
     @Autowired
     private ArticleReadRecordMapper articleReadRecordMapper;
+    @Autowired
+    private TagMapper tagMapper;
 
     @Override
     public List<ArticleVO> hottest(Integer limit) {
@@ -65,8 +68,9 @@ public class FrontArticleServiceImpl extends ServiceImpl<ArticleMapper, Article>
                 if (tagArray != null && tagArray.length > 0) {
                     List<Tag> tagList = new ArrayList<>();
                     for (String tagName : tagArray) {
-                        Tag tag = new Tag();
-                        tag.setName(tagName);
+                        Tag param = new Tag();
+                        param.setName(tagName);
+                        Tag tag = tagMapper.selectOne(param);
                         tagList.add(tag);
                     }
                     article.setTagList(tagList);

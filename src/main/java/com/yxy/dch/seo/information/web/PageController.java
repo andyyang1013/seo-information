@@ -219,7 +219,7 @@ public class PageController extends BaseController {
      * @param index 页码
      * @return 标签详情页
      */
-    @RequestMapping("/tag/{id}.html?{index}")
+    @RequestMapping("/tag/{id}.html/index={index}")
     public ModelAndView tag(@PathVariable("id") String id, @PathVariable("index") Integer index) {
         logger.info("访问标签详情页(分页)");
         // 标签详细页

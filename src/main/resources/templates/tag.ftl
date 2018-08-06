@@ -67,18 +67,18 @@
                 </div>
             </#list>
         <ul class="page-container">
-            <li><a href="${base}/tag/${tag.id}.html?1">首页</a></li>
-            <li><a href="${base}/tag/${tag.id}.html?${lastPage}">上一页</a></li>
+            <li><a href="${base}/tag/${tag.id}.html/index=1">首页</a></li>
+            <li><a href="${base}/tag/${tag.id}.html/index=${lastPage}">上一页</a></li>
             <#if pageCount != 1>
                     <#list 1..pageCount as i>
-                        <li><a href="${base}/tag/${tag.id}.html?${i}">${i}</a></li>
+                        <li><a href="${base}/tag/${tag.id}.html/index=${i}">${i}</a></li>
                     </#list>
             </#if>
             <#if pageCount <= 1>
-                    <li><a href="${base}/tag/${tag.id}.html?1">1</a></li>
+                    <li><a href="${base}/tag/${tag.id}.html/index=1">1</a></li>
             </#if>
-            <li><a href="${base}/tag/${tag.id}.html?${nextPage}">下一页</a></li>
-            <li><a href="${base}/tag/${tag.id}.html?${pageCount}">尾页</a></li>
+            <li><a href="${base}/tag/${tag.id}.html/index=${nextPage}">下一页</a></li>
+            <li><a href="${base}/tag/${tag.id}.html/index=${pageCount}">尾页</a></li>
         </ul>
     </div>
     <div class="content-r">
