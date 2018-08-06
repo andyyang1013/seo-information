@@ -86,7 +86,7 @@
             <#list columnList as column>
                 <div class="column-item">
                     <h3>${column.name}<a href="${base}/${column.namePinyin}/">查看更多</a></h3>
-                    <a href="${base}/${column.namePinyin}"><img src="${column.pictureUrl}" alt=""></a>
+                    <a href="${base}/${column.namePinyin}/"><img src="${column.pictureUrl}" alt=""></a>
                     <ul class="list">
                         <#list column.articleList as article>
                             <li>
