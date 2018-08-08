@@ -11,6 +11,7 @@ import com.yxy.dch.seo.information.service.IArticleService;
 import com.yxy.dch.seo.information.service.IUserService;
 import com.yxy.dch.seo.information.util.JacksonUtil;
 import com.yxy.dch.seo.information.util.MinioUtil;
+import com.yxy.dch.seo.information.util.Toolkit;
 import com.yxy.dch.seo.information.vo.*;
 import io.swagger.annotations.Api;
 import org.apache.commons.lang3.StringUtils;
@@ -58,6 +59,7 @@ public class ArticleController extends BaseController {
         param.setCreateUaccount(user.getAccount());
         param.setUpdateUid(user.getId());
         param.setUpdateUaccount(user.getAccount());
+        param.setUpTime(Toolkit.getCurDate());
         ArticleVO articleVO = articleService.create(param);
         logger.info("新增文章成功,result={}", JacksonUtil.toJson(articleVO));
         return articleVO;
